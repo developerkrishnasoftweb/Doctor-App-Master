@@ -161,7 +161,6 @@ class _HomeConnectorState extends State<HomeConnector>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              
               Stack(
                 children: <Widget>[
                   Container(
