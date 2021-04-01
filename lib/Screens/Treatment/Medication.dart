@@ -418,64 +418,63 @@ class _MedicationState extends State<Medication> {
                       "Advices",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    for(int index = 0; index < advices.length; index++)
+                    for (int index = 0; index < advices.length; index++)
                       advices[index].isSelected
                           ? ListTile(
-                        dense: true,
-                        trailing: IconButton(
-                            icon: Icon(Icons.cancel),
-                            onPressed: () async {
-                              print("Got Symptoms");
-                              (await sdb.watchAll()).length;
-                              print("Received Symptoms");
-                              /* showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text(
-                                        "Are you sure you want to remove it?"),
-                                    actions: [
-                                      FlatButton(
-                                        child: Text("Yes"),
-                                        color: red,
-                                        onPressed: () {
-                                          setState(() {
-                                            advices[index].isSelected =
-                                            false;
-                                          });
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                      FlatButton(
-                                        child: Text("No"),
-                                        color: green,
-                                        onPressed: () =>
-                                            Navigator.pop(context),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ); */
-                            }),
-                        title: Row(
-                          children: [
-                            Container(
-                              height: 10,
-                              width: 10,
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  shape: BoxShape.circle),
-                            ),
-                            Expanded(
-                              child: Text(
-                                "${advices[index].advice}",
-                                softWrap: true,
+                              dense: true,
+                              trailing: IconButton(
+                                  icon: Icon(Icons.cancel),
+                                  onPressed: () async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+
+                                        return AlertDialog(
+                                          title: Text(
+                                              "Are you sure you want to remove it?"),
+                                          actions: [
+                                            FlatButton(
+                                              child: Text("Yes"),
+                                              color: red,
+                                              onPressed: () {
+                                                setState(() {
+                                                  advices[index].isSelected =
+                                                      false;
+                                                });
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            FlatButton(
+                                              child: Text("No"),
+                                              color: green,
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }),
+                              title: Row(
+                                children: [
+                                  Container(
+                                    height: 10,
+                                    width: 10,
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        shape: BoxShape.circle),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      "${advices[index].advice}",
+                                      softWrap: true,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      )
+                            )
                           : SizedBox(),
                     Align(
                       alignment: Alignment.centerRight,
@@ -511,78 +510,158 @@ class _MedicationState extends State<Medication> {
                                         actions: [
                                           Text("Advice not in list?"),
                                           TextButton(
-                                            onPressed: () {
+                                            onPressed: () async {
                                               String advice = "";
-                                              showDialog(context: context, builder: (_) => AlertDialog(
-                                                title: Text("Add new advice"),
-                                                content: TextField(
-                                                  decoration: InputDecoration(
-                                                    border: UnderlineInputBorder(),
-                                                    hintText: "Advice"
-                                                  ),
-                                                  onChanged: (value){
-                                                    state(() {
-                                                      advice = value;
-                                                    });
-                                                  },
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      "Close",
-                                                      style: TextStyle(color: Colors.white),
-                                                    ),
-                                                    style: ButtonStyle(
-                                                        backgroundColor:
-                                                        MaterialStateProperty.all(
-                                                            Colors.grey),
-                                                        shape: MaterialStateProperty.all(
-                                                            RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                BorderRadius.circular(
-                                                                    20)))),
-                                                  ),
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      state((){
-                                                        advices.add(Advice(advice: advice));
-                                                        setState(() {});
-                                                        Navigator.pop(context);
-                                                      });
-                                                    },
-                                                    child: Text(
-                                                      "Add",
-                                                      style: TextStyle(color: Colors.white),
-                                                    ),
-                                                    style: ButtonStyle(
-                                                        backgroundColor:
-                                                        MaterialStateProperty.all(
-                                                            Colors.blue),
-                                                        shape: MaterialStateProperty.all(
-                                                            RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                BorderRadius.circular(
-                                                                    20)))),
-                                                  )
-                                                ],
-                                              ));
+                                              List<SelectedSymptoms> symptoms =
+                                                  [];
+                                              await sdb
+                                                  .watchAll()
+                                                  .then((value) {
+                                                value.forEach((element) {
+                                                  symptoms.add(SelectedSymptoms(
+                                                      symptom: element));
+                                                });
+                                              });
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (_) => StatefulBuilder(
+                                                              builder: (context,
+                                                                  state) {
+                                                            return AlertDialog(
+                                                              title: Text(
+                                                                  "Add new advice"),
+                                                              content:
+                                                                  SingleChildScrollView(
+                                                                child: Column(
+                                                                  children: [
+                                                                    TextField(
+                                                                      decoration: InputDecoration(
+                                                                          border:
+                                                                              UnderlineInputBorder(),
+                                                                          hintText:
+                                                                              "Advice"),
+                                                                      onChanged:
+                                                                          (value) {
+                                                                        state(
+                                                                            () {
+                                                                          advice =
+                                                                              value;
+                                                                        });
+                                                                      },
+                                                                    ),
+                                                                    for (int i =
+                                                                            0;
+                                                                        i <
+                                                                            symptoms
+                                                                                .length;
+                                                                        i++)
+                                                                      CheckboxListTile(
+                                                                          value: symptoms[i]
+                                                                              .isSelected,
+                                                                          controlAffinity: ListTileControlAffinity
+                                                                              .leading,
+                                                                          title: Text(
+                                                                              "${symptoms[i].symptom.title}"),
+                                                                          onChanged:
+                                                                              (v) {
+                                                                            state(() {
+                                                                              symptoms[i].isSelected = !symptoms[i].isSelected;
+                                                                            });
+                                                                          }),
+                                                                    /* DropdownButton<
+                                                                  Symptom>(
+                                                                  onChanged: (v) {
+                                                                    state(() {
+                                                                      selectedSymptom =
+                                                                          v;
+                                                                    });
+                                                                  },
+                                                                  isExpanded: true,
+                                                                  value:
+                                                                  selectedSymptom,
+                                                                  items: symptoms
+                                                                      .map(
+                                                                          (symptom) {
+                                                                        return DropdownMenuItem<
+                                                                            Symptom>(
+                                                                          child: Text(
+                                                                              "${symptom.title}"),
+                                                                          value:
+                                                                          symptom,
+                                                                        );
+                                                                      }).toList()) */
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child: Text(
+                                                                    "Close",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
+                                                                  style: ButtonStyle(
+                                                                      backgroundColor:
+                                                                          MaterialStateProperty.all(Colors
+                                                                              .grey),
+                                                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(20)))),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    state(() {
+                                                                      advices.add(Advice(
+                                                                          advice:
+                                                                              advice));
+                                                                      setState(
+                                                                          () {});
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    });
+                                                                  },
+                                                                  child: Text(
+                                                                    "Add",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
+                                                                  style: ButtonStyle(
+                                                                      backgroundColor:
+                                                                          MaterialStateProperty.all(Colors
+                                                                              .blue),
+                                                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(20)))),
+                                                                )
+                                                              ],
+                                                            );
+                                                          }));
                                             },
                                             child: Text(
                                               "Add New",
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
                                                         Colors.blue),
-                                                shape: MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                20)))),
+                                                shape:
+                                                    MaterialStateProperty.all(
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)))),
                                           )
                                         ],
                                       ),
@@ -605,4 +684,11 @@ class Advice {
   bool isSelected;
 
   Advice({this.advice, this.isSelected: false});
+}
+
+class SelectedSymptoms {
+  Symptom symptom;
+  bool isSelected;
+
+  SelectedSymptoms({this.symptom, this.isSelected: false});
 }
