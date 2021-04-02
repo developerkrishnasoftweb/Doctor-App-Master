@@ -9,8 +9,8 @@ part 'AdviceTable.g.dart';
 
 class Advices extends Table{
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get advice => text().withLength(min: 1, max: 50)();
-  TextColumn get symptoms => text().withLength(min: 1, max: 100)();
+  TextColumn get advice => text().withLength(min: 1, max: 300)();
+  TextColumn get symptoms => text().withLength(min: 1, max: 300)();
 }
 
 LazyDatabase _openConnection() {

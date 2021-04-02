@@ -178,7 +178,7 @@ class $AdvicesTable extends Advices with TableInfo<$AdvicesTable, Advice> {
   GeneratedTextColumn get advice => _advice ??= _constructAdvice();
   GeneratedTextColumn _constructAdvice() {
     return GeneratedTextColumn('advice', $tableName, false,
-        minTextLength: 1, maxTextLength: 50);
+        minTextLength: 1, maxTextLength: 300);
   }
 
   final VerificationMeta _symptomsMeta = const VerificationMeta('symptoms');
@@ -187,7 +187,7 @@ class $AdvicesTable extends Advices with TableInfo<$AdvicesTable, Advice> {
   GeneratedTextColumn get symptoms => _symptoms ??= _constructSymptoms();
   GeneratedTextColumn _constructSymptoms() {
     return GeneratedTextColumn('symptoms', $tableName, false,
-        minTextLength: 1, maxTextLength: 100);
+        minTextLength: 1, maxTextLength: 300);
   }
 
   @override

@@ -39,16 +39,21 @@ class _MedicationState extends State<Medication> {
   //   return totalCount;
   // }
   List<AllAdvices> advices = [];
+  AdvicesDatabase adviceProvider;
 
   @override
   void initState() {
     super.initState();
+    adviceProvider = Provider.of<AdvicesDatabase>(context, listen: false);
     getAdvices();
   }
 
-  void getAdvices() async {
-    final adviceProvider = Provider.of<AdvicesDatabase>(context);
+  Future<void> getAdvices() async {
     List<Advice> tempAdvice = await adviceProvider.getAllAdvices();
+    advices.clear();
+    for(int i = 3; i < tempAdvice.length; i++) {
+      adviceProvider.deleteAdvice(tempAdvice[i]);
+    }
     tempAdvice.forEach((element) {
       setState(() {
         advices.add(AllAdvices(advice: element));
@@ -481,7 +486,7 @@ class _MedicationState extends State<Medication> {
                                     showDialog(
                                         context: context,
                                         builder: (_) => StatefulBuilder(
-                                              builder: (_, state) =>
+                                              builder: (_, stateSetter) =>
                                                   AlertDialog(
                                                 title: Text("Select Advice"),
                                                 content: SingleChildScrollView(
@@ -498,10 +503,10 @@ class _MedicationState extends State<Medication> {
                                                           controlAffinity:
                                                               ListTileControlAffinity
                                                                   .leading,
-                                                          title: Text(
-                                                              advice.advice.advice),
+                                                          title: Text(advice
+                                                              .advice.advice),
                                                           onChanged: (value) {
-                                                            state(() {
+                                                            stateSetter(() {
                                                               setState(() {});
                                                               advice.isSelected =
                                                                   !advice
@@ -515,6 +520,7 @@ class _MedicationState extends State<Medication> {
                                                   Text("Advice not in list?"),
                                                   TextButton(
                                                     onPressed: () async {
+                                                      Navigator.pop(context);
                                                       String advice = "";
                                                       List<SelectedSymptoms>
                                                           symptoms = [];
@@ -554,6 +560,10 @@ class _MedicationState extends State<Medication> {
                                                                               advice = value;
                                                                             });
                                                                           },
+                                                                          maxLines:
+                                                                              3,
+                                                                          maxLength:
+                                                                              300,
                                                                         ),
                                                                         for (int i =
                                                                                 0;
@@ -593,17 +603,39 @@ class _MedicationState extends State<Medication> {
                                                                     ),
                                                                     TextButton(
                                                                       onPressed:
-                                                                          () {
+                                                                          () async {
+                                                                        String
+                                                                            selectedSymptoms =
+                                                                            "";
+                                                                        symptoms
+                                                                            .forEach((element) {
+                                                                          if (element
+                                                                              .isSelected) {
+                                                                            state(() {
+                                                                              selectedSymptoms += element.symptom.title + ", ";
+                                                                            });
+                                                                          }
+                                                                        });
                                                                         state(
                                                                             () {
-                                                                          // advices.add(Advice(
-                                                                          //     advice:
-                                                                          //     advice));
-                                                                          // setState(
-                                                                          //         () {});
-                                                                          // Navigator.pop(
-                                                                          //     context);
+                                                                          selectedSymptoms = selectedSymptoms.substring(
+                                                                              0,
+                                                                              selectedSymptoms.length - 2);
                                                                         });
+                                                                        print(
+                                                                            "Advice detail");
+                                                                        print(
+                                                                            advice);
+                                                                        print(
+                                                                            selectedSymptoms);
+                                                                        await adviceProvider.insertAdvice(Advice(
+                                                                            advice:
+                                                                                advice,
+                                                                            symptoms:
+                                                                                selectedSymptoms));
+                                                                        await getAdvices();
+                                                                        Navigator.pop(
+                                                                            context);
                                                                       },
                                                                       child:
                                                                           Text(
