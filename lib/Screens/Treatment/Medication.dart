@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:getcure_doctor/Database/AdviceTable.dart';
+import 'package:getcure_doctor/Database/AdviceTable.dart';
+import 'package:getcure_doctor/Database/AdviceTable.dart';
 import 'package:getcure_doctor/Database/PatientsVisitTable.dart';
 import 'package:getcure_doctor/Database/Recommendation.dart';
 import 'package:getcure_doctor/Database/SymptomsTable.dart';
@@ -35,43 +38,42 @@ class _MedicationState extends State<Medication> {
   //   getCounts(disease, tcount);
   //   return totalCount;
   // }
-  List<Advice> advices = [
-    Advice(
-        advice:
-            "Avoid red meat, trans fats, processed carbohydrates and food with high fructose corn syrup",
-        isSelected: true),
-    Advice(
-        advice:
-            "Exercise 30 to 60 minutes ground three to four times a week at moderate intensity"),
-    Advice(
-        advice:
-            "Cut calories by 500 to 1,000 calories daily if you're overweight"),
-  ];
+  List<AllAdvices> advices = [];
 
   @override
   void initState() {
     super.initState();
+    getAdvices();
+  }
+
+  void getAdvices() async {
+    final adviceProvider = Provider.of<AdvicesDatabase>(context);
+    List<Advice> tempAdvice = await adviceProvider.getAllAdvices();
+    tempAdvice.forEach((element) {
+      setState(() {
+        advices.add(AllAdvices(advice: element));
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final patient = Provider.of<PatientsVisitDB>(context);
     final sdb = Provider.of<SymptomsDB>(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Expanded(
-          flex: 2,
-          child: FutureBuilder(
-            future: patient.getDiagnosis(widget.token.guid),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<PatientsVisitData>> list) {
-              switch (list.connectionState) {
-                case ConnectionState.waiting:
-                  return Container(child: Center(child: Text("Loading")));
-                  break;
-                case ConnectionState.done:
-                  return ListView.separated(
+    return FutureBuilder(
+      future: patient.getDiagnosis(widget.token.guid),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<PatientsVisitData>> list) {
+        switch (list.connectionState) {
+          case ConnectionState.waiting:
+            return Container(child: Center(child: Text("Loading")));
+            break;
+          case ConnectionState.done:
+            return Column(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: ListView.separated(
                       itemCount: list.data.last.diagnosis == null
                           ? 0
                           : list.data.last.diagnosis.data.length,
@@ -383,307 +385,287 @@ class _MedicationState extends State<Medication> {
                             ),
                           ),
                         );
-                      });
-                  break;
-                default:
-                  return Text("No Data");
-              }
-            },
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              // height: 120,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: orangef,
-                      offset: new Offset(0.0, 0.0),
-                      blurRadius: 5.0,
-                    ),
-                  ]),
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: SingleChildScrollView(
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Advices",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    for (int index = 0; index < advices.length; index++)
-                      advices[index].isSelected
-                          ? ListTile(
-                              dense: true,
-                              trailing: IconButton(
-                                  icon: Icon(Icons.cancel),
-                                  onPressed: () async {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-
-                                        return AlertDialog(
-                                          title: Text(
-                                              "Are you sure you want to remove it?"),
-                                          actions: [
-                                            FlatButton(
-                                              child: Text("Yes"),
-                                              color: red,
-                                              onPressed: () {
-                                                setState(() {
-                                                  advices[index].isSelected =
-                                                      false;
-                                                });
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                            FlatButton(
-                                              child: Text("No"),
-                                              color: green,
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  }),
-                              title: Row(
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        shape: BoxShape.circle),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "${advices[index].advice}",
-                                      softWrap: true,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : SizedBox(),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                          icon: Icon(Icons.local_hospital),
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (_) => StatefulBuilder(
-                                      builder: (_, state) => AlertDialog(
-                                        title: Text("Select Advice"),
-                                        content: SingleChildScrollView(
-                                          physics: BouncingScrollPhysics(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: advices.map((advice) {
-                                              return CheckboxListTile(
-                                                  value: advice.isSelected,
-                                                  controlAffinity:
-                                                      ListTileControlAffinity
-                                                          .leading,
-                                                  title: Text(advice.advice),
-                                                  onChanged: (value) {
-                                                    state(() {
-                                                      setState(() {});
-                                                      advice.isSelected =
-                                                          !advice.isSelected;
-                                                    });
-                                                  });
-                                            }).toList(),
-                                          ),
-                                        ),
-                                        actions: [
-                                          Text("Advice not in list?"),
-                                          TextButton(
-                                            onPressed: () async {
-                                              String advice = "";
-                                              List<SelectedSymptoms> symptoms =
-                                                  [];
-                                              await sdb
-                                                  .watchAll()
-                                                  .then((value) {
-                                                value.forEach((element) {
-                                                  symptoms.add(SelectedSymptoms(
-                                                      symptom: element));
-                                                });
-                                              });
-                                              showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (_) => StatefulBuilder(
-                                                              builder: (context,
-                                                                  state) {
-                                                            return AlertDialog(
-                                                              title: Text(
-                                                                  "Add new advice"),
-                                                              content:
-                                                                  SingleChildScrollView(
-                                                                child: Column(
-                                                                  children: [
-                                                                    TextField(
-                                                                      decoration: InputDecoration(
-                                                                          border:
-                                                                              UnderlineInputBorder(),
-                                                                          hintText:
-                                                                              "Advice"),
-                                                                      onChanged:
-                                                                          (value) {
-                                                                        state(
-                                                                            () {
-                                                                          advice =
-                                                                              value;
-                                                                        });
-                                                                      },
-                                                                    ),
-                                                                    for (int i =
-                                                                            0;
-                                                                        i <
-                                                                            symptoms
-                                                                                .length;
-                                                                        i++)
-                                                                      CheckboxListTile(
-                                                                          value: symptoms[i]
-                                                                              .isSelected,
-                                                                          controlAffinity: ListTileControlAffinity
-                                                                              .leading,
-                                                                          title: Text(
-                                                                              "${symptoms[i].symptom.title}"),
-                                                                          onChanged:
-                                                                              (v) {
-                                                                            state(() {
-                                                                              symptoms[i].isSelected = !symptoms[i].isSelected;
-                                                                            });
-                                                                          }),
-                                                                    /* DropdownButton<
-                                                                  Symptom>(
-                                                                  onChanged: (v) {
-                                                                    state(() {
-                                                                      selectedSymptom =
-                                                                          v;
-                                                                    });
-                                                                  },
-                                                                  isExpanded: true,
-                                                                  value:
-                                                                  selectedSymptom,
-                                                                  items: symptoms
-                                                                      .map(
-                                                                          (symptom) {
-                                                                        return DropdownMenuItem<
-                                                                            Symptom>(
-                                                                          child: Text(
-                                                                              "${symptom.title}"),
-                                                                          value:
-                                                                          symptom,
-                                                                        );
-                                                                      }).toList()) */
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  child: Text(
-                                                                    "Close",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  ),
-                                                                  style: ButtonStyle(
-                                                                      backgroundColor:
-                                                                          MaterialStateProperty.all(Colors
-                                                                              .grey),
-                                                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20)))),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    state(() {
-                                                                      advices.add(Advice(
-                                                                          advice:
-                                                                              advice));
-                                                                      setState(
-                                                                          () {});
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child: Text(
-                                                                    "Add",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  ),
-                                                                  style: ButtonStyle(
-                                                                      backgroundColor:
-                                                                          MaterialStateProperty.all(Colors
-                                                                              .blue),
-                                                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20)))),
-                                                                )
-                                                              ],
-                                                            );
-                                                          }));
+                      }),
+                ),
+                /*Advice design*/
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      // height: 120,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: orangef,
+                              offset: new Offset(0.0, 0.0),
+                              blurRadius: 5.0,
+                            ),
+                          ]),
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Advices",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            for (int index = 0; index < advices.length; index++)
+                              advices[index].isSelected
+                                  ? ListTile(
+                                      dense: true,
+                                      trailing: IconButton(
+                                        icon: Icon(Icons.cancel),
+                                        onPressed: () async {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    "Are you sure you want to remove it?"),
+                                                actions: [
+                                                  FlatButton(
+                                                    child: Text("Yes"),
+                                                    color: red,
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        advices[index]
+                                                            .isSelected = false;
+                                                      });
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ),
+                                                  FlatButton(
+                                                    child: Text("No"),
+                                                    color: green,
+                                                    onPressed: () =>
+                                                        Navigator.pop(context),
+                                                  ),
+                                                ],
+                                              );
                                             },
+                                          );
+                                        },
+                                      ),
+                                      title: Row(
+                                        children: [
+                                          Container(
+                                            height: 10,
+                                            width: 10,
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey,
+                                                shape: BoxShape.circle),
+                                          ),
+                                          Expanded(
                                             child: Text(
-                                              "Add New",
-                                              style: TextStyle(
-                                                  color: Colors.white),
+                                              "${advices[index].advice.advice}",
+                                              softWrap: true,
                                             ),
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        Colors.blue),
-                                                shape:
-                                                    MaterialStateProperty.all(
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20)))),
-                                          )
+                                          ),
                                         ],
                                       ),
-                                    ));
-                          }),
+                                    )
+                                  : SizedBox(),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: IconButton(
+                                  icon: Icon(Icons.local_hospital),
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => StatefulBuilder(
+                                              builder: (_, state) =>
+                                                  AlertDialog(
+                                                title: Text("Select Advice"),
+                                                content: SingleChildScrollView(
+                                                  physics:
+                                                      BouncingScrollPhysics(),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children:
+                                                        advices.map((advice) {
+                                                      return CheckboxListTile(
+                                                          value:
+                                                              advice.isSelected,
+                                                          controlAffinity:
+                                                              ListTileControlAffinity
+                                                                  .leading,
+                                                          title: Text(
+                                                              advice.advice.advice),
+                                                          onChanged: (value) {
+                                                            state(() {
+                                                              setState(() {});
+                                                              advice.isSelected =
+                                                                  !advice
+                                                                      .isSelected;
+                                                            });
+                                                          });
+                                                    }).toList(),
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  Text("Advice not in list?"),
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      String advice = "";
+                                                      List<SelectedSymptoms>
+                                                          symptoms = [];
+                                                      await sdb
+                                                          .watchAll()
+                                                          .then((value) {
+                                                        value
+                                                            .forEach((element) {
+                                                          symptoms.add(
+                                                              SelectedSymptoms(
+                                                                  symptom:
+                                                                      element));
+                                                        });
+                                                      });
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              StatefulBuilder(
+                                                                  builder:
+                                                                      (context,
+                                                                          state) {
+                                                                return AlertDialog(
+                                                                  title: Text(
+                                                                      "Add new advice"),
+                                                                  content:
+                                                                      SingleChildScrollView(
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        TextField(
+                                                                          decoration: InputDecoration(
+                                                                              border: UnderlineInputBorder(),
+                                                                              hintText: "Advice"),
+                                                                          onChanged:
+                                                                              (value) {
+                                                                            state(() {
+                                                                              advice = value;
+                                                                            });
+                                                                          },
+                                                                        ),
+                                                                        for (int i =
+                                                                                0;
+                                                                            i < symptoms.length;
+                                                                            i++)
+                                                                          CheckboxListTile(
+                                                                              value: symptoms[i].isSelected,
+                                                                              controlAffinity: ListTileControlAffinity.leading,
+                                                                              title: Text("${symptoms[i].symptom.title}"),
+                                                                              onChanged: (v) {
+                                                                                state(() {
+                                                                                  symptoms[i].isSelected = !symptoms[i].isSelected;
+                                                                                });
+                                                                              }),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      child:
+                                                                          Text(
+                                                                        "Close",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      ),
+                                                                      style: ButtonStyle(
+                                                                          backgroundColor: MaterialStateProperty.all(Colors
+                                                                              .grey),
+                                                                          shape:
+                                                                              MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        state(
+                                                                            () {
+                                                                          // advices.add(Advice(
+                                                                          //     advice:
+                                                                          //     advice));
+                                                                          // setState(
+                                                                          //         () {});
+                                                                          // Navigator.pop(
+                                                                          //     context);
+                                                                        });
+                                                                      },
+                                                                      child:
+                                                                          Text(
+                                                                        "Add",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      ),
+                                                                      style: ButtonStyle(
+                                                                          backgroundColor: MaterialStateProperty.all(Colors
+                                                                              .blue),
+                                                                          shape:
+                                                                              MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))),
+                                                                    )
+                                                                  ],
+                                                                );
+                                                              }));
+                                                    },
+                                                    child: Text(
+                                                      "Add New",
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                    style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all(Colors
+                                                                    .blue),
+                                                        shape: MaterialStateProperty.all(
+                                                            RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20)))),
+                                                  )
+                                                ],
+                                              ),
+                                            ));
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+                  ),
+                )
+              ],
+            );
+            break;
+          default:
+            return Text("No Data");
+        }
+      },
     );
   }
 }
 
-class Advice {
-  final String advice;
+class AllAdvices {
+  final Advice advice;
   bool isSelected;
 
-  Advice({this.advice, this.isSelected: false});
+  AllAdvices({this.advice, this.isSelected: false});
 }
 
 class SelectedSymptoms {

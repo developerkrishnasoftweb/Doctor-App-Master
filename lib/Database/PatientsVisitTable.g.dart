@@ -1066,7 +1066,7 @@ class $PatientsVisitTable extends PatientsVisit
   GeneratedTextColumn get bp => _bp ??= _constructBp();
   GeneratedTextColumn _constructBp() {
     return GeneratedTextColumn('bp', $tableName, false,
-        defaultValue: Constant('120/80'));
+        defaultValue: Constant('80/120'));
   }
 
   final VerificationMeta _pulseMeta = const VerificationMeta('pulse');
