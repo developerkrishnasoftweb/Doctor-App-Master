@@ -51,9 +51,6 @@ class _MedicationState extends State<Medication> {
   Future<void> getAdvices() async {
     List<Advice> tempAdvice = await adviceProvider.getAllAdvices();
     advices.clear();
-    for(int i = 3; i < tempAdvice.length; i++) {
-      adviceProvider.deleteAdvice(tempAdvice[i]);
-    }
     tempAdvice.forEach((element) {
       setState(() {
         advices.add(AllAdvices(advice: element));
