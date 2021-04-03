@@ -228,10 +228,6 @@ class PatientsVisitDB extends _$PatientsVisitDB {
         medication: Value(Medicationgenerated(data: list))));
   }
 
-  Future updateAdvices ({PatientsVisitData data, AdvicesGenerated advicesGenerated}) {
-
-  }
-
   //Fetch Data
   Future<List<PatientsVisitData>> getBriefHistoryFuture(String id) {
     dynamic query;
