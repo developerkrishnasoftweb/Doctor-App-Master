@@ -517,7 +517,7 @@ class _MedicationState extends State<Medication> {
                                                   Text("Advice not in list?"),
                                                   TextButton(
                                                     onPressed: () async {
-                                                      Navigator.pop(context);
+                                                      // Navigator.pop(context);
                                                       String advice = "";
                                                       List<SelectedSymptoms>
                                                           symptoms = [];
@@ -619,18 +619,14 @@ class _MedicationState extends State<Medication> {
                                                                               0,
                                                                               selectedSymptoms.length - 2);
                                                                         });
-                                                                        print(
-                                                                            "Advice detail");
-                                                                        print(
-                                                                            advice);
-                                                                        print(
-                                                                            selectedSymptoms);
                                                                         await adviceProvider.insertAdvice(Advice(
                                                                             advice:
                                                                                 advice,
                                                                             symptoms:
                                                                                 selectedSymptoms));
                                                                         await getAdvices();
+                                                                        stateSetter(
+                                                                            () {});
                                                                         Navigator.pop(
                                                                             context);
                                                                       },

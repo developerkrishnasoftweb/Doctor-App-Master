@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:getcure_doctor/Database/AdviceTable.dart';
 import 'package:moor/moor.dart';
 
 //Brief History
@@ -640,6 +641,67 @@ class DignosisConverter extends TypeConverter<Dignosisgenerated, String> {
       return null;
     }
 
+    return json.encode(value.toJson());
+  }
+}
+
+//Advices
+class AdvicesGenerated {
+  List<AdviceData> advices;
+  AdvicesGenerated({this.advices});
+
+  AdvicesGenerated.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      advices = <AdviceData>[];
+      json['data'].forEach((v) {
+        advices.add(new AdviceData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if(this.advices != null) {
+      data['data'] = this.advices.map((e) => e.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class AdviceData{
+  String id, advice, symptoms;
+  AdviceData({this.advice, this.id, this.symptoms});
+  AdviceData.fromJson(Map<String, dynamic> json) {
+    id = json['id']?.toString();
+    advice = json['advice']?.toString();
+    symptoms = json['symptoms']?.toString();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['advice'] = this.advice;
+    data['symptoms'] = this.symptoms;
+    return data;
+  }
+}
+
+class AdviceConverter extends TypeConverter<AdvicesGenerated, String> {
+  const AdviceConverter();
+  @override
+  AdvicesGenerated mapToDart(String fromDb) {
+    if (fromDb == null) {
+      return null;
+    }
+    return AdvicesGenerated.fromJson(
+        json.decode(fromDb) as Map<String, dynamic>);
+  }
+
+  @override
+  String mapToSql(AdvicesGenerated value) {
+    if (value == null) {
+      return null;
+    }
     return json.encode(value.toJson());
   }
 }

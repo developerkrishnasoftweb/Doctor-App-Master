@@ -12,42 +12,74 @@ part 'PatientsVisitTable.g.dart';
 
 class PatientsVisit extends Table {
   IntColumn get id => integer().autoIncrement()();
+
   TextColumn get appointmentId => text().nullable()();
+
   IntColumn get mobileNo => integer()();
+
   IntColumn get age => integer().nullable()();
+
   TextColumn get patientName => text()();
+
   TextColumn get temperature => text().withDefault(Constant('98'))();
+
   TextColumn get bp => text().withDefault(Constant('80/120'))();
+
   TextColumn get pulse => text().withDefault(Constant('72'))();
+
   TextColumn get weight => text().withDefault(Constant('0'))();
+
   IntColumn get fee => integer().withDefault(Constant(100))();
+
   TextColumn get patientId => text()();
+
   IntColumn get clinicDoctorId => integer().nullable()();
+
   TextColumn get appointmentType => text().nullable()();
+
   TextColumn get visitType => text().nullable()();
+
   TextColumn get bookingType => text().nullable()();
+
   TextColumn get bookedBy => text().nullable()();
+
   TextColumn get bookedVia => text().nullable()();
+
   DateTimeColumn get appointmentsTime => dateTime().nullable()();
+
   DateTimeColumn get presentTime => dateTime().nullable()();
+
   BoolColumn get completed => boolean().withDefault(Constant(false))();
+
   BoolColumn get isDoctorFeedBack => boolean().withDefault(Constant(false))();
+
   BoolColumn get isPatientFeedBack => boolean().withDefault(Constant(false))();
+
   TextColumn get briefHistory =>
       text().map(const BriefHistoryConverter()).nullable()();
+
   TextColumn get visitReason =>
       text().map(const VisitReasonConverter()).nullable()();
+
   TextColumn get examination =>
       text().map(const ExaminationConverter()).nullable()();
+
   TextColumn get diagnosis =>
       text().map(const DignosisConverter()).nullable()();
+
   TextColumn get medication =>
       text().map(const MedicationConverter()).nullable()();
+
   TextColumn get feedBack =>
       text().map(const MedicationConverter()).nullable()();
+
   TextColumn get allergies => text().map(const AllergyConverter()).nullable()();
+
   TextColumn get lifestyle =>
       text().map(const LifeStyleConverter()).nullable()();
+
+  TextColumn get advices => text().map(const AdviceConverter()).nullable()();
+
   BoolColumn get isOnline => boolean().withDefault(Constant(false))();
 }
 
@@ -62,10 +94,12 @@ LazyDatabase _openConnection() {
 @UseMoor(tables: [PatientsVisit])
 class PatientsVisitDB extends _$PatientsVisitDB {
   PatientsVisitDB() : super(_openConnection());
+
   @override
   int get schemaVersion => 2;
 
   Future insert(PatientsVisitData p) => into(patientsVisit).insert(p);
+
   Future<List<PatientsVisitData>> getAll() {
     var query = select(patientsVisit)
       ..where((tbl) => tbl.isOnline.equals(false));
@@ -192,6 +226,10 @@ class PatientsVisitDB extends _$PatientsVisitDB {
     }
     return query.write(PatientsVisitCompanion(
         medication: Value(Medicationgenerated(data: list))));
+  }
+
+  Future updateAdvices ({PatientsVisitData data, AdvicesGenerated advicesGenerated}) {
+
   }
 
   //Fetch Data
@@ -427,27 +465,25 @@ class PatientsVisitDB extends _$PatientsVisitDB {
   }
 
   Future updateguid(String previousId, String newId) {
-    var query = update(patientsVisit)..where((t) =>t.patientId.equals(previousId));
-      return query.write(
-        PatientsVisitCompanion(
-        patientId: Value(newId),
-        )
-      );
+    var query = update(patientsVisit)
+      ..where((t) => t.patientId.equals(previousId));
+    return query.write(PatientsVisitCompanion(
+      patientId: Value(newId),
+    ));
   }
-    Future updateStatus(int id) {
-    var query = update(patientsVisit)..where((t) =>t.id.equals(id));
-      return query.write(
-        PatientsVisitCompanion(
-        isOnline: Value(true),
-        )
-      );
+
+  Future updateStatus(int id) {
+    var query = update(patientsVisit)..where((t) => t.id.equals(id));
+    return query.write(PatientsVisitCompanion(
+      isOnline: Value(true),
+    ));
   }
+
   Future updateCompleteStatus(String patientId) {
-    var query = update(patientsVisit)..where((t) =>t.patientId.equals(patientId));
-      return query.write(
-        PatientsVisitCompanion(
-        completed: Value(true),
-        )
-      );
+    var query = update(patientsVisit)
+      ..where((t) => t.patientId.equals(patientId));
+    return query.write(PatientsVisitCompanion(
+      completed: Value(true),
+    ));
   }
 }
