@@ -7,12 +7,12 @@ import 'package:getcure_doctor/Helpers/Navigation.dart';
 import 'package:getcure_doctor/Screens/Treatment/Diagnosis.dart';
 import 'package:getcure_doctor/Screens/Treatment/Examination.dart';
 import 'package:getcure_doctor/Screens/Treatment/Symptoms.dart';
+import 'package:getcure_doctor/Screens/pdf_generator/pdf_generator.dart';
 import 'package:getcure_doctor/Widgets/DiagnosisNotice.dart';
 import 'package:getcure_doctor/Widgets/ExamNoticable.dart';
 import 'package:getcure_doctor/Widgets/generalDetails.dart';
 import 'package:provider/provider.dart';
 import '../../Helpers/AppConfig/colors.dart';
-import '../../main.dart';
 import 'Medication.dart';
 
 
@@ -246,7 +246,7 @@ class _HomeConnectorState extends State<HomeConnector>
       onPressed: () {
         patient.updateCompleteStatus(widget.token.guid);
         tokenDB.updateCompleteStatus(widget.token.guid);
-        changeScreen(context, MyApp());
+        changeScreen(context, PatientReport(patientId: widget.token.guid));
       },
       child: Icon(Icons.print, color: Colors.white),
     ));
