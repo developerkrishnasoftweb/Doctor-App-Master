@@ -11,7 +11,6 @@ import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/AppConfig/colors.dart';
 import 'package:getcure_doctor/Helpers/Navigation.dart';
 import 'package:getcure_doctor/Widgets/MedicineSearch.dart';
-import 'package:getcure_doctor/Widgets/printing.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
