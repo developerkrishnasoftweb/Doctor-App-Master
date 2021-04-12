@@ -42,18 +42,88 @@ class _PatientReportState extends State<PatientReport> {
 
   generatePdf() async {
     Directory directory = await getExternalStorageDirectory();
-    // final im
+    // final image = pw.MemoryImage(File('images/LOGO GETCURE.webp').readAsBytesSync());
     pdf.addPage(pw.Page(build: (pw.Context context) {
       return pw.Column(
-        children: [
-          pw.Row(
-            children: [
-            ]
-          )
-        ]
-      );
+          crossAxisAlignment: pw.CrossAxisAlignment.center,
+          children: [
+            pw.Padding(child: pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                crossAxisAlignment: pw.CrossAxisAlignment.center,
+                children: [
+                  // pw.Image(image),
+                  pw.Column(
+                      mainAxisAlignment: pw.MainAxisAlignment.center,
+                      crossAxisAlignment: pw.CrossAxisAlignment.center,
+                      children: [
+                        pw.Text("AASTHA MULTI SPECIALIST HOSPITAL",
+                            style: pw.TextStyle(
+                                color: PdfColor.fromInt(0xff000000),
+                                fontSize: 25,
+                                fontWeight: pw.FontWeight.bold)),
+                        pw.Text("Address: Delhi Sharanur Road Baraut",
+                            style: pw.TextStyle(
+                                color: PdfColor.fromInt(0xff000000),
+                                fontSize: 23,
+                                fontWeight: pw.FontWeight.bold)),
+                      ])
+                ]), padding: pw.EdgeInsets.symmetric(vertical: 10)),
+            pw.Row(children: [
+              pw.Expanded(
+                  child: pw.Text("Appointment with: Dr Anil Kumar Jain",
+                      style: pw.TextStyle(
+                          color: PdfColor.fromInt(0xff000000),
+                          fontSize: 20,
+                          fontWeight: pw.FontWeight.bold))),
+              pw.Expanded(
+                  child: pw.Text("Appointment Date: 31 Jan 2021",
+                      style: pw.TextStyle(
+                          color: PdfColor.fromInt(0xff000000),
+                          fontSize: 20,
+                          fontWeight: pw.FontWeight.bold))),
+              pw.Expanded(
+                  child: pw.Text("New Visit, Token No.-5",
+                      style: pw.TextStyle(
+                          color: PdfColor.fromInt(0xff000000),
+                          fontSize: 20,
+                          fontWeight: pw.FontWeight.bold))),
+            ]),
+            pw.Row(children: [
+              pw.Expanded(
+                  child: pw.Text("Patient's Name: Mr Lal Singh",
+                      style: pw.TextStyle(
+                          color: PdfColor.fromInt(0xff000000),
+                          fontSize: 20,
+                          fontWeight: pw.FontWeight.bold))),
+              pw.Expanded(
+                  child: pw.Text("Age: 27 years",
+                      style: pw.TextStyle(
+                          color: PdfColor.fromInt(0xff000000),
+                          fontSize: 20,
+                          fontWeight: pw.FontWeight.bold))),
+              pw.Expanded(
+                  child: pw.Text("Gender: Male",
+                      style: pw.TextStyle(
+                          color: PdfColor.fromInt(0xff000000),
+                          fontSize: 20,
+                          fontWeight: pw.FontWeight.bold))),
+              pw.Expanded(
+                  child: pw.Text("Address: Mumbai",
+                      style: pw.TextStyle(
+                          color: PdfColor.fromInt(0xff000000),
+                          fontSize: 20,
+                          fontWeight: pw.FontWeight.bold))),
+              pw.Expanded(
+                  child: pw.Text("GHID: A9012345555",
+                      style: pw.TextStyle(
+                          color: PdfColor.fromInt(0xff000000),
+                          fontSize: 20,
+                          fontWeight: pw.FontWeight.bold))),
+            ])
+          ]);
     }));
-    final tempPDF = File('${directory.path + Platform.pathSeparator}report.pdf');
+    final tempPDF =
+        File('${directory.path + Platform.pathSeparator}report.pdf');
     tempPDF.writeAsBytes(await pdf.save());
     setState(() {
       generatedPDF = tempPDF;
@@ -66,12 +136,14 @@ class _PatientReportState extends State<PatientReport> {
       appBar: AppBar(
           title: Text("Patient Report", style: TextStyle(color: white)),
           backgroundColor: orange),
-      body: generatedPDF != null ? PDFView(
-        pdfData: generatedPDF.readAsBytesSync(),
-        filePath: generatedPDF.path,
-        defaultPage: 0,
-        enableSwipe: true,
-      ) : Center(child: CircularProgressIndicator()),
+      body: generatedPDF != null
+          ? PDFView(
+              pdfData: generatedPDF.readAsBytesSync(),
+              filePath: generatedPDF.path,
+              defaultPage: 0,
+              enableSwipe: true,
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 }
