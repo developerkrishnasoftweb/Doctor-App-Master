@@ -81,13 +81,12 @@ class _HomeConnectorState extends State<HomeConnector>
   final controller = PageController(
     initialPage: 0,
   );
-  List<Widget> tabsFun(BuildContext context, RecommendationDB recommend) {
+  List<Widget> tabsFun(BuildContext context, RecommendationDB recommend, ) {
     final tabpages = <Widget>[
       Symtoms(
         token: widget.token,
         clinicDocId: widget.clinicDocId,
         pd: pdo,
-        
       ),
       Examination(
         token: widget.token,
@@ -246,7 +245,7 @@ class _HomeConnectorState extends State<HomeConnector>
       onPressed: () {
         patient.updateCompleteStatus(widget.token.guid);
         tokenDB.updateCompleteStatus(widget.token.guid);
-        changeScreen(context, PatientReport(patientId: widget.token.guid));
+        changeScreen(context, PatientReport(patientId: widget.token.guid, token: widget.token));
       },
       child: Icon(Icons.print, color: Colors.white),
     ));

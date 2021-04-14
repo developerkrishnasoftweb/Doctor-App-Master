@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:getcure_doctor/Database/AdviceTable.dart';
 import 'package:getcure_doctor/Database/ExaminationTable.dart';
 import 'package:getcure_doctor/Database/MedicinesTable.dart';
 import 'package:getcure_doctor/Database/Recommendation.dart';
 import 'package:getcure_doctor/Models/PatientsVisitTableModels.dart';
+import 'package:getcure_doctor/Screens/Treatment/Medication.dart';
 import 'package:moor/moor.dart';
 import 'package:moor_ffi/moor_ffi.dart';
 import 'package:path_provider/path_provider.dart';
@@ -226,6 +228,11 @@ class PatientsVisitDB extends _$PatientsVisitDB {
     }
     return query.write(PatientsVisitCompanion(
         medication: Value(Medicationgenerated(data: list))));
+  }
+
+  Future insertAdvice(List<AdviceData> advices, PatientsVisitData data) {
+    var query = update(patientsVisit)..where((tbl) => tbl.id.equals(data.id));
+    return query.write(PatientsVisitCompanion(advices: Value(AdvicesGenerated(advices: advices))));
   }
 
   //Fetch Data

@@ -10,6 +10,7 @@ import 'package:getcure_doctor/Database/SymptomsTable.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/AppConfig/colors.dart';
 import 'package:getcure_doctor/Helpers/Navigation.dart';
+import 'package:getcure_doctor/Models/PatientsVisitTableModels.dart';
 import 'package:getcure_doctor/Widgets/MedicineSearch.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -51,14 +52,14 @@ class _MedicationState extends State<Medication> {
 
   Future<void> getAdvices() async {
     List<Advice> tempAdvice = await adviceProvider.getAllAdvices();
-    List<PatientsVisitData> visitData = await patient.getDiagnosis(widget.token.guid);
+    PatientsVisitData visitData = (await patient.getDiagnosis(widget.token.guid)).first;
     advices.clear();
     tempAdvice.forEach((advice) {
       setState(() {
         advices.add(AllAdvices(advice: advice));
       });
     });
-    visitData.first.diagnosis.data.forEach((diagnosis) {
+    visitData.diagnosis.data.forEach((diagnosis) {
       advices.forEach((advice) {
         if(advice.advice.symptoms.split(", ").contains(diagnosis.title)) {
           setState(() {
@@ -67,11 +68,26 @@ class _MedicationState extends State<Medication> {
         }
       });
     });
+    insertAdvices();
+  }
+
+  insertAdvices() async {
+    PatientsVisitData visitData = (await patient.getDiagnosis(widget.token.guid)).first;
+    List<AdviceData> adviceData = <AdviceData>[];
+    advices.forEach((advice) {
+      if(advice.isSelected) {
+        adviceData.add(AdviceData.fromJson(advice.advice.toJson()));
+      }
+    });
+    patient.insertAdvice(adviceData, visitData);
   }
 
   @override
   Widget build(BuildContext context) {
     final sdb = Provider.of<SymptomsDB>(context);
+    // advices.forEach((element) {
+    //   if(element.isSelected)
+    // });
     return FutureBuilder(
       future: patient.getDiagnosis(widget.token.guid),
       builder:
@@ -527,7 +543,7 @@ class _MedicationState extends State<Medication> {
                                                                       .advice
                                                                       .advice),
                                                                   onChanged:
-                                                                      (value) {
+                                                                      (value) async {
                                                                     stateSetter(
                                                                         () {
                                                                       setState(
@@ -536,6 +552,7 @@ class _MedicationState extends State<Medication> {
                                                                           !advice
                                                                               .isSelected;
                                                                     });
+                                                                    await insertAdvices();
                                                                   });
                                                             }).toList(),
                                                           ),
