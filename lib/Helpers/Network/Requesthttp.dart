@@ -18,6 +18,7 @@ import 'package:getcure_doctor/Models/StateSearchSuggestion.dart';
 import 'package:getcure_doctor/Models/SyncModels/CancelledTokens.dart';
 import 'package:getcure_doctor/Models/TimingAddModel.dart';
 import 'package:getcure_doctor/Models/TokenMode.dart';
+import 'package:getcure_doctor/Models/pdf_config_model.dart';
 import 'package:getcure_doctor/Widgets/DoctorHoliday.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -65,21 +66,20 @@ Future<bool> updatedetails(id, name, age, gender, degree, mob, email, lang,
 Future<bool> updateFees(String clinicDoctorId, opdFees, emergencyFees) async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   String tk = pref.getString('docToken');
-  var response = await http.put(FEESUPDATE+clinicDoctorId , headers: {
+  var response = await http.put(FEESUPDATE + clinicDoctorId, headers: {
     HttpHeaders.authorizationHeader: tk
   }, body: {
-    "consultation_fee": opdFees, 
+    "consultation_fee": opdFees,
     "emergency_fee": emergencyFees,
   });
   print(response.body);
   if (response.statusCode == 200) {
     var res = await http.get(GETDOCTOR, headers: {"Authorization": tk});
-    GetMyProfile getMyProfile =
-        GetMyProfile.fromJson(json.decode(res.body));
+    GetMyProfile getMyProfile = GetMyProfile.fromJson(json.decode(res.body));
     print(getMyProfile.toJson());
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('docDataResponse', json.encode(getMyProfile.data));
-     String docResponse = pref.getString('docDataResponse');
+    String docResponse = pref.getString('docDataResponse');
     DoctorLoginData doctor = DoctorLoginData.fromJson(json.decode(docResponse));
     print(doctor.toJson());
     pref.reload();
@@ -110,7 +110,7 @@ Future<bool> loginDoctor(mobNo, pass) async {
     }
     return false;
   } catch (_) {
-    throw(_);
+    throw (_);
   }
 }
 
@@ -123,6 +123,29 @@ Future<List<StateData>> getStateinfo() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('stateModel', json.encode(stateSearch));
     return stateSearch.data;
+  } else {
+    return null;
+  }
+}
+
+Future<PdfConfig> getPdfConfig() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String docId = pref.getString('docId');
+  if(docId != null) {
+    var response = await http.get(GET_PDF_CONFIG + docId);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      PdfConfig pdfConfig;
+      if (jsonResponse['data'] != null) {
+        if (jsonResponse['data'][0] != null) {
+          pdfConfig = PdfConfig.fromJson(json.decode(response.body)['data'][0]);
+          pref.setString('pdfConfig', json.encode(pdfConfig.toJson()));
+        }
+      }
+      return pdfConfig;
+    } else {
+      return null;
+    }
   } else {
     return null;
   }
@@ -392,7 +415,8 @@ Future<String> bookToken(name, age, mobileno, address, vtype, atype, tno, ttime,
   }
 }
 
-Future<bool>fetchCancelledTokens(String id, DateTime date, TokenDB db, int clinicid) async {
+Future<bool> fetchCancelledTokens(
+    String id, DateTime date, TokenDB db, int clinicid) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('docToken');
   print(id);
@@ -408,8 +432,8 @@ Future<bool>fetchCancelledTokens(String id, DateTime date, TokenDB db, int clini
         CancelledTokens.fromJson(json.decode(response.body));
     print(cancelledTokens.data.length);
     for (var i in cancelledTokens.data) {
-      var tok =
-          await db.getAll(i.patientId,DateTime.parse(i.date + " " + i.time), DateTime.parse(i.bookedAt) );
+      var tok = await db.getAll(i.patientId,
+          DateTime.parse(i.date + " " + i.time), DateTime.parse(i.bookedAt));
 
       print(tok.length);
       if (tok.length != 0) {
@@ -421,26 +445,25 @@ Future<bool>fetchCancelledTokens(String id, DateTime date, TokenDB db, int clini
             i.patientName);
 
         db.insertTask(Token(
-          clinicid: clinicid,
-          name: token.name,
-          guid: token.guid,
-          tokenno: token.tokenno,
-          doctorid: token.doctorid,
-          fees: token.fees,
-          mobileno: token.mobileno,
-          address: token.address,
-          age: token.age,
-          tokentime: token.tokentime,
-          appointmenttype: token.appointmenttype,
-          visittype: token.visittype,
-          bookedtype: token.bookedtype,
-          booked: false,
-          cancelled: true,
-          isOnline: true
-        ));
+            clinicid: clinicid,
+            name: token.name,
+            guid: token.guid,
+            tokenno: token.tokenno,
+            doctorid: token.doctorid,
+            fees: token.fees,
+            mobileno: token.mobileno,
+            address: token.address,
+            age: token.age,
+            tokentime: token.tokentime,
+            appointmenttype: token.appointmenttype,
+            visittype: token.visittype,
+            bookedtype: token.bookedtype,
+            booked: false,
+            cancelled: true,
+            isOnline: true));
       } else {
-        var cancelled =
-            await db.getCancelledTokens(DateTime.parse(i.date + " " + i.time),i.patientId);
+        var cancelled = await db.getCancelledTokens(
+            DateTime.parse(i.date + " " + i.time), i.patientId);
         if (cancelled.length == 0) {
           var tokn = await db.getToken(
               DateTime.parse(i.date + " " + i.time), clinicid);
@@ -465,7 +488,7 @@ Future<bool>fetchCancelledTokens(String id, DateTime date, TokenDB db, int clini
       }
     }
     return true;
-  }else{
+  } else {
     return false;
   }
 }
@@ -596,8 +619,7 @@ Future<void> getTokens(date, TokenDB db, String clinicDocid,
 getDiseaseAnalysis(int docId, DateTime st, DateTime et) async {
   String token = await getToken();
   var response = await http.get(
-    DISANALYSIS + 
-    docId.toString() ,
+    DISANALYSIS + docId.toString(),
     headers: {"Authorization": token},
   );
   print(response.body);
@@ -609,8 +631,7 @@ getDiseaseAnalysis(int docId, DateTime st, DateTime et) async {
 getMedicineAnalysis(int docId, DateTime st, DateTime et) async {
   String token = await getToken();
   var response = await http.get(
-    MEDANALYSIS + 
-    docId.toString(),
+    MEDANALYSIS + docId.toString(),
     headers: {"Authorization": token},
   );
   print(response.body);
@@ -618,18 +639,18 @@ getMedicineAnalysis(int docId, DateTime st, DateTime et) async {
       MedicineAnalysisModel.fromJson(json.decode(response.body));
   return dis;
 }
+
 getFeedBackAnalysis(int docId, DateTime st, DateTime et) async {
   String token = await getToken();
   var response = await http.get(
-    PATIENTFEEDBACK +
-    docId.toString() ,
+    PATIENTFEEDBACK + docId.toString(),
     headers: {"Authorization": token},
   );
   print(response.body);
-  FeedbackAnalysis dis =
-      FeedbackAnalysis.fromJson(json.decode(response.body));
+  FeedbackAnalysis dis = FeedbackAnalysis.fromJson(json.decode(response.body));
   return dis;
 }
+
 Future doctorTimings(SendTime st, clinicdocId) async {
   print(st);
 

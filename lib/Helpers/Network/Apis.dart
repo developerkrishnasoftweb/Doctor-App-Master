@@ -91,6 +91,7 @@ const POSTSYMPTOM = BASEURL +
     "/symptom"; //(post api) (doc token) (body: {doctor_id: number; title: string; type: [Visit Reason, Brief History]}),
 //23)
 const DELETESYM = BASEURL + "/symptom/"; //(+symptomid) (delete api) (doc token)
+const GET_PDF_CONFIG = BASEURL + "/pdfs/";
 
 
 // Data sync

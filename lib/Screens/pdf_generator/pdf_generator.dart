@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,10 +7,13 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:getcure_doctor/Database/PatientsVisitTable.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/AppConfig/colors.dart';
+import 'package:getcure_doctor/Helpers/Network/Requesthttp.dart';
+import 'package:getcure_doctor/Models/pdf_config_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientReport extends StatefulWidget {
   final String patientId;
@@ -27,6 +31,7 @@ class _PatientReportState extends State<PatientReport> {
   pw.Document pdf;
   File generatedPDF;
   int currentPage = 0, totalPage = 0;
+  PdfConfig pdfConfig;
 
   @override
   void initState() {
@@ -37,6 +42,18 @@ class _PatientReportState extends State<PatientReport> {
   }
 
   getPatientData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var configData = pref.getString('pdfConfig');
+    if(configData != null) {
+      setState(() {
+        pdfConfig = PdfConfig.fromJson(jsonDecode(configData));
+      });
+    } else {
+      PdfConfig config = await getPdfConfig();
+      setState(() {
+        pdfConfig = config;
+      });
+    }
     PatientsVisitData data =
         (await patientsVisitDB.getDiagnosis(widget.patientId)).first;
     setState(() {
