@@ -32,6 +32,7 @@ class _PatientReportState extends State<PatientReport> {
   File generatedPDF;
   int currentPage = 0, totalPage = 0;
   PdfConfig pdfConfig;
+  PdfDocument document = PdfDocument();
 
   @override
   void initState() {
@@ -93,135 +94,133 @@ class _PatientReportState extends State<PatientReport> {
                           mainAxisAlignment: pw.MainAxisAlignment.center,
                           crossAxisAlignment: pw.CrossAxisAlignment.center,
                           children: [
-                        pw.Text("AASTHA MULTI SPECIALIST HOSPITAL",
-                            style: pw.TextStyle(
-                                color: PdfColor.fromInt(0xff000000),
-                                fontSize: 23,
-                                fontWeight: pw.FontWeight.bold),
-                            textAlign: pw.TextAlign.center),
-                        pw.Text("Address: Delhi Sharanur Road Baraut",
-                            style: pw.TextStyle(
-                                color: PdfColor.fromInt(0xff000000),
-                                fontSize: 20,
-                                fontWeight: pw.FontWeight.bold)),
-                      ]))
+                            pw.Text("AASTHA MULTI SPECIALIST HOSPITAL",
+                                style: pw.TextStyle(
+                                    color: PdfColor.fromInt(0xff000000),
+                                    fontSize: 23,
+                                    fontWeight: pw.FontWeight.bold),
+                                textAlign: pw.TextAlign.center),
+                            pw.Text("Address: Delhi Sharanur Road Baraut",
+                                style: pw.TextStyle(
+                                    color: PdfColor.fromInt(0xff000000),
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                          ]))
                 ]),
             padding: pw.EdgeInsets.symmetric(vertical: 10)),
         pw.Divider(),
-        header("APPOINTMENT DETAILS"),
         buildDetailRow("Appointment With", "Dr Anil Kumar Jain"),
         buildDetailRow("Appointment Date",
-            "${patientsVisitData.appointmentsTime.toString().split(" ").first}"),
+            "${patientsVisitData?.appointmentsTime?.toString()?.split(" ")?.first ?? ''}"),
         buildDetailRow("Visit Type",
-            "${widget.token.visittype.toUpperCase()}, Token No.- ${widget.token.id}"),
+            "${widget.token?.visittype?.toUpperCase() ?? ''}, Token No.- ${widget.token?.id ?? ''}"),
         pw.SizedBox(height: 10),
-        header("PATIENT DETAILS"),
-        buildDetailRow("Patient's Name:", "${widget.token.name}"),
-        buildDetailRow("Age:", "${widget.token.age} years"),
-        buildDetailRow("Gender:", "${widget.token.gender}"),
-        buildDetailRow("Address:", "${widget.token.address}"),
-        buildDetailRow("GUID:", "${widget.token.guid}"),
+        buildDetailRow("Patient's Name:", "${widget.token?.name ?? ''}"),
+        buildDetailRow("Age:", "${widget.token?.age ?? ''} years"),
+        buildDetailRow("Gender:", "${widget.token?.gender ?? ''}"),
+        buildDetailRow("Address:", "${widget.token?.address ?? ''}"),
+        buildDetailRow("GUID:", "${widget.token?.guid ?? ''}"),
         pw.Divider(),
         pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                header("VITAL SIGNS"),
-                bulletItem("Temp: ${patientsVisitData.temperature}"),
-                bulletItem("Bp: ${patientsVisitData.bp} BPM"),
-                // bulletItem("Diastolic: ${patientsVisitData.} bpm"),
-                bulletItem("Pulse: ${patientsVisitData.pulse} bpm"),
-                bulletItem("Weight: ${patientsVisitData.weight} KG"),
-              ])),
+                    header("VITAL SIGNS"),
+                    bulletItem("Temp: ${patientsVisitData.temperature}"),
+                    bulletItem("Bp: ${patientsVisitData.bp} BPM"),
+                    // bulletItem("Diastolic: ${patientsVisitData.} bpm"),
+                    bulletItem("Pulse: ${patientsVisitData.pulse} bpm"),
+                    bulletItem("Weight: ${patientsVisitData.weight} KG"),
+                  ])),
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                header("ALLERGIES"),
-                for (int i = 0;
-                    i < patientsVisitData.allergies.data.length;
+                    header("ALLERGIES"),
+                    for (int i = 0;
+                    i < (patientsVisitData?.allergies?.data?.length ?? 0);
                     i++)
-                  bulletItem("${patientsVisitData.allergies.data[i].title}"),
-              ]))
+                      bulletItem("${patientsVisitData.allergies.data[i].title}"),
+                  ]))
         ]),
         pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                header("LIFESTYLE"),
-                for (int i = 0;
-                    i < patientsVisitData.lifestyle.data.length;
+                    header("LIFESTYLE"),
+                    for (int i = 0;
+                    i < (patientsVisitData?.lifestyle?.data?.length ?? 0);
                     i++)
-                  bulletItem("${patientsVisitData.lifestyle.data[i].title}"),
-              ])),
+                      bulletItem("${patientsVisitData.lifestyle.data[i].title}"),
+                  ])),
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                header("EXAMINATION"),
-                for (int i = 0;
-                    i < patientsVisitData.examination.data.length;
+                    header("EXAMINATION"),
+                    for (int i = 0;
+                    i < (patientsVisitData?.examination?.data?.length ?? 0);
                     i++)
-                  bulletItem("${patientsVisitData.examination.data[i].title}"),
-              ]))
+                      bulletItem("${patientsVisitData.examination.data[i].title}"),
+                  ]))
         ]),
         pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                header("BRIEF HISTORY"),
-                for (int i = 0;
-                    i < patientsVisitData.briefHistory.data.length;
+                    header("BRIEF HISTORY"),
+                    for (int i = 0;
+                    i < (patientsVisitData?.briefHistory?.data?.length ?? 0);
                     i++)
-                  bulletItem("${patientsVisitData.briefHistory.data[i].title}"),
-              ])),
+                      bulletItem("${patientsVisitData.briefHistory.data[i].title}"),
+                  ])),
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                header("DIAGNOSIS"),
-                for (int i = 0;
-                    i < patientsVisitData.diagnosis.data.length;
+                    header("DIAGNOSIS"),
+                    for (int i = 0;
+                    i < (patientsVisitData?.diagnosis?.data?.length ?? 0);
                     i++)
-                  bulletItem("${patientsVisitData.diagnosis.data[i].title}"),
-              ]))
+                      bulletItem("${patientsVisitData.diagnosis.data[i].title}"),
+                  ]))
         ]),
         pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                header("MEDICATION"),
-                for (int i = 0;
-                    i < patientsVisitData.medication.data.length;
+                    header("MEDICATION"),
+                    for (int i = 0;
+                    i < (patientsVisitData?.medication?.data?.length ?? 0);
                     i++) ...[
-                  // bulletItem("${patientsVisitData.medication.data[i].disease}"),
-                  for (int j = 0;
-                      j < patientsVisitData.medication.data[i].medicines.length;
+                      // bulletItem("${patientsVisitData.medication.data[i].disease}"),
+                      for (int j = 0;
+                      j < (patientsVisitData?.medication?.data[i]?.medicines?.length ?? 0);
                       j++)
-                    bulletItem(
-                        "${patientsVisitData.medication.data[i].medicines[j].title} (${patientsVisitData.medication.data[i].medicines[j].dose} ${patientsVisitData.medication.data[i].medicines[j].unit} ${patientsVisitData.medication.data[i].medicines[j].frequency} ${patientsVisitData.medication.data[i].medicines[j].duration})")
-                ],
-              ])),
+                        bulletItem(
+                            "${patientsVisitData.medication.data[i].medicines[j].title} (${patientsVisitData.medication.data[i].medicines[j].dose} ${patientsVisitData.medication.data[i].medicines[j].unit} ${patientsVisitData.medication.data[i].medicines[j].frequency} ${patientsVisitData.medication.data[i].medicines[j].duration})")
+                    ],
+                  ])),
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                header("MEDICAL ADVICE"),
-                for (int i = 0;
-                    i < patientsVisitData.advices.advices.length;
+                    header("MEDICAL ADVICE"),
+                    for (int i = 0;
+                    i < (patientsVisitData?.advices?.advices?.length ?? 0);
                     i++)
-                  bulletItem("${patientsVisitData.advices.advices[i].advice}"),
-                // bulletItem(
-                //     "Make healthy eating and physical activity part of your daily routine."),
-              ]))
+                      bulletItem("${patientsVisitData.advices.advices[i].advice}"),
+                    // bulletItem(
+                    //     "Make healthy eating and physical activity part of your daily routine."),
+                  ]))
         ]),
         pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           header("VISIT REASON"),
-          for (int i = 0; i < patientsVisitData.visitReason.data.length; i++)
+          for (int i = 0; i < (patientsVisitData?.visitReason?.data?.length ?? 0); i++)
             bulletItem("${patientsVisitData.visitReason.data[i].title}"),
           // bulletItem("Muscle Aches (6 Days)"),
           // bulletItem("High Fever (6 Days)"),
@@ -234,6 +233,7 @@ class _PatientReportState extends State<PatientReport> {
     setState(() {
       generatedPDF = tempPDF;
     });
+
   }
 
   @override

@@ -193,7 +193,7 @@ class _HomeConnectorState extends State<HomeConnector>
                         // SizedBox(
                         //       width: 5,
                         //     ),
-                        Text(widget.token.gender),
+                        Text(widget.token.gender ?? 'MALE'),
                       ],
                     ),
                   ),
@@ -245,6 +245,7 @@ class _HomeConnectorState extends State<HomeConnector>
       onPressed: () {
         patient.updateCompleteStatus(widget.token.guid);
         tokenDB.updateCompleteStatus(widget.token.guid);
+        setState(() {});
         changeScreen(context, PatientReport(patientId: widget.token.guid, token: widget.token));
       },
       child: Icon(Icons.print, color: Colors.white),

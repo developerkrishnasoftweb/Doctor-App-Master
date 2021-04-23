@@ -59,15 +59,17 @@ class _MedicationState extends State<Medication> {
         advices.add(AllAdvices(advice: advice));
       });
     });
-    visitData.diagnosis.data.forEach((diagnosis) {
-      advices.forEach((advice) {
-        if(advice.advice.symptoms.split(", ").contains(diagnosis.title)) {
-          setState(() {
-            advice.isSelected = true;
-          });
-        }
+    if(visitData.diagnosis?.data != null) {
+      visitData.diagnosis.data.forEach((diagnosis) {
+        advices.forEach((advice) {
+          if(advice.advice.symptoms.split(", ").contains(diagnosis.title)) {
+            setState(() {
+              advice.isSelected = true;
+            });
+          }
+        });
       });
-    });
+    }
     insertAdvices();
   }
 
