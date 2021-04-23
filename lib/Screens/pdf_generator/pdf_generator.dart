@@ -45,7 +45,7 @@ class _PatientReportState extends State<PatientReport> {
   getPatientData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var configData = pref.getString('pdfConfig');
-    if(configData != null) {
+    if (configData != null) {
       setState(() {
         pdfConfig = PdfConfig.fromJson(jsonDecode(configData));
       });
@@ -94,134 +94,151 @@ class _PatientReportState extends State<PatientReport> {
                           mainAxisAlignment: pw.MainAxisAlignment.center,
                           crossAxisAlignment: pw.CrossAxisAlignment.center,
                           children: [
-                            pw.Text("AASTHA MULTI SPECIALIST HOSPITAL",
-                                style: pw.TextStyle(
-                                    color: PdfColor.fromInt(0xff000000),
-                                    fontSize: 23,
-                                    fontWeight: pw.FontWeight.bold),
-                                textAlign: pw.TextAlign.center),
-                            pw.Text("Address: Delhi Sharanur Road Baraut",
-                                style: pw.TextStyle(
-                                    color: PdfColor.fromInt(0xff000000),
-                                    fontSize: 20,
-                                    fontWeight: pw.FontWeight.bold)),
-                          ]))
+                        pw.Text("AASTHA MULTI SPECIALIST HOSPITAL",
+                            style: pw.TextStyle(
+                                color: PdfColor.fromInt(0xff000000),
+                                fontSize: 23,
+                                fontWeight: pw.FontWeight.bold),
+                            textAlign: pw.TextAlign.center),
+                        pw.Text("Address: Delhi Sharanur Road Baraut",
+                            style: pw.TextStyle(
+                                color: PdfColor.fromInt(0xff000000),
+                                fontSize: 20,
+                                fontWeight: pw.FontWeight.bold)),
+                      ]))
                 ]),
             padding: pw.EdgeInsets.symmetric(vertical: 10)),
         pw.Divider(),
-        buildDetailRow("Appointment With", "Dr Anil Kumar Jain"),
-        buildDetailRow("Appointment Date",
-            "${patientsVisitData?.appointmentsTime?.toString()?.split(" ")?.first ?? ''}"),
-        buildDetailRow("Visit Type",
-            "${widget.token?.visittype?.toUpperCase() ?? ''}, Token No.- ${widget.token?.id ?? ''}"),
+        buildDetailRow("Appointment With", "Dr Anil Kumar Jain",
+            pdfConfig.appointmentIdLable, pdfConfig.appointmentDateValue),
+        buildDetailRow(
+            "Appointment Date",
+            "${patientsVisitData?.appointmentsTime?.toString()?.split(" ")?.first ?? ''}",
+            pdfConfig.appointmentDateLable,
+            pdfConfig.appointmentDateValue),
+        buildDetailRow(
+            "Visit Type",
+            "${widget.token?.visittype?.toUpperCase() ?? ''}, Token No.- ${widget.token?.id ?? ''}",
+            pdfConfig.visitTypeLabel,
+            pdfConfig.visitTypeValue),
         pw.SizedBox(height: 10),
-        buildDetailRow("Patient's Name:", "${widget.token?.name ?? ''}"),
-        buildDetailRow("Age:", "${widget.token?.age ?? ''} years"),
-        buildDetailRow("Gender:", "${widget.token?.gender ?? ''}"),
-        buildDetailRow("Address:", "${widget.token?.address ?? ''}"),
-        buildDetailRow("GUID:", "${widget.token?.guid ?? ''}"),
+        buildDetailRow("Patient's Name:", "${widget.token?.name ?? ''}",
+            pdfConfig.nameLable, pdfConfig.nameValue),
+        buildDetailRow("Age:", "${widget.token?.age ?? ''} years",
+            pdfConfig.ageLable, pdfConfig.ageValue),
+        buildDetailRow("Gender:", "${widget.token?.gender ?? ''}",
+            pdfConfig.genderLable, pdfConfig.genderValue),
+        buildDetailRow("Address:", "${widget.token?.address ?? ''}",
+            pdfConfig.addressLable, pdfConfig.addressValue),
+        buildDetailRow("GUID:", "${widget.token?.guid ?? ''}",
+            pdfConfig.ghidLable, pdfConfig.ghidValue),
         pw.Divider(),
         pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    header("VITAL SIGNS"),
-                    bulletItem("Temp: ${patientsVisitData.temperature}"),
-                    bulletItem("Bp: ${patientsVisitData.bp} BPM"),
-                    // bulletItem("Diastolic: ${patientsVisitData.} bpm"),
-                    bulletItem("Pulse: ${patientsVisitData.pulse} bpm"),
-                    bulletItem("Weight: ${patientsVisitData.weight} KG"),
-                  ])),
+                header("VITAL SIGNS", pdfConfig.vitalsLable),
+                bulletItem("Temp: ${patientsVisitData?.temperature ?? ''}", pdfConfig.vitalsValue),
+                bulletItem("Bp: ${patientsVisitData?.bp ?? ''} BPM", pdfConfig.vitalsValue),
+                // bulletItem("Diastolic: ${patientsVisitData.} bpm"),
+                bulletItem("Pulse: ${patientsVisitData?.pulse ?? ''} bpm", pdfConfig.vitalsValue),
+                bulletItem("Weight: ${patientsVisitData?.weight ?? ''} KG", pdfConfig.vitalsValue),
+              ])),
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    header("ALLERGIES"),
-                    for (int i = 0;
+                header("ALLERGIES", pdfConfig.allergiesLable),
+                for (int i = 0;
                     i < (patientsVisitData?.allergies?.data?.length ?? 0);
                     i++)
-                      bulletItem("${patientsVisitData.allergies.data[i].title}"),
-                  ]))
+                  bulletItem("${patientsVisitData.allergies.data[i].title}", pdfConfig.allergiesValue),
+              ]))
         ]),
         pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    header("LIFESTYLE"),
-                    for (int i = 0;
+                header("LIFESTYLE", pdfConfig.lifestyleLable),
+                for (int i = 0;
                     i < (patientsVisitData?.lifestyle?.data?.length ?? 0);
                     i++)
-                      bulletItem("${patientsVisitData.lifestyle.data[i].title}"),
-                  ])),
+                  bulletItem("${patientsVisitData.lifestyle.data[i].title}", pdfConfig.lifestyleValue),
+              ])),
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    header("EXAMINATION"),
-                    for (int i = 0;
+                header("EXAMINATION", pdfConfig.examinationLable),
+                for (int i = 0;
                     i < (patientsVisitData?.examination?.data?.length ?? 0);
                     i++)
-                      bulletItem("${patientsVisitData.examination.data[i].title}"),
-                  ]))
+                  bulletItem("${patientsVisitData.examination.data[i].title}", pdfConfig.examinationValue),
+              ]))
         ]),
         pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    header("BRIEF HISTORY"),
-                    for (int i = 0;
+                header("BRIEF HISTORY", pdfConfig.briefHistoryLable),
+                for (int i = 0;
                     i < (patientsVisitData?.briefHistory?.data?.length ?? 0);
                     i++)
-                      bulletItem("${patientsVisitData.briefHistory.data[i].title}"),
-                  ])),
+                  bulletItem("${patientsVisitData.briefHistory.data[i].title}", pdfConfig.briefHistoryValue),
+              ])),
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    header("DIAGNOSIS"),
-                    for (int i = 0;
+                header("DIAGNOSIS", pdfConfig.diagnosisLable),
+                for (int i = 0;
                     i < (patientsVisitData?.diagnosis?.data?.length ?? 0);
                     i++)
-                      bulletItem("${patientsVisitData.diagnosis.data[i].title}"),
-                  ]))
+                  bulletItem("${patientsVisitData.diagnosis.data[i].title}", pdfConfig.diagnosisValue),
+              ]))
         ]),
         pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    header("MEDICATION"),
-                    for (int i = 0;
+                header("MEDICATION", pdfConfig.madicationLable),
+                for (int i = 0;
                     i < (patientsVisitData?.medication?.data?.length ?? 0);
                     i++) ...[
-                      // bulletItem("${patientsVisitData.medication.data[i].disease}"),
-                      for (int j = 0;
-                      j < (patientsVisitData?.medication?.data[i]?.medicines?.length ?? 0);
+                  // bulletItem("${patientsVisitData.medication.data[i].disease}"),
+                  for (int j = 0;
+                      j <
+                          (patientsVisitData
+                                  ?.medication?.data[i]?.medicines?.length ??
+                              0);
                       j++)
-                        bulletItem(
-                            "${patientsVisitData.medication.data[i].medicines[j].title} (${patientsVisitData.medication.data[i].medicines[j].dose} ${patientsVisitData.medication.data[i].medicines[j].unit} ${patientsVisitData.medication.data[i].medicines[j].frequency} ${patientsVisitData.medication.data[i].medicines[j].duration})")
-                    ],
-                  ])),
+                    bulletItem(
+                        "${patientsVisitData.medication.data[i].medicines[j].title} (${patientsVisitData.medication.data[i].medicines[j].dose} ${patientsVisitData.medication.data[i].medicines[j].unit} ${patientsVisitData.medication.data[i].medicines[j].frequency} ${patientsVisitData.medication.data[i].medicines[j].duration})", pdfConfig.madicationValue)
+                ],
+              ])),
           pw.Expanded(
               child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    header("MEDICAL ADVICE"),
-                    for (int i = 0;
+                header("MEDICAL ADVICE", pdfConfig.adviceLable),
+                for (int i = 0;
                     i < (patientsVisitData?.advices?.advices?.length ?? 0);
                     i++)
-                      bulletItem("${patientsVisitData.advices.advices[i].advice}"),
-                    // bulletItem(
-                    //     "Make healthy eating and physical activity part of your daily routine."),
-                  ]))
+                  bulletItem("${patientsVisitData.advices.advices[i].advice}", pdfConfig.adviceValue),
+                // bulletItem(
+                //     "Make healthy eating and physical activity part of your daily routine."),
+              ]))
         ]),
         pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
-          header("VISIT REASON"),
-          for (int i = 0; i < (patientsVisitData?.visitReason?.data?.length ?? 0); i++)
-            bulletItem("${patientsVisitData.visitReason.data[i].title}"),
+          header("VISIT REASON", pdfConfig.visitReasonsLable),
+          for (int i = 0;
+              i < (patientsVisitData?.visitReason?.data?.length ?? 0);
+              i++)
+            bulletItem("${patientsVisitData.visitReason.data[i].title}", pdfConfig.visitReasonsValue),
           // bulletItem("Muscle Aches (6 Days)"),
           // bulletItem("High Fever (6 Days)"),
         ])
@@ -233,7 +250,6 @@ class _PatientReportState extends State<PatientReport> {
     setState(() {
       generatedPDF = tempPDF;
     });
-
   }
 
   @override
@@ -261,43 +277,73 @@ class _PatientReportState extends State<PatientReport> {
     );
   }
 
-  pw.Widget buildDetailRow(String title, String value) {
+  pw.Widget buildDetailRow(String title, String value,
+      TextPdfConfig titleConfig, TextPdfConfig valueConfig) {
     return pw.Padding(
         child: pw.Row(children: [
           pw.Expanded(
-              child: pw.Text("$title",
-                  style: pw.TextStyle(
-                      color: PdfColor.fromInt(0xff000000),
-                      fontSize: 18,
-                      fontWeight: pw.FontWeight.bold))),
+              child: titleConfig.visibility
+                  ? pw.Container(
+                      child: pw.Text("$title",
+                          style: titleConfig.textStyle ??
+                              pw.TextStyle(
+                                  color: titleConfig.color ??
+                                      PdfColor.fromInt(0xff000000),
+                                  fontSize: 18,
+                                  fontWeight: pw.FontWeight.bold)),
+                      margin: titleConfig.margin,
+                      padding: titleConfig.padding)
+                  : pw.SizedBox()),
           pw.Expanded(
-              child: pw.Align(
-            alignment: pw.Alignment.centerRight,
-            child: pw.Text("$value",
-                style: pw.TextStyle(
-                    color: PdfColor.fromInt(0xff000000), fontSize: 18)),
-          )),
+              child: valueConfig.visibility
+                  ? pw.Container(
+                      margin: valueConfig.margin,
+                      padding: valueConfig.padding,
+                      child: pw.Align(
+                        alignment: pw.Alignment.centerRight,
+                        child: pw.Text("$value",
+                            style: valueConfig.textStyle ??
+                                pw.TextStyle(
+                                    color: valueConfig.color ??
+                                        PdfColor.fromInt(0xff000000),
+                                    fontSize: 18)),
+                      ),
+                    )
+                  : pw.SizedBox()),
         ]),
         padding: pw.EdgeInsets.symmetric(vertical: 5));
   }
 
-  pw.Widget header(String header) {
-    return pw.Align(
-        child: pw.Padding(
-            child: pw.Text("$header".toUpperCase(),
-                style: pw.TextStyle(
-                    color: PdfColor.fromInt(0xff000000),
-                    fontSize: 19,
-                    fontWeight: pw.FontWeight.bold)),
-            padding: pw.EdgeInsets.symmetric(vertical: 10)),
-        alignment: pw.Alignment.centerLeft);
+  pw.Widget header(String header, TextPdfConfig headConfig) {
+    return headConfig.visibility
+        ? pw.Align(
+            child: pw.Container(
+                child: pw.Text("$header".toUpperCase(),
+                    style: headConfig.textStyle ??
+                        pw.TextStyle(
+                            color: headConfig.color ??
+                                PdfColor.fromInt(0xff000000),
+                            fontSize: 19,
+                            fontWeight: pw.FontWeight.bold)),
+                margin: headConfig.margin,
+                padding: headConfig.padding ??
+                    pw.EdgeInsets.symmetric(vertical: 10)),
+            alignment: pw.Alignment.centerLeft)
+        : pw.SizedBox();
   }
 
-  pw.Widget bulletItem(String value) {
-    return pw.Text("\u2022 $value",
-        style: pw.TextStyle(color: PdfColor.fromInt(0xff555555), fontSize: 20),
-        softWrap: true,
-        maxLines: 3);
+  pw.Widget bulletItem(String value, TextPdfConfig bulletItemConfig) {
+    return bulletItemConfig.visibility ? pw.Container(
+        margin: bulletItemConfig.margin,
+        padding: bulletItemConfig.padding,
+        child: pw.Text("\u2022 $value",
+            style: bulletItemConfig.textStyle ??
+                pw.TextStyle(
+                    color:
+                        bulletItemConfig.color ?? PdfColor.fromInt(0xff555555),
+                    fontSize: 20),
+            softWrap: true,
+            maxLines: 3)) : pw.SizedBox();
   }
 
   void pageChanged(int page, int total) {

@@ -1,62 +1,115 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class PdfConfig {
-  String id, doctorId, imageURL, somethingText1, somethingText2, somethingText3, createdAt, updatedAt;
-      TextPdfConfig imageLable, nameLable, nameValue, genderLable, genderValue, ageLable, ageValue, addressLable, addressValue, appointmentIdLable, appointmentIdValue, appointmentDateLable, appointmentDateValue, appointmentTimeLable, appointmentTimeValue, ghidLable, ghidValue, tokenNoLable, tokenNoValue, vitalsLable, vitalsValue, briefHistoryLable, briefHistoryValue, visitReasonsLable, visitReasonsValue, allergiesLable, allergiesValue, lifestyleLable, lifestyleValue, examinationLable, examinationValue, noticableLable, noticableValue, diagnosisLable, diagnosisValue, madicationLable, madicationValue, adviceLable, adviceValue, freeVisitDateLable, freeVisitDateValue;
+  String id,
+      doctorId,
+      imageURL,
+      somethingText1,
+      somethingText2,
+      somethingText3,
+      createdAt,
+      updatedAt;
+  TextPdfConfig imageLable,
+      nameLable,
+      nameValue,
+      visitTypeLabel,
+      visitTypeValue,
+      genderLable,
+      genderValue,
+      ageLable,
+      ageValue,
+      addressLable,
+      addressValue,
+      appointmentIdLable,
+      appointmentIdValue,
+      appointmentDateLable,
+      appointmentDateValue,
+      appointmentTimeLable,
+      appointmentTimeValue,
+      ghidLable,
+      ghidValue,
+      tokenNoLable,
+      tokenNoValue,
+      vitalsLable,
+      vitalsValue,
+      briefHistoryLable,
+      briefHistoryValue,
+      visitReasonsLable,
+      visitReasonsValue,
+      allergiesLable,
+      allergiesValue,
+      lifestyleLable,
+      lifestyleValue,
+      examinationLable,
+      examinationValue,
+      noticableLable,
+      noticableValue,
+      diagnosisLable,
+      diagnosisValue,
+      madicationLable,
+      madicationValue,
+      adviceLable,
+      adviceValue,
+      freeVisitDateLable,
+      freeVisitDateValue;
   bool isActive, deletedAt;
 
   PdfConfig(
       {this.id,
-        this.doctorId,
-        this.imageURL,
-        this.imageLable,
-        this.nameLable,
-        this.nameValue,
-        this.genderLable,
-        this.genderValue,
-        this.ageLable,
-        this.ageValue,
-        this.addressLable,
-        this.addressValue,
-        this.appointmentIdLable,
-        this.appointmentIdValue,
-        this.appointmentDateLable,
-        this.appointmentDateValue,
-        this.appointmentTimeLable,
-        this.appointmentTimeValue,
-        this.ghidLable,
-        this.ghidValue,
-        this.tokenNoLable,
-        this.tokenNoValue,
-        this.vitalsLable,
-        this.vitalsValue,
-        this.briefHistoryLable,
-        this.briefHistoryValue,
-        this.visitReasonsLable,
-        this.visitReasonsValue,
-        this.allergiesLable,
-        this.allergiesValue,
-        this.lifestyleLable,
-        this.lifestyleValue,
-        this.examinationLable,
-        this.examinationValue,
-        this.noticableLable,
-        this.noticableValue,
-        this.diagnosisLable,
-        this.diagnosisValue,
-        this.madicationLable,
-        this.madicationValue,
-        this.adviceLable,
-        this.adviceValue,
-        this.freeVisitDateLable,
-        this.freeVisitDateValue,
-        this.somethingText1,
-        this.somethingText2,
-        this.somethingText3,
-        this.isActive,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt});
+      this.doctorId,
+      this.imageURL,
+      this.imageLable,
+      this.nameLable,
+      this.nameValue,
+      this.visitTypeLabel,
+      this.visitTypeValue,
+      this.genderLable,
+      this.genderValue,
+      this.ageLable,
+      this.ageValue,
+      this.addressLable,
+      this.addressValue,
+      this.appointmentIdLable,
+      this.appointmentIdValue,
+      this.appointmentDateLable,
+      this.appointmentDateValue,
+      this.appointmentTimeLable,
+      this.appointmentTimeValue,
+      this.ghidLable,
+      this.ghidValue,
+      this.tokenNoLable,
+      this.tokenNoValue,
+      this.vitalsLable,
+      this.vitalsValue,
+      this.briefHistoryLable,
+      this.briefHistoryValue,
+      this.visitReasonsLable,
+      this.visitReasonsValue,
+      this.allergiesLable,
+      this.allergiesValue,
+      this.lifestyleLable,
+      this.lifestyleValue,
+      this.examinationLable,
+      this.examinationValue,
+      this.noticableLable,
+      this.noticableValue,
+      this.diagnosisLable,
+      this.diagnosisValue,
+      this.madicationLable,
+      this.madicationValue,
+      this.adviceLable,
+      this.adviceValue,
+      this.freeVisitDateLable,
+      this.freeVisitDateValue,
+      this.somethingText1,
+      this.somethingText2,
+      this.somethingText3,
+      this.isActive,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt});
 
   PdfConfig.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toString();
@@ -65,6 +118,8 @@ class PdfConfig {
     imageLable = TextPdfConfig.fromJson(json['imageLable']);
     nameLable = TextPdfConfig.fromJson(json['nameLable']);
     nameValue = TextPdfConfig.fromJson(json['nameValue']);
+    visitTypeLabel = TextPdfConfig.fromJson(json['visitTypeLabel']);
+    visitTypeValue = TextPdfConfig.fromJson(json['visitTypeValue']);
     genderLable = TextPdfConfig.fromJson(json['genderLable']);
     genderValue = TextPdfConfig.fromJson(json['genderValue']);
     ageLable = TextPdfConfig.fromJson(json['ageLable']);
@@ -170,21 +225,31 @@ class PdfConfig {
 }
 
 class TextPdfConfig {
-  final TextStyle textStyle;
-  final EdgeInsetsGeometry margin, padding;
-  final Color color;
+  final pw.TextStyle textStyle;
+  final pw.EdgeInsets margin, padding;
+  final PdfColor color;
   final bool visibility;
 
-  const TextPdfConfig({this.textStyle, this.margin, this.padding, this.color, this.visibility});
+  const TextPdfConfig(
+      {this.textStyle,
+      this.margin = pw.EdgeInsets.zero,
+      this.padding = pw.EdgeInsets.zero,
+      this.color = const PdfColor(0, 0, 0),
+      this.visibility = false});
 
-  factory TextPdfConfig.fromJson(Map<String, dynamic> json) {
+  factory TextPdfConfig.fromJson(String source) {
+    Map<String, dynamic> json = {};
+    if (source != null) {
+      if (source.isNotEmpty) {
+        json = jsonDecode(source);
+      }
+    }
     return TextPdfConfig(
-      color: json['color'],
-      padding: json['padding'],
-      margin: json['margin'],
-      textStyle: json['textStyle'],
-      visibility: json['visibility']
-    );
+        color: json['color'] ?? const PdfColor(0, 0, 0),
+        padding: json['padding'] ?? pw.EdgeInsets.zero,
+        margin: json['margin'] ?? pw.EdgeInsets.zero,
+        textStyle: json['textStyle'],
+        visibility: json['visibility'] ?? true);
   }
 
   Map<String, dynamic> toJson() {
