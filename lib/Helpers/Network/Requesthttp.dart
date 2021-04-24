@@ -136,10 +136,12 @@ Future<PdfConfig> getPdfConfig() async {
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       PdfConfig pdfConfig;
+      print('Config ${jsonResponse['data']}');
       if (jsonResponse['data'] != null) {
         if (jsonResponse['data'][0] != null) {
           pdfConfig = PdfConfig.fromJson(json.decode(response.body)['data'][0]);
-          pref.setString('pdfConfig', json.encode(pdfConfig.toJson()));
+          pref.remove('pdfConfig');
+          // pref.setString('pdfConfig', json.encode(pdfConfig.toJson()));
         }
       }
       return pdfConfig;

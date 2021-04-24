@@ -274,6 +274,7 @@ class _PatientReportState extends State<PatientReport> {
               onPageChanged: pageChanged,
             )
           : Center(child: CircularProgressIndicator()),
+
     );
   }
 
