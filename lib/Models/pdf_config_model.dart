@@ -166,76 +166,19 @@ class PdfConfig {
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['doctor_id'] = this.doctorId;
-    data['imageURL'] = this.imageURL;
-    data['imageLable'] = this.imageLable.toJson();
-    data['nameLable'] = this.nameLable.toJson();
-    data['nameValue'] = this.nameValue.toJson();
-    data['genderLable'] = this.genderLable.toJson();
-    data['genderValue'] = this.genderValue.toJson();
-    data['ageLable'] = this.ageLable.toJson();
-    data['ageValue'] = this.ageValue.toJson();
-    data['addressLable'] = this.addressLable.toJson();
-    data['addressValue'] = this.addressValue.toJson();
-    data['appointmentIdLable'] = this.appointmentIdLable.toJson();
-    data['appointmentIdValue'] = this.appointmentIdValue.toJson();
-    data['appointmentDateLable'] = this.appointmentDateLable.toJson();
-    data['appointmentDateValue'] = this.appointmentDateValue.toJson();
-    data['appointmentTimeLable'] = this.appointmentTimeLable.toJson();
-    data['appointmentTimeValue'] = this.appointmentTimeValue.toJson();
-    data['ghidLable'] = this.ghidLable.toJson();
-    data['ghidValue'] = this.ghidValue.toJson();
-    data['tokenNoLable'] = this.tokenNoLable.toJson();
-    data['tokenNoValue'] = this.tokenNoValue.toJson();
-    data['vitalsLable'] = this.vitalsLable.toJson();
-    data['vitalsValue'] = this.vitalsValue.toJson();
-    data['briefHistoryLable'] = this.briefHistoryLable.toJson();
-    data['briefHistoryValue'] = this.briefHistoryValue.toJson();
-    data['visitReasonsLable'] = this.visitReasonsLable.toJson();
-    data['visitReasonsValue'] = this.visitReasonsValue.toJson();
-    data['allergiesLable'] = this.allergiesLable.toJson();
-    data['allergiesValue'] = this.allergiesValue.toJson();
-    data['lifestyleLable'] = this.lifestyleLable.toJson();
-    data['lifestyleValue'] = this.lifestyleValue.toJson();
-    data['examinationLable'] = this.examinationLable.toJson();
-    data['examinationValue'] = this.examinationValue.toJson();
-    data['noticableLable'] = this.noticableLable.toJson();
-    data['noticableValue'] = this.noticableValue.toJson();
-    data['diagnosisLable'] = this.diagnosisLable.toJson();
-    data['diagnosisValue'] = this.diagnosisValue.toJson();
-    data['madicationLable'] = this.madicationLable.toJson();
-    data['madicationValue'] = this.madicationValue.toJson();
-    data['adviceLable'] = this.adviceLable.toJson();
-    data['adviceValue'] = this.adviceValue.toJson();
-    data['freeVisitDateLable'] = this.freeVisitDateLable.toJson();
-    data['freeVisitDateValue'] = this.freeVisitDateValue.toJson();
-    data['somethingText1'] = this.somethingText1;
-    data['somethingText2'] = this.somethingText2;
-    data['somethingText3'] = this.somethingText3;
-    data['is_active'] = this.isActive;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    return data;
-  }
 }
 
 class TextPdfConfig {
-  final pw.TextStyle textStyle;
   final pw.EdgeInsets margin, padding;
   final PdfColor color;
   final bool visibility;
 
   const TextPdfConfig(
-      {this.textStyle,
+      {
       this.margin = pw.EdgeInsets.zero,
       this.padding = pw.EdgeInsets.zero,
       this.color = const PdfColor(0, 0, 0),
-      this.visibility = false});
+      this.visibility = true});
 
   factory TextPdfConfig.fromJson(String source) {
     Map<String, dynamic> json = {};
@@ -245,20 +188,41 @@ class TextPdfConfig {
       }
     }
     return TextPdfConfig(
-        color: json['color'] ?? const PdfColor(0, 0, 0),
-        padding: json['padding'] ?? pw.EdgeInsets.zero,
-        margin: json['margin'] ?? pw.EdgeInsets.zero,
-        textStyle: json['textStyle'],
+        color:  colorByCode(json['color']),
+        padding: edgeInsets(json['padding']),
+        margin: edgeInsets(json['margin']),
         visibility: json['visibility'] ?? true);
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'color': this.color,
-      'padding': this.padding,
-      'margin': this.margin,
-      'textStyle': this.textStyle,
-      'visibility': this.visibility
-    };
+
+}
+
+PdfColor colorByCode (data) {
+  List<double> colorCode = [];
+  if(data != null) {
+    data.forEach((v) {
+      colorCode.add(v);
+    });
   }
+  if(colorCode != null) {
+    if(colorCode.length != 4) {
+      colorCode = [0.0, 0.0, 0.0, 0.0];
+    }
+  }
+  return PdfColor(colorCode[0], colorCode[1], colorCode[2], colorCode[3]);
+}
+
+pw.EdgeInsets edgeInsets (data) {
+  List<double> values = [];
+  if(data != null) {
+    data.forEach((v) {
+      values.add(v);
+    });
+  }
+  if(values != null) {
+    if(values.length != 4) {
+      values = [0.0, 0.0, 0.0, 0.0];
+    }
+  }
+  return pw.EdgeInsets.fromLTRB(values[0], values[1], values[2], values[3]);
 }

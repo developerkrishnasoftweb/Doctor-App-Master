@@ -130,26 +130,34 @@ Future<List<StateData>> getStateinfo() async {
 
 Future<PdfConfig> getPdfConfig() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
-  String docId = pref.getString('docId');
-  if(docId != null) {
-    var response = await http.get(GET_PDF_CONFIG + docId);
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      PdfConfig pdfConfig;
-      print('Config ${jsonResponse['data']}');
-      if (jsonResponse['data'] != null) {
-        if (jsonResponse['data'][0] != null) {
-          pdfConfig = PdfConfig.fromJson(json.decode(response.body)['data'][0]);
-          pref.remove('pdfConfig');
-          // pref.setString('pdfConfig', json.encode(pdfConfig.toJson()));
+  try {
+    String docId = pref.getString('docId');
+    if(docId != null) {
+      var response = await http.get(GET_PDF_CONFIG + docId);
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        PdfConfig pdfConfig;
+        if (jsonResponse['data'] != null) {
+          if (jsonResponse['data'][0] != null) {
+            pdfConfig = PdfConfig.fromJson(jsonResponse['data'][0]);
+            pref.setString('pdfConfig', json.encode(jsonResponse['data'][0]));
+          }
         }
+        return pdfConfig;
+      } else {
+        return null;
       }
-      return pdfConfig;
     } else {
       return null;
     }
-  } else {
-    return null;
+  } catch(e) {
+    throw('Error in config $e');
+    var configData = pref.getString('pdfConfig');
+    if(configData != null) {
+      return PdfConfig.fromJson(jsonDecode(configData));
+    } else {
+      return null;
+    }
   }
 }
 
