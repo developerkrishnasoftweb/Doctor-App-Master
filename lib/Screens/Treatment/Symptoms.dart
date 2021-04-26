@@ -228,7 +228,6 @@ class _SymtomsState extends State<Symtoms> {
                             );
                           },
                         );
-
                         break;
                       // default:
                       //   return Text('NO Data');

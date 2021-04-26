@@ -47,9 +47,8 @@ class _PatientReportState extends State<PatientReport> {
     setState(() {
       pdfConfig = config;
     });
-    print('Name value ${pdfConfig.nameValue.color}');
     PatientsVisitData data =
-        (await patientsVisitDB.getDiagnosis(widget.patientId)).first;
+        (await patientsVisitDB.checkPatient(widget.patientId)).last;
     setState(() {
       patientsVisitData = data;
     });

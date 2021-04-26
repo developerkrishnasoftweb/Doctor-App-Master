@@ -15,13 +15,15 @@ import 'package:provider/provider.dart';
 import '../../Helpers/AppConfig/colors.dart';
 import 'Medication.dart';
 
-
 class HomeConnector extends StatefulWidget {
   final Token token;
   final ScrollController pageController;
   final int clinicDocId;
-  const HomeConnector({Key key, this.token, this.pageController, this.clinicDocId})
+
+  const HomeConnector(
+      {Key key, this.token, this.pageController, this.clinicDocId})
       : super(key: key);
+
   @override
   _HomeConnectorState createState() => _HomeConnectorState();
 }
@@ -34,24 +36,26 @@ class _HomeConnectorState extends State<HomeConnector>
   @override
   void initState() {
     super.initState();
-    
+
     setState(() {
       tabController = TabController(length: 4, vsync: this);
-      
-    tabController.animation
-      ..addListener(() {
-        setState(() {
-          _currentIndex = (tabController.animation.value).round(); //_tabController.animation.value returns double
-          getDataPd(pq);
-          getExamCount(pq);
-        });
-      });
-    });
 
+      tabController.animation
+        ..addListener(() {
+          setState(() {
+            _currentIndex = (tabController.animation.value)
+                .round(); //_tabController.animation.value returns double
+            getDataPd(pq);
+            getExamCount(pq);
+          });
+        });
+    });
   }
+
   int examcount = 0;
+
   void getExamCount(PatientsVisitDB patient) async {
-    final patient = Provider.of<PatientsVisitDB>(context,listen: false);
+    final patient = Provider.of<PatientsVisitDB>(context, listen: false);
     List<PatientsVisitData> testsTotal =
         await patient.getBriefHistoryFuture(widget.token.guid);
     if (testsTotal.last.examination == null) {
@@ -59,17 +63,14 @@ class _HomeConnectorState extends State<HomeConnector>
     } else {
       examcount = 0;
       for (var x in testsTotal.last.examination.data) {
-        if(x.status.compareTo("Completed")!=0){
+        if (x.status.compareTo("Completed") != 0) {
           examcount += x.parameters.length;
         }
-        
       }
     }
     print("Exam call hua");
     print(examcount);
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -78,10 +79,15 @@ class _HomeConnectorState extends State<HomeConnector>
     controller.dispose();
     super.dispose();
   }
+
   final controller = PageController(
     initialPage: 0,
   );
-  List<Widget> tabsFun(BuildContext context, RecommendationDB recommend, ) {
+
+  List<Widget> tabsFun(
+    BuildContext context,
+    RecommendationDB recommend,
+  ) {
     final tabpages = <Widget>[
       Symtoms(
         token: widget.token,
@@ -96,7 +102,7 @@ class _HomeConnectorState extends State<HomeConnector>
         token: widget.token,
         clinicDocId: widget.clinicDocId,
       ),
-      Medication(token: widget.token,recommend: recommend)
+      Medication(token: widget.token, recommend: recommend)
     ];
     return tabpages;
   }
@@ -116,14 +122,15 @@ class _HomeConnectorState extends State<HomeConnector>
     )
   ];
   var scrollDirection = Axis.horizontal;
-  
+
   List<PatientsVisitData> pdo = [];
+
   Future<List<PatientsVisitData>> getDataPd(PatientsVisitDB patient) async {
     print("General Details");
     List<PatientsVisitData> pd = await patient.checkPatient(widget.token.guid);
     print(pd);
     setState(() {
-      pdo=pd;
+      pdo = pd;
     });
     return pd;
   }
@@ -131,15 +138,24 @@ class _HomeConnectorState extends State<HomeConnector>
   Widget getDesigns(PatientsVisitDB patient) {
     switch (_currentIndex) {
       case 0:
-        return GeneralDetails(token: widget.token, patientVisit: patient, temp: "109");
+        return GeneralDetails(
+            token: widget.token, patientVisit: patient, temp: "109");
       case 1:
-        return ExamNotice(token: widget.token, patientVisit: patient,pd:pdo,);
+        return ExamNotice(
+          token: widget.token,
+          patientVisit: patient,
+          pd: pdo,
+        );
       case 2:
-        return DiagnosisNotice(token: widget.token, patientVisit: patient,pd: pdo, );
-      default: 
+        return DiagnosisNotice(
+          token: widget.token,
+          patientVisit: patient,
+          pd: pdo,
+        );
+      default:
         return Container();
     }
-  } 
+  }
 
   PatientsVisitDB pq;
 
@@ -150,109 +166,108 @@ class _HomeConnectorState extends State<HomeConnector>
     final tokenDB = Provider.of<TokenDB>(context);
     final recommend = Provider.of<RecommendationDB>(context);
     setState(() {
-      pq=patient;
+      pq = patient;
     });
     return Scaffold(
-      body: PageView(
-      scrollDirection: scrollDirection,
-      children: <Widget>[
-        SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Stack(
+        body: PageView(
+          scrollDirection: scrollDirection,
+          children: <Widget>[
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    color: grey300,
-                    height: 50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Row(
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        color: grey300,
+                        height: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Container(
-                              height: 30,
-                              width: 30,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: green),
-                              child: Center(
-                                child: Text(
-                                  widget.token.tokenno.toString(),
-                                  style: TextStyle(color: white),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: green),
+                                  child: Center(
+                                    child: Text(
+                                      widget.token.tokenno.toString(),
+                                      style: TextStyle(color: white),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(widget.token.name),
+                              ],
                             ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(widget.token.name),
+                            Text(widget.token.age.toString() + " years"),
+                            // SizedBox(
+                            //       width: 5,
+                            //     ),
+                            Text(widget.token.gender ?? 'MALE'),
                           ],
                         ),
-                        Text(widget.token.age.toString() + " years"),
-                        // SizedBox(
-                        //       width: 5,
-                        //     ),
-                        Text(widget.token.gender ?? 'MALE'),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                                    
+                  getDesigns(patient),
+                  TabBar(
+                    onTap: (value) {
+                      setState(() {
+                        getDesigns(patient);
+                        getDataPd(patient);
+                        getExamCount(patient);
+                      });
+                    },
+                    controller: tabController,
+                    tabs: tabs,
+                    labelColor: black,
+                    isScrollable: true,
+                    physics: AlwaysScrollableScrollPhysics(),
+                    dragStartBehavior: DragStartBehavior.down,
+                  ),
+                  DefaultTabController(
+                      initialIndex: 0,
+                      length: tabs.length,
+                      // initialIndex: 0,
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Flexible(
+                              fit: FlexFit.loose,
+                              child: TabBarView(
+                                  controller: tabController,
+                                  physics: ScrollPhysics(),
+                                  children: tabsFun(context, recommend)),
+                            )
+                          ],
+                        ),
+                      ))
                 ],
-              ),      
-              getDesigns(patient),   
-                   
-              TabBar(
-
-                onTap: (value) {
-                  setState(() {
-                    getDesigns(patient);
-                    getDataPd(patient);
-                    getExamCount(patient);
-                  });
-                },
-                controller: tabController,
-                tabs: tabs,
-                labelColor: black,
-                isScrollable: true,
-                physics: AlwaysScrollableScrollPhysics(),
-                dragStartBehavior: DragStartBehavior.down,
               ),
-              DefaultTabController(
-                initialIndex: 0,
-                  length: tabs.length,
-                  // initialIndex: 0,
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.7,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Flexible(
-                          fit: FlexFit.loose,
-                          child: TabBarView(
-                              controller: tabController,
-                              physics: ScrollPhysics(),
-                              children: tabsFun(context, recommend)),
-                        )
-                      ],
-                    ),
-                  ))
-            ],
-          ),
-        )
-      ],
-    ), floatingActionButton: FloatingActionButton(
-      onPressed: () {
-        patient.updateCompleteStatus(widget.token.guid);
-        tokenDB.updateCompleteStatus(widget.token.guid);
-        setState(() {});
-        changeScreen(context, PatientReport(patientId: widget.token.guid, token: widget.token));
-      },
-      child: Icon(Icons.print, color: Colors.white),
-    ));
+            )
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            patient.updateCompleteStatus(widget.token.guid);
+            tokenDB.updateCompleteStatus(widget.token.guid);
+            setState(() {});
+            // print('Diagnosis data');
+            // print(data.diagnosis.data);
+            changeScreen(context, PatientReport(patientId: widget.token.guid, token: widget.token));
+          },
+          child: Icon(Icons.print, color: Colors.white),
+        ));
   }
 }
-
 
 /*
 final upperDesign3 = Container(

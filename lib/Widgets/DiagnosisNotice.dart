@@ -50,7 +50,7 @@ class _DiagnosisNoticeState extends State<DiagnosisNotice> {
                   children: [
                     Center(
                       child: Text(
-                        'Noticable',
+                        'Noticeable',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
