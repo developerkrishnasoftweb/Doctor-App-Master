@@ -260,8 +260,6 @@ class _HomeConnectorState extends State<HomeConnector>
             patient.updateCompleteStatus(widget.token.guid);
             tokenDB.updateCompleteStatus(widget.token.guid);
             setState(() {});
-            // print('Diagnosis data');
-            // print(data.diagnosis.data);
             changeScreen(context, PatientReport(patientId: widget.token.guid, token: widget.token));
           },
           child: Icon(Icons.print, color: Colors.white),
