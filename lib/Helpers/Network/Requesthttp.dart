@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:getcure_doctor/Database/AdviceTable.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Models/Appointments/BriefHistoryMode.dart';
 import 'package:getcure_doctor/Models/Appointments/DoctorAppointmentHistoryModel.dart';
@@ -132,7 +133,7 @@ Future<PdfConfig> getPdfConfig() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   try {
     String docId = pref.getString('docId');
-    if(docId != null) {
+    if (docId != null) {
       var response = await http.get(GET_PDF_CONFIG + docId);
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
@@ -150,10 +151,10 @@ Future<PdfConfig> getPdfConfig() async {
     } else {
       return null;
     }
-  } catch(e) {
-    throw('Error in config $e');
+  } catch (e) {
+    throw ('Error in config $e');
     var configData = pref.getString('pdfConfig');
-    if(configData != null) {
+    if (configData != null) {
       return PdfConfig.fromJson(jsonDecode(configData));
     } else {
       return null;
@@ -253,6 +254,59 @@ Future<List<String>> getBriefHistories() async {
   // if (data.length > 0) {
   return data;
   // }
+}
+
+void getAdvices(BuildContext context) async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  final adviceProvider = Provider.of<AdvicesDatabase>(context, listen: false);
+  String token = pref.getString('docToken');
+  String docId = pref.getString('docId');
+  if (token != null && docId != null) {
+    var response = await http.get(GET_ADVICES + '/$docId');
+    final jsonResponse = jsonDecode(response.body);
+    if (jsonResponse['data'] != null) {
+      jsonResponse['data'].forEach((advice) async {
+        String symptoms = '';
+        advice['symptoms'].forEach((v) async {
+          symptoms += "$v, ";
+        });
+        symptoms = symptoms.substring(0, symptoms.length - 2);
+        await adviceProvider.truncate();
+        await adviceProvider
+            .insertAdvice(Advice(advice: advice['title'], symptoms: symptoms));
+      });
+    }
+  }
+}
+
+Future addAdvices(String title, String symptoms) async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String token = pref.getString('docToken');
+  String docId = pref.getString('docId');
+  if (token != null && docId != null) {
+    print(
+        {"title": title, "symptoms": symptoms.split(", "), "doctor_id": docId});
+    var response = await http.post(GET_ADVICES,
+        headers: {"Authorization": token, "Content-Type": "application/json"},
+        body: jsonEncode({
+          "title": title,
+          "symptoms": symptoms.split(", "),
+          "doctor_id": docId
+        }));
+    print("Token : $token");
+    print(response.body);
+    return true;
+    // final jsonResponse = jsonDecode(response.body);
+    // if (jsonResponse['data'] != null) {
+    //   jsonResponse['data'].forEach((advice) async {
+    //     String symptoms = '';
+    //     advice['symptoms'].forEach((v) async {
+    //       symptoms += "$v, ";
+    //     });
+    //     symptoms = symptoms.substring(0, symptoms.length - 2);
+    //   });
+    // }
+  }
 }
 
 // Future<List<String>> getVisitReason() async {

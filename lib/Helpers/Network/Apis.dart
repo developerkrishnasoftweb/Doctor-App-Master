@@ -84,6 +84,9 @@ const DELETEEXAMINATION =
 
 //20)
 const BRIEFHISTORY = BASEURL + "/brief-histories"; //(get api) (doc token),
+
+
+const GET_ADVICES = BASEURL + "/advices"; //(get api) (doc token),
 //21)
 const VISITREASON = BASEURL + "/visit-reasons"; //(get api) (doc token),
 //22)

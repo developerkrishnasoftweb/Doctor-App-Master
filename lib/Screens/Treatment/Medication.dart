@@ -10,6 +10,7 @@ import 'package:getcure_doctor/Database/SymptomsTable.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/AppConfig/colors.dart';
 import 'package:getcure_doctor/Helpers/Navigation.dart';
+import 'package:getcure_doctor/Helpers/Network/Requesthttp.dart';
 import 'package:getcure_doctor/Models/PatientsVisitTableModels.dart';
 import 'package:getcure_doctor/Widgets/MedicineSearch.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,7 @@ class _MedicationState extends State<Medication> {
 
   Future<void> getAdvices() async {
     List<Advice> tempAdvice = await adviceProvider.getAllAdvices();
-    PatientsVisitData visitData = (await patient.getDiagnosis(widget.token.guid)).first;
+    PatientsVisitData visitData = (await patient.getDiagnosis(widget.token.guid)).last;
     advices.clear();
     tempAdvice.forEach((advice) {
       setState(() {
@@ -645,6 +646,8 @@ class _MedicationState extends State<Medication> {
                                                                                   selectedSymptoms = selectedSymptoms.substring(0, selectedSymptoms.length - 2);
                                                                                 });
                                                                                 await adviceProvider.insertAdvice(Advice(advice: advice, symptoms: selectedSymptoms));
+                                                                                print("Method called");
+                                                                                await addAdvices(advice, selectedSymptoms);
                                                                                 await getAdvices();
                                                                                 stateSetter(() {});
                                                                                 Navigator.pop(context);

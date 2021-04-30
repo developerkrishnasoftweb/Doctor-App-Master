@@ -4,6 +4,7 @@ import 'package:getcure_doctor/Database/PatientsVisitTable.dart';
 import 'package:getcure_doctor/Database/Recommendation.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/Navigation.dart';
+import 'package:getcure_doctor/Helpers/Network/Requesthttp.dart';
 import 'package:getcure_doctor/Screens/Treatment/Diagnosis.dart';
 import 'package:getcure_doctor/Screens/Treatment/Examination.dart';
 import 'package:getcure_doctor/Screens/Treatment/Symptoms.dart';

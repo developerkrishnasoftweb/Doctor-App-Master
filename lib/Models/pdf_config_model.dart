@@ -172,13 +172,14 @@ class TextPdfConfig {
   final pw.EdgeInsets margin, padding;
   final PdfColor color;
   final bool visibility;
+  final double fontSize;
 
   const TextPdfConfig(
-      {
-      this.margin = pw.EdgeInsets.zero,
+      {this.margin = pw.EdgeInsets.zero,
       this.padding = pw.EdgeInsets.zero,
       this.color = const PdfColor(0, 0, 0),
-      this.visibility = true});
+      this.visibility = true,
+      this.fontSize = 18});
 
   factory TextPdfConfig.fromJson(String source) {
     Map<String, dynamic> json = {};
@@ -188,39 +189,38 @@ class TextPdfConfig {
       }
     }
     return TextPdfConfig(
-        color:  colorByCode(json['color']),
+        color: colorByCode(json['color']),
         padding: edgeInsets(json['padding']),
         margin: edgeInsets(json['margin']),
-        visibility: json['visibility'] ?? true);
+        visibility: json['visibility'] ?? true,
+        fontSize: json['fontSize'] ?? 18);
   }
-
-
 }
 
-PdfColor colorByCode (data) {
+PdfColor colorByCode(data) {
   List<double> colorCode = [];
-  if(data != null) {
+  if (data != null) {
     data.forEach((v) {
       colorCode.add(v);
     });
   }
-  if(colorCode != null) {
-    if(colorCode.length != 4) {
+  if (colorCode != null) {
+    if (colorCode.length != 4) {
       colorCode = [0.0, 0.0, 0.0, 0.0];
     }
   }
   return PdfColor(colorCode[0], colorCode[1], colorCode[2], colorCode[3]);
 }
 
-pw.EdgeInsets edgeInsets (data) {
+pw.EdgeInsets edgeInsets(data) {
   List<double> values = [];
-  if(data != null) {
+  if (data != null) {
     data.forEach((v) {
       values.add(v);
     });
   }
-  if(values != null) {
-    if(values.length != 4) {
+  if (values != null) {
+    if (values.length != 4) {
       values = [0.0, 0.0, 0.0, 0.0];
     }
   }

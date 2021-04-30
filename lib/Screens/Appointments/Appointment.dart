@@ -299,6 +299,7 @@ class _AppointmentsState extends State<Appointments> {
               setState(() {
                 _isInAsyncCall=true;
               });
+              getAdvices(context);
               syncPatient(p, widget.database, pv).then((res) {
                 if (res) {
                   syncPatientVisit(pv).then((pvr) async {
