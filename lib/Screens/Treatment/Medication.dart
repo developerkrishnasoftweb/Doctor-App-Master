@@ -53,17 +53,18 @@ class _MedicationState extends State<Medication> {
 
   Future<void> getAdvices() async {
     List<Advice> tempAdvice = await adviceProvider.getAllAdvices();
-    PatientsVisitData visitData = (await patient.getDiagnosis(widget.token.guid)).last;
+    PatientsVisitData visitData =
+        (await patient.getDiagnosis(widget.token.guid)).last;
     advices.clear();
     tempAdvice.forEach((advice) {
       setState(() {
         advices.add(AllAdvices(advice: advice));
       });
     });
-    if(visitData.diagnosis?.data != null) {
+    if (visitData.diagnosis?.data != null) {
       visitData.diagnosis.data.forEach((diagnosis) {
         advices.forEach((advice) {
-          if(advice.advice.symptoms.split(", ").contains(diagnosis.title)) {
+          if (advice.advice.symptoms.split(", ").contains(diagnosis.title)) {
             setState(() {
               advice.isSelected = true;
             });
@@ -75,10 +76,11 @@ class _MedicationState extends State<Medication> {
   }
 
   insertAdvices() async {
-    PatientsVisitData visitData = (await patient.getDiagnosis(widget.token.guid)).first;
+    PatientsVisitData visitData =
+        (await patient.getDiagnosis(widget.token.guid)).first;
     List<AdviceData> adviceData = <AdviceData>[];
     advices.forEach((advice) {
-      if(advice.isSelected) {
+      if (advice.isSelected) {
         adviceData.add(AdviceData.fromJson(advice.advice.toJson()));
       }
     });
