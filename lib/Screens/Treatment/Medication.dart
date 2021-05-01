@@ -77,7 +77,7 @@ class _MedicationState extends State<Medication> {
 
   insertAdvices() async {
     PatientsVisitData visitData =
-        (await patient.getDiagnosis(widget.token.guid)).first;
+        (await patient.checkPatient(widget.token.guid)).last;
     List<AdviceData> adviceData = <AdviceData>[];
     advices.forEach((advice) {
       if (advice.isSelected) {
@@ -648,7 +648,6 @@ class _MedicationState extends State<Medication> {
                                                                                   selectedSymptoms = selectedSymptoms.substring(0, selectedSymptoms.length - 2);
                                                                                 });
                                                                                 await adviceProvider.insertAdvice(Advice(advice: advice, symptoms: selectedSymptoms));
-                                                                                print("Method called");
                                                                                 await addAdvices(advice, selectedSymptoms);
                                                                                 await getAdvices();
                                                                                 stateSetter(() {});

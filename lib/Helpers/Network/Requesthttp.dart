@@ -281,7 +281,7 @@ void getAdvices(BuildContext context) async {
 
 Future addAdvices(String title, String symptoms) async {
   SharedPreferences pref = await SharedPreferences.getInstance();
-  String token = pref.getString('docToken');
+  String token = pref.getString('signtoken');
   String docId = pref.getString('docId');
   if (token != null && docId != null) {
     print(
