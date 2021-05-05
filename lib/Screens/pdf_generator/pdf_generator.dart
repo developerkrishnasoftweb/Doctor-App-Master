@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -81,12 +83,31 @@ class _PatientReportState extends State<PatientReport> {
           .load("fonts${Platform.pathSeparator}OpenSans-BoldItalic.ttf")),
     );
     pdf = pw.Document(theme: myTheme);
-    final image = pw.MemoryImage(
-        (await rootBundle.load('images/getcure logo.png'))
-            .buffer
-            .asUint8List());
+    final rootImage = await rootBundle.load('images/getcure logo.png');
+    final image = pw.MemoryImage((rootImage).buffer.asUint8List());
+
     pdf.addPage(pw.MultiPage(
-        pageFormat: selectedPageFormat,
+        // theme: pw.ThemeData(
+        //   softWrap: true
+        // ),
+        pageTheme: pw.PageTheme(
+            pageFormat: selectedPageFormat,
+            buildBackground: (context) {
+              return pw.FullPage(
+                ignoreMargins: true,
+                child: pw.CustomPaint(
+                  size: PdfPoint(
+                      selectedPageFormat.width, selectedPageFormat.height),
+                  painter: (PdfGraphics canvas, PdfPoint size) {
+                    canvas.drawImage(
+                        PdfImage.file(PdfDocument(),
+                            bytes: rootImage.buffer.asUint8List()),
+                        10,
+                        20);
+                  },
+                ),
+              );
+            }),
         build: (context) {
           return [
             pw.SizedBox(width: double.infinity),
