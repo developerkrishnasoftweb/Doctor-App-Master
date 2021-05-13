@@ -19,8 +19,9 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 class Medication extends StatefulWidget {
   final Token token;
   final RecommendationDB recommend;
+  final Function(List<AdviceData>) getAdvices;
 
-  Medication({Key key, this.token, this.recommend}) : super(key: key);
+  Medication({Key key, this.token, this.recommend, this.getAdvices}) : super(key: key);
 
   @override
   _MedicationState createState() => _MedicationState();
@@ -84,7 +85,8 @@ class _MedicationState extends State<Medication> {
         adviceData.add(AdviceData.fromJson(advice.advice.toJson()));
       }
     });
-    patient.insertAdvice(adviceData, visitData);
+    await patient.insertAdvice(adviceData, visitData);
+    widget.getAdvices(adviceData);
   }
 
   @override

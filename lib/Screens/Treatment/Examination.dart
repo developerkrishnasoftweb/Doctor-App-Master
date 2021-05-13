@@ -16,9 +16,6 @@ class Examination extends StatefulWidget {
 }
 
 class _ExaminationState extends State<Examination> {
-  hello() {
-    print("hajcjkdskdsmnnmncbzxnnnnnncnzcnzcxczxbn");
-  }
 
   int examcount;
   getExamCount(PatientsVisitDB patient) async {

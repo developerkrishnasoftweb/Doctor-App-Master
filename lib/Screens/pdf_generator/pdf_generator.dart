@@ -11,6 +11,7 @@ import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/AppConfig/colors.dart';
 import 'package:getcure_doctor/Helpers/Network/Requesthttp.dart';
 import 'package:getcure_doctor/Models/DoctorLogin.dart';
+import 'package:getcure_doctor/Models/PatientsVisitTableModels.dart';
 import 'package:getcure_doctor/Models/pdf_config_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
@@ -23,8 +24,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PatientReport extends StatefulWidget {
   final String patientId;
   final Token token;
+  final List<AdviceData> advices;
 
-  const PatientReport({Key key, this.patientId, this.token}) : super(key: key);
+  const PatientReport(
+      {Key key, this.patientId, this.token, this.advices = const []})
+      : super(key: key);
 
   @override
   _PatientReportState createState() => _PatientReportState();
@@ -310,15 +314,11 @@ class _PatientReportState extends State<PatientReport> {
                         ],
 
                         // Medial Advice
-                        /* header("MEDICAL ADVICE", pdfConfig?.adviceLable),
-                        for (int i = 0;
-                            i <
-                                (patientsVisitData?.advices?.advices?.length ??
-                                    0);
-                            i++)
+                        header("MEDICAL ADVICE", pdfConfig?.adviceLable),
+                        for (int i = 0; i < widget.advices.length; i++)
                           bulletItem(
-                              "${patientsVisitData.advices.advices[i].advice}",
-                              pdfConfig?.adviceValue), */
+                              "${widget.advices[i].advice}",
+                              pdfConfig?.adviceValue),
                       ])),
                 ]),
           ];

@@ -5,6 +5,7 @@ import 'package:getcure_doctor/Database/Recommendation.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/Navigation.dart';
 import 'package:getcure_doctor/Helpers/Network/Requesthttp.dart';
+import 'package:getcure_doctor/Models/PatientsVisitTableModels.dart';
 import 'package:getcure_doctor/Screens/Treatment/Diagnosis.dart';
 import 'package:getcure_doctor/Screens/Treatment/Examination.dart';
 import 'package:getcure_doctor/Screens/Treatment/Symptoms.dart';
@@ -33,6 +34,7 @@ class _HomeConnectorState extends State<HomeConnector>
     with SingleTickerProviderStateMixin {
   TabController tabController;
   int _currentIndex = 0;
+  List<AdviceData> advices = [];
 
   @override
   void initState() {
@@ -103,7 +105,13 @@ class _HomeConnectorState extends State<HomeConnector>
         token: widget.token,
         clinicDocId: widget.clinicDocId,
       ),
-      Medication(token: widget.token, recommend: recommend)
+      Medication(
+        token: widget.token,
+        recommend: recommend,
+        getAdvices: (v) {
+          advices = v;
+        },
+      )
     ];
     return tabpages;
   }
@@ -261,7 +269,13 @@ class _HomeConnectorState extends State<HomeConnector>
             patient.updateCompleteStatus(widget.token.guid);
             tokenDB.updateCompleteStatus(widget.token.guid);
             setState(() {});
-            changeScreen(context, PatientReport(patientId: widget.token.guid, token: widget.token));
+            changeScreen(
+                context,
+                PatientReport(
+                  patientId: widget.token.guid,
+                  token: widget.token,
+                  advices: advices,
+                ));
           },
           child: Icon(Icons.print, color: Colors.white),
         ));

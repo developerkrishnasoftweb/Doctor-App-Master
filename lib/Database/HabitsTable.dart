@@ -23,7 +23,7 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'getHabits.sqlite'));
-    return VmDatabase(file, logStatements: true);
+    return VmDatabase(file);
   });
 }
 

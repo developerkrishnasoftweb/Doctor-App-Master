@@ -102,7 +102,7 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'getExamination.sqlite'));
-    return VmDatabase(file, logStatements: true);
+    return VmDatabase(file);
   });
 }
 

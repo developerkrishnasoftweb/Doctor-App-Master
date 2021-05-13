@@ -89,7 +89,7 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'getPatientVisit.sqlite'));
-    return VmDatabase(file, logStatements: true);
+    return VmDatabase(file);
   });
 }
 
@@ -230,7 +230,7 @@ class PatientsVisitDB extends _$PatientsVisitDB {
         medication: Value(Medicationgenerated(data: list))));
   }
 
-  Future insertAdvice(List<AdviceData> advices, PatientsVisitData data) {
+  Future<int> insertAdvice(List<AdviceData> advices, PatientsVisitData data) {
     var query = update(patientsVisit)..where((tbl) => tbl.id.equals(data.id));
     return query.write(PatientsVisitCompanion(advices: Value(AdvicesGenerated(advices: advices))));
   }
