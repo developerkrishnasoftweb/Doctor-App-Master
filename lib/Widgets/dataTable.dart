@@ -116,7 +116,7 @@ class _TokenTableState extends State<TokenTable> {
                                                 counter: widget.count,
                                                 docId: p.doctorid,
                                               ))
-                                      : {print('false')}),
+                                      : {}),
                               DataCell(
                                   GetBiggerData(
                                       p.address,
@@ -385,7 +385,6 @@ class _AppointmentHistoryTableState extends State<AppointmentHistoryTable> {
       builder: (BuildContext context,
           AsyncSnapshot<DoctorAppointmentHistoryModel> snapshot) {
         if (snapshot.data == null) {
-          print("No data");
           return CircularProgressIndicator();
         } else {
           return Container(

@@ -100,7 +100,7 @@ Future updateStatus(int id) {
     if (q.length == 0) {
       into(symptoms).insert(object);
     } else {
-      print('Already Exists in table');
+
     }
   }
 
@@ -119,7 +119,7 @@ Future updateStatus(int id) {
     if (q.length == 0) {
       into(symptoms).insert(object);
     } else {
-      print('Already Exists in table');
+
     }
   }
 
@@ -136,7 +136,7 @@ Future updateStatus(int id) {
     if (q.length == 0) {
       into(symptoms).insert(object);
     } else {
-      print('Already Exists in table');
+
     }
   }
 
@@ -153,7 +153,7 @@ Future updateStatus(int id) {
     if (q.length == 0) {
       into(symptoms).insert(object);
     } else {
-      print('Already Exists in table');
+
     }
   }
 }

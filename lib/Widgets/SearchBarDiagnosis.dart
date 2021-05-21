@@ -145,7 +145,6 @@ StreamBuilder<List<Symptom>> _buildTaskList(
   return StreamBuilder(
     stream: database.watchAllTasks(query),
     builder: (context, AsyncSnapshot<List<Symptom>> snapshot) {
-      print(query);
       final tasks = snapshot.data ?? List();
       return Container(
         alignment: Alignment.topLeft,

@@ -135,7 +135,6 @@ class _CreateClinicState extends State<CreateClinic> {
   ClinicsByStateData _selectedClinic;
   @override
   Widget build(BuildContext context) {
-    print("Clinic timings");
     return new Scaffold(
         appBar: new AppBar(
           backgroundColor: orangef,

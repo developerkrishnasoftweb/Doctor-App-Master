@@ -138,8 +138,6 @@ class _ExaminationSearchBarState extends State<ExaminationSearchBar> {
       stream: database.watchAllTasks(query),
       builder: (context, AsyncSnapshot<List<exam.Examination>> snapshot) {
         final tasks = snapshot.data ?? List();
-        print(tasks.length);
-        print(snapshot.data);
         return Container(
           height: MediaQuery.of(context).size.height * 0.4,
           width: MediaQuery.of(context).size.width * 0.6,

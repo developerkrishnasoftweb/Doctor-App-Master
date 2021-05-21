@@ -58,8 +58,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
     setState(() {
       _image = File(image.path);
     });
-
-    print(_image);
   }
 
   startupload(File imageFile) async {
@@ -77,7 +75,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
             "Authorization": token,
           }));
 
-      print(response.statusCode);
+
       var data = jsonDecode(response.toString());
       ImageDataModel imageUrl = ImageDataModel.fromJson(data);
       IdentityVerificationUrl addThis = IdentityVerificationUrl(type: "id_verification",url: imageUrl.data);
@@ -86,10 +84,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
       }else{
         sendThis.identityVerificationUrl[0]=addThis;
       }
-      
-      print(data);
     } catch (e) {
-      print(e);
     }
   }
 
@@ -108,7 +103,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
             "Authorization": token,
           }));
 
-      print(response.statusCode);
+
       var data = jsonDecode(response.toString());
       ImageDataModel imageUrl = ImageDataModel.fromJson(data);
       IdentityVerificationUrl addThis = IdentityVerificationUrl(type: "clinic_ownership",url: imageUrl.data);
@@ -117,10 +112,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
       }else{
         sendThis.identityVerificationUrl[1]=addThis;
       }
-      
-      print(data);
     } catch (e) {
-      print(e);
     }
   }
 

@@ -257,7 +257,6 @@ class _AddClinicState extends State<AddClinic> {
                             onPressed: () {
                               speclist.add(_speciality.text);
                               _speciality.clear();
-                              print(speclist);
                             }),
                       )
                     ],
@@ -309,7 +308,6 @@ class _AddClinicState extends State<AddClinic> {
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        print('hello');
                         if (await addClinic(
                             _name.text,
                             _type.text,

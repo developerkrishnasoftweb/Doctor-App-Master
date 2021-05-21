@@ -2540,7 +2540,6 @@ class _TimingGenerationState extends State<TimingGeneration> {
                       setState(() {
                         _isInAsyncCall = true;
                       });
-                      print(widget.clinicDoctorId);
                       SendTime st = SendTime(doctorTimings: []);
                       for (int i = 0; i < 7; i++) {
                         TimingGenerationValue tm = TimingGenerationValue(
@@ -2561,7 +2560,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-                                print(tm.slots);
+
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
@@ -2577,7 +2576,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.mondaydata);
-                                print(tm.slots);
+
                               }
                               
                             }
@@ -2598,7 +2597,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-                                print(tm.slots);
+
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
@@ -2615,7 +2614,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.tuesdaydata);
-                                print(tm.slots);
+
                               }
                               
                             }
@@ -2636,7 +2635,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-                                print(tm.slots);
+
                               }
                             } else {
                                ClinicDoctor x = profile.data.clinicDoctor
@@ -2653,7 +2652,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.wednesdaydata);
-                                print(tm.slots);
+
                               }
                               
                             }
@@ -2674,7 +2673,6 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-                                print(mod);
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
@@ -2691,7 +2689,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.thusdaydata);
-                                print(tm.slots);
+
                               }
                               
                             }
@@ -2711,7 +2709,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-                                print(mod);
+
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
@@ -2727,7 +2725,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.fridaydata);
-                                print(tm.slots);
+
                               }
                               
                             }
@@ -2748,7 +2746,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-                                print(mod);
+
                               }
                             } else {
                                ClinicDoctor x = profile.data.clinicDoctor
@@ -2765,7 +2763,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.saturdaydata);
-                                print(tm.slots);
+
                               }
                               
                             }
@@ -2785,7 +2783,6 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-                                print(mod);
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
@@ -2801,7 +2798,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.sundaydata);
-                                print(tm.slots);
+
                               }
                               
                             }
@@ -2810,10 +2807,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                         }
                         st.doctorTimings.add(tm);
                       }
-                      print(st.doctorTimings);
                       for (var i in st.doctorTimings) {
-                        print(i.day);
-                        print(i.slots.toString());
                       }
                       
                       bool check =

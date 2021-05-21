@@ -198,7 +198,6 @@ class _MedicineSearchState extends State<MedicineSearch>
                                                     if (newcat &&
                                                         _category
                                                             .text.isNotEmpty) {
-                                                      print(_category.text);
                                                       category
                                                           .add(_category.text);
                                                       addNewCategory(
@@ -273,7 +272,6 @@ class _MedicineSearchState extends State<MedicineSearch>
     return StreamBuilder(
       stream: database.watchAllTask(query),
       builder: (context, AsyncSnapshot<List<Medicine>> snapshot) {
-        print(query+snapshot.data.toString());
         final tasks = snapshot.data ?? List();
         return Container(
           height: MediaQuery.of(context).size.height * 0.6,

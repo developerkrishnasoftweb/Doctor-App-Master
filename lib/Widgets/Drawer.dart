@@ -45,7 +45,6 @@ class DrawerWidget extends StatelessWidget {
     final database = Provider.of<TokenDB>(context);
     final symptomDatabase = Provider.of<SymptomsDB>(context);
     //print(clinicid);
-    print(docId.toString());
     return Drawer(
       child: new ListView(
         children: <Widget>[

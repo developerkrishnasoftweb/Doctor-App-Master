@@ -32,8 +32,6 @@ class _ExaminationState extends State<Examination> {
         }
       }
     }
-    print("Exam call hua");
-    print(examcount);
     setState(() {});
   }
 

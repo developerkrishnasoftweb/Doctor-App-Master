@@ -35,7 +35,6 @@ class _ListDocPatientsState extends State<ListDocPatients> {
   Token tok;
 
   void changePages(int index) {
-    print(index);
     pageController.animateToPage(index,
         duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
 
@@ -56,10 +55,6 @@ class _ListDocPatientsState extends State<ListDocPatients> {
     // tokenNo =checkList.length==0?0: checkList.first.tokenno;
     setState(() {
     });
-
-    print("COUNT OF TOKENS ");
-    print(countOfTokens);
-    print(tokenNo);
   }
 
   @override
@@ -84,7 +79,7 @@ class _ListDocPatientsState extends State<ListDocPatients> {
   //         clinicDoctorId: tok.doctorid);
   //     patient.insert(p);
   //   } else {
-  //     print('preseent');
+  //
   //     PatientsVisitData r = result.last;
   //     final p = PatientsVisitData(
   //         mobileNo: r.mobileNo,
@@ -152,7 +147,6 @@ class _ListDocPatientsState extends State<ListDocPatients> {
                 InkWell(
                     onTap: () {
                       totalTokens(widget.topi);
-                      print('list');
                       showDialog(
                           context: context,
                           builder: (context) {
@@ -187,7 +181,6 @@ class _ListDocPatientsState extends State<ListDocPatients> {
           builder: (context, AsyncSnapshot<List<Token>> snapshot) {
             final tasks = snapshot.data ?? List();
             // tok=tasks[0];
-            print(tasks.length);
             if (tasks.length == 0) {
               return Container(
                   child: Center(
@@ -224,7 +217,7 @@ class _ListDocPatientsState extends State<ListDocPatients> {
                   //       clinicDoctorId: tasks[index].doctorid);
                   //   patient.insert(p);
                   // } else {
-                  //   print('preseent');
+                  //
                   //   PatientsVisitData r = result.last;
                   //   final p = PatientsVisitData(
                   //       mobileNo: r.mobileNo,

@@ -66,11 +66,9 @@ class _DisplayEmergencyListState extends State<DisplayEmergencyList> {
                             onTap: () async {
                               List<Token> checkList =
                                   await widget.token.getAllbookedTasks(widget.date);
-                                  print(checkList.length);
-                                  print("Emerhdsjfkjdsfkjdsavjkbahkdsvbkhadsbfjlkdsa");
+
                                   for(var i in checkList){
-                                    print(i.tokenno);
-                                    print(index-1);
+
                                   }
                               int iWantIndex =
                                   checkList.indexOf(snapshot.data[index-1]);

@@ -46,17 +46,14 @@ Future<bool> updatedetails(id, name, age, gender, degree, mob, email, lang,
     "experience": experience,
     "designation": designation
   });
-  print(response.body);
   if (response.statusCode == 200) {
     GetMyProfile getMyProfile =
         GetMyProfile.fromJson(json.decode(response.body));
-    print(getMyProfile.toJson());
     SharedPreferences pref = await SharedPreferences.getInstance();
     //print(getMyProfile.toJson());
     pref.setString('docDataResponse', json.encode(getMyProfile.data));
     String docResponse = pref.getString('docDataResponse');
     DoctorLoginData doctor = DoctorLoginData.fromJson(json.decode(docResponse));
-    print(doctor.age);
     pref.reload();
     return true;
   } else {
@@ -73,16 +70,13 @@ Future<bool> updateFees(String clinicDoctorId, opdFees, emergencyFees) async {
     "consultation_fee": opdFees,
     "emergency_fee": emergencyFees,
   });
-  print(response.body);
   if (response.statusCode == 200) {
     var res = await http.get(GETDOCTOR, headers: {"Authorization": tk});
     GetMyProfile getMyProfile = GetMyProfile.fromJson(json.decode(res.body));
-    print(getMyProfile.toJson());
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('docDataResponse', json.encode(getMyProfile.data));
     String docResponse = pref.getString('docDataResponse');
     DoctorLoginData doctor = DoctorLoginData.fromJson(json.decode(docResponse));
-    print(doctor.toJson());
     pref.reload();
     return true;
   } else {
@@ -92,12 +86,8 @@ Future<bool> updateFees(String clinicDoctorId, opdFees, emergencyFees) async {
 
 Future<bool> loginDoctor(mobNo, pass) async {
   try {
-    print(LOGINDOCTOR);
-    print({"emailOrPhone": mobNo, "password": pass});
     var response = await http
         .post(LOGINDOCTOR, body: {"emailOrPhone": mobNo, "password": pass});
-    print(response.body);
-    print(response.statusCode);
     if (response.statusCode == 200) {
       DoctorLogin doctor = DoctorLogin.fromJson(json.decode(response.body));
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -116,9 +106,7 @@ Future<bool> loginDoctor(mobNo, pass) async {
 }
 
 Future<List<StateData>> getStateinfo() async {
-  print("Request http line 70");
   var response = await http.get(GETSTATES);
-  print(response.body);
   if (response.statusCode == 200) {
     StateSearch stateSearch = StateSearch.fromJson(json.decode(response.body));
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -163,9 +151,7 @@ Future<PdfConfig> getPdfConfig() async {
 }
 
 Future<List<StateData>> activeStates() async {
-  print("Request http line 80");
   var response = await http.get(ACTIVESTATES);
-  print(response.body);
   if (response.statusCode == 200) {
     StateSearch stateSearch = StateSearch.fromJson(json.decode(response.body));
     // SharedPreferences pref = await SharedPreferences.getInstance();
@@ -177,14 +163,12 @@ Future<List<StateData>> activeStates() async {
 }
 
 Future<List<ClinicsByStateData>> clinicsByState(String id) async {
-  print("Request http line 98");
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('signtoken');
   var response = await http.get(
     CLINICSBYSTATES + id,
     headers: {"Authorization": token},
   );
-  print(response.body);
   if (response.statusCode == 200) {
     ClinicsByState stateSearch =
         ClinicsByState.fromJson(json.decode(response.body));
@@ -201,7 +185,6 @@ Future<bool> addClinicByCode(String gcc) async {
   String token = prefs.getString('signtoken');
   var response = await http.post(ADDCLINICBYCODE,
       headers: {"Authorization": token}, body: {"clinic_code": gcc});
-  print(response.body);
   if (response.statusCode == 200) {
     return true;
   } else {
@@ -211,7 +194,7 @@ Future<bool> addClinicByCode(String gcc) async {
 
 Future<List<ts.SpecialityData>> getSpeciality() async {
   var response = await http.get(GETSPECIAL);
-  print(response.body);
+
   if (response.statusCode == 200) {
     ts.SpecialitySearch specialitySearch =
         ts.SpecialitySearch.fromJson(json.decode(response.body));
@@ -242,15 +225,13 @@ Future<List<String>> getBriefHistories() async {
   String token = pref.getString('docToken');
   var response =
       await http.get(BRIEFHISTORY, headers: {"Authorization": token});
-  print("hello");
-  print(response.body);
+
   BriefHistoryModel brief =
       BriefHistoryModel.fromJson(jsonDecode(response.body));
   List<String> data = [];
   for (var x in brief.data) {
     data.add(x.title);
   }
-  print(data);
   // if (data.length > 0) {
   return data;
   // }
@@ -284,8 +265,6 @@ Future addAdvices(String title, String symptoms) async {
   String token = pref.getString('signtoken');
   String docId = pref.getString('docId');
   if (token != null && docId != null) {
-    print(
-        {"title": title, "symptoms": symptoms.split(", "), "doctor_id": docId});
     var response = await http.post(GET_ADVICES,
         headers: {"Authorization": token, "Content-Type": "application/json"},
         body: jsonEncode({
@@ -293,8 +272,7 @@ Future addAdvices(String title, String symptoms) async {
           "symptoms": symptoms.split(", "),
           "doctor_id": docId
         }));
-    print("Token : $token");
-    print(response.body);
+
     return true;
     // final jsonResponse = jsonDecode(response.body);
     // if (jsonResponse['data'] != null) {
@@ -315,7 +293,7 @@ Future addAdvices(String title, String symptoms) async {
 // var response =
 //     await http.get(BRIEFHISTORY, headers: {"Authorization": token});
 //     print("hello");
-// print(response.body);
+//
 // BriefHistoryModel brief =
 //     BriefHistoryModel.fromJson(jsonDecode(response.body));
 // List<String> data = [];
@@ -329,8 +307,8 @@ Future addAdvices(String title, String symptoms) async {
 // }
 Future<String> generateOtp(mobno) async {
   var response = await http.post(OTP, body: {"mobile_no": mobno});
-  print(response.body);
-  print(response.statusCode);
+
+
   if (response.statusCode == 200) {
     return response.body;
   }
@@ -346,13 +324,12 @@ getToken() async {
 Future<bool> signupDoctor(mobno, otp, password) async {
   var response = await http.post(SIGNUP,
       body: {"mobile_no": mobno, "password": password, "otp": otp});
-  print(response.body);
+
   if (response.statusCode == 200) {
     DoctorLogin doctor = DoctorLogin.fromJson(json.decode(response.body));
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('signtoken', doctor.token);
     pref.setString('signdresponse', json.encode(doctor));
-    print(doctor.token);
     return true;
   } else {
     return false;
@@ -362,7 +339,6 @@ Future<bool> signupDoctor(mobno, otp, password) async {
 Future<bool> updateDoctor(
     name, email, city, speciality, gender, education, yearexp) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  print(json.encode(speciality));
   String t = json.encode(speciality);
   String token = prefs.getString('signtoken');
   var response = await http.put(UPDATEDOCTOR, headers: {
@@ -374,7 +350,7 @@ Future<bool> updateDoctor(
     "experience": yearexp,
     "specialities": json.encode(speciality)
   });
-  print(response.body);
+
   if (response.statusCode == 200) {
     return true;
   } else {
@@ -385,7 +361,7 @@ Future<bool> updateDoctor(
 // Future<bool> login(url, mobno, password) async {
 //   var response =
 //       await http.post(url, body: {"emailOrPhone": mobno, "password": password});
-//   print(response.body);
+//
 //   if (response.statusCode == 200) {
 //     DoctorUser doctor = DoctorUser.fromJson(json.decode(response.body));
 //     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -400,7 +376,7 @@ Future<bool> updateDoctor(
 // Future<String> loginError(url, mobno, password) async {
 //   var response =
 //       await http.post(url, body: {"emailOrPhone": mobno, "password": password});
-//   print(response.body);
+//
 //   if (response.statusCode == 200) {
 //     if (url == LOGINDOCTOR) {
 //       DoctorUser doctor = DoctorUser.fromJson(json.decode(response.body));
@@ -440,8 +416,8 @@ Future<bool> addClinic(clinicName, type, eoy, nob, nod, cityId, cityName,
       "specialities": json.encode(spec),
     },
   );
-  print(response.body);
-  print(response.statusCode);
+
+
   if (response.statusCode == 200) {
     return true;
   } else {
@@ -471,7 +447,7 @@ Future<String> bookToken(name, age, mobileno, address, vtype, atype, tno, ttime,
     "clinic_doctor_id": docid.toString(),
     "is_present": 'true'
   });
-  print(response.body);
+
   if (response.statusCode == 200) {
     return json.decode(response.body)["data"]["patient_id"];
   } else {
@@ -483,23 +459,19 @@ Future<bool> fetchCancelledTokens(
     String id, DateTime date, TokenDB db, int clinicid) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('docToken');
-  print(id);
   var response = await http.get(
     CANCELTOKENFETCH +
         id +
         "?date=${DateFormat('yyyy-MM-dd').format(date).toString()}",
     headers: {"Authorization": token},
   );
-  print(response.body);
+
   if (response.statusCode == 200) {
     CancelledTokens cancelledTokens =
         CancelledTokens.fromJson(json.decode(response.body));
-    print(cancelledTokens.data.length);
     for (var i in cancelledTokens.data) {
       var tok = await db.getAll(i.patientId,
           DateTime.parse(i.date + " " + i.time), DateTime.parse(i.bookedAt));
-
-      print(tok.length);
       if (tok.length != 0) {
         var token = tok.last;
         db.updateData(
@@ -531,8 +503,6 @@ Future<bool> fetchCancelledTokens(
         if (cancelled.length == 0) {
           var tokn = await db.getToken(
               DateTime.parse(i.date + " " + i.time), clinicid);
-          print("line 410 page request http" + i.date + " " + i.time);
-          print(tokn.length);
           db.insertTask(Token(
             clinicid: clinicid,
             name: i.patientName,
@@ -559,8 +529,6 @@ Future<bool> fetchCancelledTokens(
 
 Future<void> getTokens(date, TokenDB db, String clinicDocid,
     pot.PatientsDB patientDatabse, BuildContext context) async {
-  print("**********************************");
-  print(clinicDocid);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final patient = Provider.of<PatientsVisitDB>(context, listen: false);
   String token = prefs.getString('docToken');
@@ -571,10 +539,9 @@ Future<void> getTokens(date, TokenDB db, String clinicDocid,
         "?${DateFormat('yyyy-MM-dd').format(date).toString()}",
     headers: {"Authorization": token},
   );
-  print(response.body);
+
   if (response.statusCode == 200) {
     TokenModel tokens = TokenModel.fromJson(json.decode(response.body));
-    print(tokens.toJson());
     for (final i in tokens.data) {
       if (i.bookingType != "cancelled") {
         final token = Token(
@@ -617,13 +584,11 @@ Future<void> getTokens(date, TokenDB db, String clinicDocid,
             age: i.patient.age,
             address: i.patient.address);
         var responsePatient = patientDatabse.createPatient2(pat);
-        print("Patient reponse" + responsePatient.toString());
 
         List<PatientsVisitData> result =
             await patient.checkPatient(i.patientId);
 
         if (result.isEmpty) {
-          print('absent');
           final p = PatientsVisitData(
               fee: i.fees,
               appointmentId: i.appointmentId,
@@ -642,7 +607,7 @@ Future<void> getTokens(date, TokenDB db, String clinicDocid,
               clinicDoctorId: i.clinicDoctorId);
           patient.insert(p);
         } else {
-          print('preseent');
+
           PatientsVisitData r = result.last;
           final p = PatientsVisitData(
             fee: i.fees,
@@ -686,7 +651,7 @@ getDiseaseAnalysis(int docId, DateTime st, DateTime et) async {
     DISANALYSIS + docId.toString(),
     headers: {"Authorization": token},
   );
-  print(response.body);
+
   DiseaseAnalysisModel dis =
       DiseaseAnalysisModel.fromJson(json.decode(response.body));
   return dis;
@@ -698,7 +663,7 @@ getMedicineAnalysis(int docId, DateTime st, DateTime et) async {
     MEDANALYSIS + docId.toString(),
     headers: {"Authorization": token},
   );
-  print(response.body);
+
   MedicineAnalysisModel dis =
       MedicineAnalysisModel.fromJson(json.decode(response.body));
   return dis;
@@ -710,17 +675,13 @@ getFeedBackAnalysis(int docId, DateTime st, DateTime et) async {
     PATIENTFEEDBACK + docId.toString(),
     headers: {"Authorization": token},
   );
-  print(response.body);
+
   FeedbackAnalysis dis = FeedbackAnalysis.fromJson(json.decode(response.body));
   return dis;
 }
 
 Future doctorTimings(SendTime st, clinicdocId) async {
-  print(st);
-
   var body = st.toJson();
-  print(body);
-  print(json.encode(body));
   SharedPreferences pref = await SharedPreferences.getInstance();
   String token = pref.getString('docToken');
   var response =
@@ -729,52 +690,42 @@ Future doctorTimings(SendTime st, clinicdocId) async {
   }, body: {
     "doctor_timings": json.encode(body),
   });
-  print(response.statusCode);
-  print(response.body);
+
+
   if (response.statusCode == 200) {
     var res = await http.get(GETDOCTOR, headers: {"Authorization": token});
     if (res.statusCode == 200) {
       GetMyProfile getMyProfile = GetMyProfile.fromJson(json.decode(res.body));
       pref.setString('docDataResponse', json.encode(getMyProfile.data));
-      print("Ohh bete ki send ho gaya");
-      print(res.body);
       return true;
     }
   } else {
-    print("Fuck ho gaya");
     return false;
   }
 }
 
 Future<bool> sendHolidays(DocHoli ans, docId) async {
-  print(docId);
   var body = ans.toJson();
   String sendHO = json.encode(body['holidays']);
-  print(sendHO);
   SharedPreferences pref = await SharedPreferences.getInstance();
   String token = pref.getString('docToken');
   var response = await http.put(DOCTORENJOYDAYE,
       headers: {"Authorization": token}, body: {"holidays": sendHO});
-  print(response.statusCode);
-  print(response.body);
+
+
   if (response.statusCode == 200) {
-    print("Ohh bete ki send ho gaya");
     SenHolidayUpdateModel docData =
         SenHolidayUpdateModel.fromJson(json.decode(response.body));
-    print(docData.data.holidays);
     pref.setString('docDataResponse', json.encode(docData.data));
     pref.reload();
     return true;
   } else {
-    print("Fuck ho gaya");
     return false;
   }
 }
 
 Future<DoctorAppointmentHistoryModel> appointmenthistoryfetch(
     String sd, String ed, int docid, query) async {
-  print("App date");
-  print(sd + " " + ed + " " + docid.toString());
   SharedPreferences pref = await SharedPreferences.getInstance();
   String token = pref.getString("docToken");
   var response;
@@ -799,7 +750,7 @@ Future<DoctorAppointmentHistoryModel> appointmenthistoryfetch(
             query,
         headers: {"Authorization": token});
   }
-  print(response.body);
+
   if (response.statusCode == 200) {
     DoctorAppointmentHistoryModel def =
         DoctorAppointmentHistoryModel.fromJson(json.decode(response.body));
@@ -810,8 +761,6 @@ Future<DoctorAppointmentHistoryModel> appointmenthistoryfetch(
 }
 
 Future<DoctorInvoiceModel> getDocVoice(clinicDocId, startDate, endDate) async {
-  print("Invoice clinic doc id");
-  print(clinicDocId);
   SharedPreferences pref = await SharedPreferences.getInstance();
   String token = pref.getString("docToken");
   var response = await http.get(
@@ -823,7 +772,7 @@ Future<DoctorInvoiceModel> getDocVoice(clinicDocId, startDate, endDate) async {
           "&end_date=" +
           endDate,
       headers: {"Authorization": token});
-  print(response.body);
+
   if (response.statusCode == 200) {
     DoctorInvoiceModel doc =
         DoctorInvoiceModel.fromJson(json.decode(response.body));
@@ -838,9 +787,6 @@ Future<DoctorLoginData> docinfo() async {
   pref.reload();
   String resp = pref.getString("docDataResponse");
   DoctorLoginData user = DoctorLoginData.fromJson(json.decode(resp));
-
-  print("afhoashfklsajk djakdjpsasjfdpksajdkfsa");
-  print(user.holidays);
   return user;
 }
 
@@ -860,15 +806,14 @@ Future<MyDoctorProfile> getMyProfileDat() async {
 
 Future<bool> sendImagesUrl(SendImageDataModel send) async {
   String ans = json.encode(send.toJson()['identity_verification_url']);
-  print(ans);
   SharedPreferences pref = await SharedPreferences.getInstance();
   String token = pref.getString("signtoken");
   var response = await http.put(DOCTORENJOYDAYE,
       headers: {"Authorization": token},
       body: {"identity_verification_url": ans});
 
-  print(response.statusCode);
-  print(response.body);
+
+
 
   if (response.statusCode == 200) {
     return true;

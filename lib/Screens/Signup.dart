@@ -194,7 +194,6 @@ class SignUpPageState extends State<SignUpPage> {
                                       setState(() {
                                         mobno = val;
                                       });
-                                      print(mobno);
                                     },
                                     keyboardType: TextInputType.number,
                                   ),

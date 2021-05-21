@@ -22,10 +22,8 @@ class _GeneralDetailsState extends State<GeneralDetails> {
   String weight;
 
   getData() async {
-    print("General Details");
     List<PatientsVisitData> pd =
         await widget.patientVisit.checkPatient(widget.token.guid);
-    print(pd);
     setState(() {
       temp = tempController.text = pd.last.temperature.toString();
       bp = bpController.text = pd.last.bp.toString();

@@ -78,11 +78,9 @@ class LoginPageState extends State<LoginPage> {
 
   void _validateInputs(TokenDB database,PatientsDB pd) async {
     if (_formKey.currentState.validate()) {
-      print(pass);
       _formKey.currentState.save();
       bool isLoggedIn = await loginDoctor(emailOrMob, pass);
       if (!isLoggedIn) {
-        print('hello');
         errorController.add(ErrorAnimationType.shake);
         setState(() {
           hasError = true;
@@ -105,12 +103,10 @@ class LoginPageState extends State<LoginPage> {
                     patientDatabase: pd,
                   )));
         } else {
-          print('not');
           _btnController.reset();
         }
       }
     } else {
-      print('not2');
       _btnController.reset();
     }
   }

@@ -44,8 +44,6 @@ class _AppointmentsState extends State<Appointments> {
     pref.reload();
     String doctors = pref.getString('docDataResponse');
     docUser = DoctorLoginData.fromJson(json.decode(doctors));
-    print(docUser.toJson());
-    print(docUser.clinicDoctor);
     for (var i in docUser.clinicDoctor) {
       if (!dropdown.contains(i)) {
         setState(() {
@@ -57,7 +55,6 @@ class _AppointmentsState extends State<Appointments> {
       _selecteddoc = dropdown.first;
       counting(widget.database);
     });
-    print(dropdown);
     // dropdownvalue = frontDeskUser.data.clinicDoctors[0];
     // for (int i = 0; i < docUser.data.length; i++) {
     //   setState(() {
@@ -68,7 +65,6 @@ class _AppointmentsState extends State<Appointments> {
   }
 
   void callOnTimingsUpdate() {
-    print("callback in Appointment.dart");
     widget.database.deleteallTask();
     getdoctors();
   }
@@ -76,7 +72,6 @@ class _AppointmentsState extends State<Appointments> {
   GenerateTokens token = GenerateTokens();
 
   generate(TokenDB database) {
-    print(_selecteddoc.id.toString() + "******************************");
     BuildContext context;
     token.tokens = GeneratedTokens(
         fees: _selecteddoc.consultationFee,
@@ -170,15 +165,12 @@ class _AppointmentsState extends State<Appointments> {
   void counting(TokenDB x) async {
     List<Token> countRowslist = await x.getcount(datePicked);
     countRows = countRowslist.length;
-    print("counting booked= " + countRows.toString());
     countRowslist = await x.getcountoncall(datePicked);
     countoncall = countRowslist.length;
-    print("counting on call booked= " + countoncall.toString());
     countRowslist = await x.getcountonfront(datePicked);
     countonfront = countRowslist.length;
     countRowslist = await x.getcountOnline(datePicked);
     countOnline = countRowslist.length;
-    print("count online= " + countOnline.toString());
     countRowslist = await x.getcountPresent(datePicked);
     countPresent = countRowslist.length;
     countRowslist = await x.getcountCompleted(datePicked);
@@ -582,11 +574,9 @@ class _AppointmentsState extends State<Appointments> {
                   IconButton(
                       icon: Icon(Icons.file_download),
                       onPressed: () async {
-                        print(datePicked);
                         dynamic li = await widget.database
                             .getAllTasks(datePicked, _selecteddoc.id);
                         if (li.length == 0) {
-                          print("no token generated");
                           generate(widget.database);
                         } else {
                           getTokens(

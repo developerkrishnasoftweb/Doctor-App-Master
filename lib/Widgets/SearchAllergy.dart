@@ -136,7 +136,6 @@ StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
   return StreamBuilder(
     stream: database.watchAllTasks(query,HType.Allergy),
     builder: (context, AsyncSnapshot<List<Habit>> snapshot) {
-      print(query);
       final tasks = snapshot.data ?? List();
       return Container(
         alignment: Alignment.topLeft,

@@ -31,7 +31,6 @@ class _DisplayListsState extends State<DisplayLists> {
   void getAllEntries() async {
     List<Token> lists =
         await widget.token.getAllBookedTokens().then((value) => ans = value);
-    print(ans);
   }
 
   @override

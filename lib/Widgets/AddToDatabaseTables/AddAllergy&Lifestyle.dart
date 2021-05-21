@@ -93,7 +93,6 @@ StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
   return StreamBuilder(
     stream: database.watchAllTask(query),
     builder: (context, AsyncSnapshot<List<Habit>> snapshot) {
-      print(query);
       final tasks = snapshot.data ?? List();
       return Container(
         height: MediaQuery.of(context).size.height * 0.6,

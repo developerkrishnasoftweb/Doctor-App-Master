@@ -105,7 +105,6 @@ StreamBuilder<List<Symptom>> _buildTaskList(BuildContext context, String query,
   return StreamBuilder(
     stream: database.watchAllVisitTasks(query),
     builder: (context, AsyncSnapshot<List<Symptom>> snapshot) {
-      print(query);
       final tasks = snapshot.data ?? List();
       return Container(
         height: MediaQuery.of(context).size.height * 0.6,

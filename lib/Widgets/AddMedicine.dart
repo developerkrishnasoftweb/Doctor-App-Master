@@ -47,7 +47,6 @@ class _AddMedicineState extends State<AddMedicine> {
       _duration = duration.first;
       _category = category.first;
     });
-    print(duration);
   }
 
   addParameter(String parameter, String type, String value) async {
@@ -100,10 +99,8 @@ class _AddMedicineState extends State<AddMedicine> {
         break;
       default:
     }
-    print('done');
     pref.remove('parameters');
     pref.setString('parameters', json.encode(parametersUpdate));
-    print(pref.getString("parameters"));
     getParameters();
   }
 
@@ -506,9 +503,6 @@ class _AddMedicineState extends State<AddMedicine> {
                   ),
                   FlatButton(
                       onPressed: () {
-                        print('hello');
-                        print(selectedItems.toString());
-                        print(selectedItems.map((e) => interactionDrugList[e]));
                         Medicine medicine = new Medicine(
                             category: _category,
                             clinicDoctorId: widget.docId,

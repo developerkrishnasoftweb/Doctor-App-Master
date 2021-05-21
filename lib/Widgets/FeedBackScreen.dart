@@ -102,7 +102,6 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
             padding: const EdgeInsets.all(8.0),
             child: FlatButton(
               onPressed: () {
-                print(feedback);
                 fback(feed, recom);
                 // for (int i = 0; i < widget.pat.feedBack.data.length; i++) {
                 //   FeedBackData object = FeedBackData(
@@ -171,7 +170,6 @@ class _ResponseInputState extends State<ResponseInput> {
       widget.feedback[widget.index] = choice;
       debugPrint(choice);
     });
-    print(widget.feedback);
   }
 
   @override

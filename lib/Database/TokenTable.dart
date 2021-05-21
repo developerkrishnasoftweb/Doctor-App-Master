@@ -93,7 +93,6 @@ class TokenDB extends _$TokenDB {
   }
 
   Future<List<Token>> getAllbookedTasks(DateTime date) {
-    print(date);
     dynamic query;
     query = select(tokens)
       ..where((t) => t.booked.equals(true))
@@ -108,7 +107,6 @@ class TokenDB extends _$TokenDB {
   }
 
   Future<List<Token>> getAll(String guid, DateTime date, DateTime bookedAt) {
-    print(date);
     dynamic query;
     query = select(tokens)
       ..where((t) => t.booked.equals(true))
@@ -189,7 +187,6 @@ class TokenDB extends _$TokenDB {
 
   Future<int> allBooked() async {
     dynamic query = select(tokens)..where((t) => t.booked.equals(true));
-    print(await query.length);
     return query.length;
   }
 
@@ -212,7 +209,6 @@ class TokenDB extends _$TokenDB {
   Future insertTask(Token token) => into(tokens).insert(token);
   Future updateTask(Token token) => update(tokens).replace(token);
   Future updateData(Token token, String name) {
-    print(name);
     var query = update(tokens)..where((t) => t.id.equals(token.id));
     return query.write(TokensCompanion(
         guid: Value(token.guid),

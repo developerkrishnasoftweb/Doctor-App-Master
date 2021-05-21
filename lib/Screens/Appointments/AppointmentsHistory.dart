@@ -48,7 +48,6 @@ class _DoctorAppointmentHistoryState extends State<DoctorAppointmentHistory> {
         countvalues();  
       });
     String date = selectedDate.toString();
-    print("date= " + date);
   }
 
   _selectDateEnd(BuildContext context) async {
@@ -64,7 +63,6 @@ class _DoctorAppointmentHistoryState extends State<DoctorAppointmentHistory> {
         countvalues();  
       });
     String date = selectedDateEnd.toString();
-    print("date= " + date);
   }
   int countTotal = 0;
   int countCancelled = 0;

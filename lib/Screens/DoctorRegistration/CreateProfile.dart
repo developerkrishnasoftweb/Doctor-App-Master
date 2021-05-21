@@ -77,7 +77,6 @@ class _CreateProfileState extends State<CreateProfile> {
     setState(() {
       suggestionstate = sugst;
     });
-    print(suggestionstate);
     //  return suggestionstate;
   }
 
@@ -323,7 +322,6 @@ class _CreateProfileState extends State<CreateProfile> {
                       style: new TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
-                      print(specselected.map((e) => e.toString()).toList());
                       List<String> test = [];
                       for(var i in specselected){
                         test.add(i.toString());

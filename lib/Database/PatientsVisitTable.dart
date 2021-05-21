@@ -115,7 +115,6 @@ class PatientsVisitDB extends _$PatientsVisitDB {
       // ..limit(1);
       return query.get();
     } catch (e) {
-      print("Error" + e);
       return null;
     }
   }
@@ -167,7 +166,6 @@ class PatientsVisitDB extends _$PatientsVisitDB {
       List<RecommendationData> listRecom = await rec.recommend(j.title);
 
       if (listRecom.length != 0) {
-        print(j.title);
         for (var i in listRecom[0].medicines.medicines) {
           List<Medicine> listMd = await md.getMed(i);
           PrescribedMedicines pm = PrescribedMedicines(
@@ -418,8 +416,6 @@ class PatientsVisitDB extends _$PatientsVisitDB {
 
   Future updateExaminationParams(
       PatientsVisitData data, int eid, ParameterData pd, String text) {
-    print(pd.title);
-    print(text);
     var query = update(patientsVisit)..where((t) => t.id.equals(data.id));
     List<ExaminationData> list = [];
     // list = data.briefHistory.data;
@@ -427,19 +423,16 @@ class PatientsVisitDB extends _$PatientsVisitDB {
       list = data.examination.data;
     }
     var res = list.where((element) => element.examinationId == eid);
-    print(res.last.title);
 
     var par = res.last.parameters;
 
     for (var x in par) {
       if (x.title == pd.title) {
-        print(x.result);
         if (x.result.isEmpty) {
           x.result.add(text);
         } else {
           x.result.last = text;
         }
-        print(x.result);
       }
     }
 

@@ -116,8 +116,6 @@ class ExaminationsDB extends _$ExaminationsDB {
     var q = await fetchTask(examination.title);
     if (q.length == 0) {
       into(examinations).insert(examination);
-    } else {
-      print('Already Exists in table');
     }
   }
 

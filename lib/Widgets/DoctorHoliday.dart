@@ -39,7 +39,6 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
             DateFormat("yyyy-MM-dd").format(selectedDate).toString();
       });
     String date = selectedDate.toString();
-    print("date= " + date);
   }
 
   // ClinicDoctor dropdownvalue;
@@ -59,7 +58,6 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
-    print(h);
     return Consumer<Holiday>(
       builder: (context, hol, child) {
         return Scaffold(
@@ -152,8 +150,6 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                                     .toString());
                                 controller.clear();
                               }
-
-                              print(hol.holi);
                             }),
                       ],
                     ),
@@ -260,7 +256,6 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                                           ? 0
                                           : snapshot.data.holidays.length,
                                       itemBuilder: (context, index) {
-                                        print(snapshot.data.holidays);
                                         snapshot.data.holidays.sort();
                                         final item =
                                             snapshot.data.holidays[index];
@@ -279,12 +274,10 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                                                   setState(() {
                                                     _isInAsyncCall = true;
                                                   });
-                                                  print(snapshot.data.holidays);
                                                   setState(() {
                                                     snapshot.data.holidays
                                                         .removeAt(index);
                                                   });
-                                                  print(snapshot.data.holidays);
                                                   DocHoli ans = DocHoli(
                                                       holidays: snapshot
                                                           .data.holidays);

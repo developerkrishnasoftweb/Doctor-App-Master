@@ -35,8 +35,6 @@ syncTokens(TokenDB tokenDB, int clinicDocId) async {
     return true;
   }
   for (var i in list) {
-    print(i.name);
-    print(i.presentTime);
     li.add(TokenSyncData(
       appointmentId: i.appointmentId,
       patientId: i.guid,
@@ -57,22 +55,19 @@ syncTokens(TokenDB tokenDB, int clinicDocId) async {
           i.presentTime != null ? DateFormat.Hms().format(i.presentTime) : null,
     ));
   }
-  print(li.length);
 
   TokenSync tokenSync = TokenSync(data: li);
   var response = await http.post(
       BASEURL + "/sync-tokens/" + clinicDocId.toString(),
       headers: {"Authorization": token},
       body: {"tokens": json.encode(tokenSync.toJson()['data'])});
-  print(json.encode(tokenSync.toJson()['data']));
-  print(response.body);
+
   if (response.statusCode == 200) {
     for (var i in list) {
       tokenDB.updateStatus(i.id);
     }
     return true;
   } else {
-    print("Tokens sync failed");
     return false;
   }
 }
@@ -97,14 +92,12 @@ syncPatient(PatientsDB patientsDB, TokenDB tokenDB,
   }
 
   PatientDataSync patientDataSync = PatientDataSync(data: li);
-  print(json.encode(patientDataSync.toJson()['data']));
   var response = await http.post(PATIENTDATASYNC,
       headers: {"Authorization": token},
       body: {"patients": json.encode(patientDataSync.toJson()['data'])});
-  print(response.body);
+
 
   if (response.statusCode == 200) {
-    print("Sync patient line 109 completed");
     GuidUpdating guidUpdate = GuidUpdating.fromJson(json.decode(response.body));
     for (var id in guidUpdate.patientIds) {
       tokenDB.updateguid(id.previousId, id.newId);
@@ -113,7 +106,6 @@ syncPatient(PatientsDB patientsDB, TokenDB tokenDB,
     }
     return true;
   } else {
-    print("Sync patient line 118 Failed");
     return false;
   }
 }
@@ -130,19 +122,16 @@ syncCancelled(TokenDB tokenDB, int id) async {
         patientName: i.name,
         visitType: i.visittype));
   }
-  print(json.encode(syncToken.toJson()['tokens']));
   String token = await getToken();
   var response = await http.post(CANCELBULK + id.toString(),
       headers: {"Authorization": token},
       body: {"tokens": json.encode(syncToken.toJson()['tokens'])});
-  print(response.body);
+
   if (response.statusCode == 200) {
     for (var i in tokenList) {
       tokenDB.updateStatus(i.id);
     }
-    print("Cancelled Synced complete page data sync line 145");
   } else {
-    print("Cancelled Synced failed page data sync line 147");
   }
 }
 
@@ -166,17 +155,14 @@ syncExamination(ExaminationsDB examinationsDB) async {
   }, body: {
     "examinations": json.encode(examinationSync.toJson()['examinations'])
   });
-  print(json.encode(examinationSync.toJson()['examinations']));
-  print(response.body);
+
   if (response.statusCode == 200) {
-    print("Sync examination line 170 completed");
 
     for (var i in list) {
       examinationsDB.updateStatus(i.id);
     }
     return true;
   } else {
-    print("Examination sync failed");
     return false;
   }
 }
@@ -198,15 +184,13 @@ syncHabit(HabitDB habitDB) async {
   var response = await http.post(HABITSYNC,
       headers: {"Authorization": token},
       body: {"habits": json.encode(patientDataSync.toJson()['habits'])});
-  print(json.encode(patientDataSync.toJson()['habits']));
-  print(response.body);
+
   if (response.statusCode == 200) {
     for (var i in list) {
       habitDB.updateStatus(i.id);
     }
     return true;
   } else {
-    print("Habit sync failed");
     return false;
   }
 }
@@ -250,15 +234,13 @@ syncSymptom(SymptomsDB symptomsDB) async {
   var response = await http.post(SYMPTOMSSYNC,
       headers: {"Authorization": token},
       body: {"symptoms": json.encode(patientDataSync.toJson()['symptoms'])});
-  print(json.encode(patientDataSync.toJson()['symptoms']));
-  print(response.body);
+
   if (response.statusCode == 200) {
     for (var i in list) {
       symptomsDB.updateStatus(i.id);
     }
     return true;
   } else {
-    print("Symptoms sync failed");
     return false;
   }
 }
@@ -290,15 +272,13 @@ syncMedicines(MedicinesDB medicinesDB) async {
   var response = await http.post(MEDICINESYNC,
       headers: {"Authorization": token},
       body: {"medicines": json.encode(medicineSync.toJson()['medicines'])});
-  print(json.encode(medicineSync.toJson()['medicines']));
-  print(response.body);
+
   if (response.statusCode == 200) {
     for (var i in list) {
       medicinesDB.updateStatus(i.id);
     }
     return true;
   } else {
-    print("Sync Medication line 300 failed");
 
     return false;
   }
@@ -307,7 +287,6 @@ syncMedicines(MedicinesDB medicinesDB) async {
 syncFeedBack(FeedBackDB feedBackDB) async {
   String token = await getToken();
   List<FeedBackData> list = await feedBackDB.getAllSync();
-  print(list);
   if (list.length == 0) {
     return true;
   }
@@ -334,19 +313,16 @@ syncFeedBack(FeedBackDB feedBackDB) async {
     }
   }
   FeedBackSync patientDataSync = FeedBackSync(feedbacks: li);
-  print(patientDataSync);
   var response = await http.post(FEEDBACKSYNC,
       headers: {"Authorization": token},
       body: {"feedbacks": json.encode(patientDataSync.toJson()['feedbacks'])});
-  print(json.encode(patientDataSync.toJson()['feedbacks']));
-  print(response.body);
+
   if (response.statusCode == 200) {
     for (var i in list) {
       feedBackDB.updateStatus(i.id);
     }
     return true;
   } else {
-    print("Sync FeedBack line 348 failed");
 
     return false;
   }
@@ -399,17 +375,14 @@ syncPatientVisit(PatientsVisitDB patientsVisitDB) async {
   var response = await http.post(PATIENTVISITSYNC,
       headers: {"Authorization": doctorLogin.token},
       body: {"patient_visits": json.encode(patientVisitSync.toJson()['data'])});
-  print(json.encode(patientVisitSync.toJson()['data']));
-  print(response.body);
+
   if (response.statusCode == 200) {
-    print("syncPatientVisit line 397 completed");
 
     for (var i in list) {
       patientsVisitDB.updateStatus(i.id);
     }
     return true;
   } else {
-    print("syncPatientVisit line 397 failed");
 
     return false;
   }
@@ -445,8 +418,6 @@ fetchData(int docId, SymptomsDB symptomsDB, int clinicDocId) async {
   );
   if (response.statusCode == 200) {
     SymptomSync symptomSync = SymptomSync.fromJson(json.decode(response.body));
-    print(response.body);
-    print(symptomSync.symptoms.first.title);
     for (var i in symptomSync.symptoms) {
       symptomsDB.addBrief(i.title, setVisibility(i.visibilityPeriod), docId, clinicDocId);
     }
@@ -461,7 +432,7 @@ fetchExamination(String docId, ExaminationsDB examinationsDB) async {
   );
   if (response.statusCode == 200) {
     SyncExam symptomSync = SyncExam.fromJson(json.decode(response.body));
-    print(response.body);
+
     for (var i in symptomSync.data) {
       var exm = Examination(
         clinicDoctorId: i.doctorId,
@@ -478,7 +449,6 @@ fetchExamination(String docId, ExaminationsDB examinationsDB) async {
 
 fetchMedication(String docId, MedicinesDB medicinesDB) async {
   String token = await getToken();
-  print(docId);
   var response = await http.get(
     BASEURL + "/medicines/" + docId,
     headers: {"Authorization": token},
@@ -486,7 +456,7 @@ fetchMedication(String docId, MedicinesDB medicinesDB) async {
   if (response.statusCode == 200) {
     MedicineDataSync symptomSync =
         MedicineDataSync.fromJson(json.decode(response.body));
-    print(response.body);
+
     for (var i in symptomSync.medicines) {
       var med = Medicine(
           clinicDoctorId: i.doctorId,
@@ -511,15 +481,12 @@ fetchMedication(String docId, MedicinesDB medicinesDB) async {
 
 fetchHabits(String docId, HabitDB habitDB) async {
   String token = await getToken();
-  print(docId);
   var response = await http.get(
     BASEURL + "/habits/" + docId,
     headers: {"Authorization": token},
   );
   if (response.statusCode == 200) {
     HabitsSync habitSync = HabitsSync.fromJson(json.decode(response.body));
-    print(response.body);
-    print(habitSync.toJson());
     for (var i in habitSync.habits) {
       var hb = Habit(
           doctorId: i.doctorId,
@@ -533,7 +500,6 @@ fetchHabits(String docId, HabitDB habitDB) async {
 
 fetchFeedback(String clinicDocId, FeedBackDB feedDB, int doctorId) async {
   String token = await getToken();
-  print(clinicDocId);
   var response = await http.get(
     BASEURL + "/feedbacks/" + clinicDocId,
     headers: {"Authorization": token},
@@ -541,8 +507,7 @@ fetchFeedback(String clinicDocId, FeedBackDB feedDB, int doctorId) async {
   if (response.statusCode == 200) {
     FeedbackAPISync feedSync =
         FeedbackAPISync.fromJson(json.decode(response.body));
-    print(response.body);
-    print(feedSync.toJson());
+
     for (var i in feedSync.feedbacks) {
       var fh = FeedBackData(
           doctorId: doctorId,
@@ -560,18 +525,17 @@ fetchFeedback(String clinicDocId, FeedBackDB feedDB, int doctorId) async {
 
 fetchPatientsVisit(String clinicDocId, PatientsVisitDB pvDB) async {
   String token = await getToken();
-  print(clinicDocId);
   var response = await http.get(
     BASEURL + "/visits/clinic-doctor/" + clinicDocId,
     headers: {"Authorization": token},
   );
 
   if (response.statusCode == 200) {
-    print(response.body);
+
 
     PatientVisitSync pvs =
         PatientVisitSync.fromJson(json.decode(response.body));
-    print(pvs.toJson());
+
 
     for (var i in pvs.data) {
       var pvi = PatientsVisitData(
@@ -611,12 +575,10 @@ fetchPatients(String clinicDocId, PatientsDB patientsDB) async {
     BASEURL + "/patients/doctor",
     headers: {"Authorization": token},
   );
-  print(clinicDocId);
   if (response.statusCode == 200) {
-    print(response.body);
+
     PatientDataSync patientSync =
         PatientDataSync.fromJson(json.decode(response.body));
-    print(patientSync.toJson());
     for (var i in patientSync.data) {
       var x = Patient(
           mobileNo: int.parse(i.mobileNo),
@@ -640,7 +602,7 @@ fetchParameters(String id) async {
     PARAMETERS + id,
     headers: {"Authorization": token},
   );
-  print(response.body);
+
   if (response.statusCode == 200) {
     ParametersUpdate parametersUpdate =
         ParametersUpdate.fromJson(json.decode(response.body));
@@ -666,7 +628,7 @@ fetchParameters(String id) async {
       parametersUpdate.data.route[i].isOnline = true;
     }
     pref.setString("parameters", json.encode(parametersUpdate));
-    print(pref.getString("parameters"));
+
   }
 }
 
@@ -677,9 +639,7 @@ syncParameters(String id) async {
   ParametersUpdate parametersUpdate =
       ParametersUpdate.fromJson(json.decode(parameters));
   ParameterSync parameterSync = new ParameterSync(params: []);
-  print(parameters);
   for (var i in parametersUpdate.data.category) {
-    print(i.isOnline);
     if (!i.isOnline) {
       parameterSync.params
           .add(Params(name: i.title, type: i.type, value: i.value));
@@ -721,15 +681,11 @@ syncParameters(String id) async {
           .add(Params(name: i.title, type: i.type, value: i.value));
     }
   }
-  print(token);
 // String ansSend =
   var response = await http.post(PARAMETERS + id + "/bulk",
       headers: {"Authorization": token},
       body: {"params": json.encode(parameterSync.params)});
-  print(response.body);
-  print(json.encode(parameterSync));
   if (response.statusCode == 200) {
-    print("Parameter Sync Success line 671 page datasyncfunction");
     for (var i = 0; i < parametersUpdate.data.category.length; i++) {
       parametersUpdate.data.category[i].isOnline = true;
     }
@@ -752,8 +708,6 @@ syncParameters(String id) async {
       parametersUpdate.data.route[i].isOnline = true;
     }
     pref.setString("parameters", json.encode(parametersUpdate));
-    print(pref.getString("parameters"));
   } else {
-    print("Parameter Sync failed line 673 page datasyncfunction");
   }
 }

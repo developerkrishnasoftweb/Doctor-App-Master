@@ -80,7 +80,6 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
         datePicked = picked;
       });
     String date = datePicked.toString();
-    print("date= " + date);
     getcounts();
   }
 
@@ -96,7 +95,6 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
         datePickedend = picked;
       });
     String date = datePickedend.toString();
-    print("date= " + date);
     getcounts();
   }
   @override

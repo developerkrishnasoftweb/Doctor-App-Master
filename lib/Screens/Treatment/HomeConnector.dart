@@ -71,8 +71,6 @@ class _HomeConnectorState extends State<HomeConnector>
         }
       }
     }
-    print("Exam call hua");
-    print(examcount);
     setState(() {});
   }
 
@@ -135,9 +133,8 @@ class _HomeConnectorState extends State<HomeConnector>
   List<PatientsVisitData> pdo = [];
 
   Future<List<PatientsVisitData>> getDataPd(PatientsVisitDB patient) async {
-    print("General Details");
     List<PatientsVisitData> pd = await patient.checkPatient(widget.token.guid);
-    print(pd);
+
     setState(() {
       pdo = pd;
     });
@@ -170,7 +167,6 @@ class _HomeConnectorState extends State<HomeConnector>
 
   @override
   Widget build(BuildContext context) {
-    print(tabController.index);
     final patient = Provider.of<PatientsVisitDB>(context);
     final tokenDB = Provider.of<TokenDB>(context);
     final recommend = Provider.of<RecommendationDB>(context);

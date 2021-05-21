@@ -39,7 +39,7 @@ class HabitDB extends _$HabitDB {
     if (q.length == 0) {
       into(habits).insert(h);
     } else {
-      print('Already Exists in table');
+
     }
   }
 

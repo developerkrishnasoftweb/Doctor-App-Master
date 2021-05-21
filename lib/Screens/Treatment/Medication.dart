@@ -170,7 +170,6 @@ class _MedicationState extends State<Medication> {
                                       subtitle: Text(
                                           "${md.last.medicines[index].dose} ${md.last.medicines[index].unit}  ${md.last.medicines[index].route} ${md.last.medicines[index].frequency} ${md.last.medicines[index].direction} ${md.last.medicines[index].duration}"),
                                       onLongPress: () {
-                                        print(md.last.medicines[index].title);
                                       },
                                       trailing: IconButton(
                                           icon: Icon(Icons.cancel),

@@ -41,8 +41,6 @@ class PatientsDB extends _$PatientsDB {
     var q = await fetchTask(h.patientId);
     if (q.length == 0) {
       into(patients).insert(h);
-    } else {
-      print('Already Exists in table');
     }
   }
 
@@ -78,7 +76,6 @@ class PatientsDB extends _$PatientsDB {
 
   Future<List<Patient>> getAll() {
     final query = select(patients);
-    print(query);
     return query.get();
   }
 
@@ -93,7 +90,6 @@ class PatientsDB extends _$PatientsDB {
         ..where((pat) => pat.patientId.contains(patientId));
       return query.get();
     } catch (e) {
-      print("Error" + e);
       return null;
     }
   }
@@ -126,7 +122,6 @@ class PatientsDB extends _$PatientsDB {
     }
 
     List<Patient> part = await checkPatient(pat.patientId);
-    print(part);
     //  if (pat.patientId.toString() != part.patientId) {
     // }
     return uniqueId;

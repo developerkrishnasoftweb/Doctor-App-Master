@@ -169,8 +169,6 @@ class RecommendationDB extends _$RecommendationDB {
     var query = select(recommendation)
       ..where((tbl) => tbl.disease.equals(disease));
       List<RecommendationData> list = await query.get();
-
-      print(list);
       return list;
       // print('Recommendation counts');
       // print(list);

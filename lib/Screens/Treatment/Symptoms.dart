@@ -61,16 +61,12 @@ class _SymtomsState extends State<Symtoms> {
       try {
         Response response = await Dio().post(url, data: formData);
         var data = jsonDecode(response.toString());
-        print(response.data);
-        print(data['secure_url']);
 
         setState(() {
           isloading = false;
           imageUrl = data['secure_url'];
-          print(imageUrl);
         });
       } catch (e) {
-        print(e);
       }
     }
   }
@@ -82,7 +78,7 @@ class _SymtomsState extends State<Symtoms> {
   //     GETBRIEFHISTORY,
   //     headers: {"Authorization": token},
   //   );
-  //   print(response.body);
+  //
   //   if (response.statusCode == 200) {
   //     SymptomsModel briefHistory =
   //         SymptomsModel.fromJson(json.decode(response.body));
@@ -337,7 +333,6 @@ class _SymtomsState extends State<Symtoms> {
                                 if (snapshot.data.last.feedBack == null ||
                                     snapshot.data.last.feedBack.data.length ==
                                         0) {
-                                  print(snapshot.data.last.feedBack);
                                   Fluttertoast.showToast(
                                       msg: "No pending feedback",
                                       toastLength: Toast.LENGTH_SHORT,
@@ -347,8 +342,6 @@ class _SymtomsState extends State<Symtoms> {
                                       textColor: white,
                                       fontSize: 16.0);
                                 } else {
-                                  print(snapshot
-                                      .data.last.feedBack.data[0].disease);
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {

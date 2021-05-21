@@ -80,8 +80,6 @@ class MedicinesDB extends _$MedicinesDB {
     var q = await fetchTask(m.title);
     if (q.length == 0) {
       into(medicines).insert(m);
-    } else {
-      print('Already Exists in table');
     }
   }
 

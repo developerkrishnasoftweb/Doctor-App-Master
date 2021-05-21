@@ -70,10 +70,8 @@ class _SlotBookingState extends State<SlotBooking> {
   var listener = DataConnectionChecker().onStatusChange.listen((status) {
     switch (status) {
       case DataConnectionStatus.connected:
-        print('Data connection is available.');
         break;
       case DataConnectionStatus.disconnected:
-        print('You are disconnected from the internet.');
         break;
     }
   });
@@ -156,8 +154,7 @@ class _SlotBookingState extends State<SlotBooking> {
           break;
         default:
           choice4 = null;
-      }
-      debugPrint(choice4); //Debug the choice in console
+      } //Debug the choice in console
     });
   }
 
@@ -168,7 +165,6 @@ class _SlotBookingState extends State<SlotBooking> {
     //   tokenNo = tok.tokenno;
     // });
     if (result.isEmpty) {
-      print('absent');
       final p = PatientsVisitData(
           mobileNo: int.parse(_mobileno),
           patientName: _name,
@@ -181,7 +177,7 @@ class _SlotBookingState extends State<SlotBooking> {
           clinicDoctorId: widget.token.doctorid);
       patient.insert(p);
     } else {
-      print('preseent');
+
       PatientsVisitData r = result.last;
       final p = PatientsVisitData(
         mobileNo: r.mobileNo,
@@ -216,7 +212,6 @@ class _SlotBookingState extends State<SlotBooking> {
   @override
   Widget build(BuildContext context) {
     // final database = Provider.of<TokenDB>(context);
-    print(listener);
     return SimpleDialog(
         elevation: 20,
         titlePadding: EdgeInsets.zero,
@@ -580,7 +575,6 @@ class _SlotBookingState extends State<SlotBooking> {
                                     _radiovalue4,
                                     _fees);
                               }
-                              print("GUID" + response);
                               var pat = Patient(
                                   mobileNo: int.parse(_mobileno),
                                   name: _name,
@@ -591,8 +585,6 @@ class _SlotBookingState extends State<SlotBooking> {
                                   address: _address);
                               responsePatient = await widget.patientDatabase
                                   .createPatient2(pat);
-                              print("Patient reponse" +
-                                  responsePatient.toString());
                               await widget.database.updateData(
                                   widget.token.copyWith(
                                       name: _name,
@@ -650,7 +642,6 @@ class _SlotBookingState extends State<SlotBooking> {
                                     _radiovalue4,
                                     _fees);
                               }
-                              print("GUID" + response);
                               var pat = Patient(
                                   mobileNo: int.parse(_mobileno),
                                   name: _name,
@@ -661,8 +652,6 @@ class _SlotBookingState extends State<SlotBooking> {
                                   address: _address);
                               responsePatient = await widget.patientDatabase
                                   .createPatient2(pat);
-                              print("Patient reponse" +
-                                  responsePatient.toString());
                               await widget.database.updateData(
                                   widget.token.copyWith(
                                       name: _name,

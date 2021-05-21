@@ -138,7 +138,6 @@ class _LabTestState extends State<LabTest> with SingleTickerProviderStateMixin {
                       ),
                       color: blue,
                       onPressed: () {
-                        print(test.parametersList.length);
                         ex.insertTask(Examination(
                             clinicDoctorId: 1,
                             doctorId: widget.docId,

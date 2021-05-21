@@ -142,7 +142,6 @@ class _GetTimingsState extends State<GetTimings> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height);
     final recom = Provider.of<RecommendationDB>(context);
     final med = Provider.of<MedicinesDB>(context);
     return SingleChildScrollView(
@@ -221,7 +220,6 @@ class _GetTimingsState extends State<GetTimings> {
                                           setState(() {
                                             days = index;
                                           });
-                                          print(days);
                                         },
                                         child: Container(
                                           alignment: Alignment.center,
@@ -268,8 +266,6 @@ class _GetTimingsState extends State<GetTimings> {
                                           setState(() {
                                             months = index;
                                           });
-                                          print(months);
-                                         
                                         },
                                         child: Container(
                                           alignment: Alignment.center,
@@ -316,7 +312,6 @@ class _GetTimingsState extends State<GetTimings> {
                                           setState(() {
                                             years = index;
                                           });
-                                          print(years.toString());
                                         },
                                         child: Container(
                                           alignment: Alignment.center,

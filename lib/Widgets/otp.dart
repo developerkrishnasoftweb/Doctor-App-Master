@@ -46,7 +46,6 @@ class _OtpState extends State<Otp> {
   );
   @override
   Widget build(BuildContext context) {
-    print(widget.generated);
     return Scaffold(
       backgroundColor: Colors.white,
       key: scaffoldKey,
@@ -164,13 +163,11 @@ class _OtpState extends State<Otp> {
                       errorAnimationController: errorController,
                       controller: textEditingController,
                       onChanged: (value) {
-                        print(value);
                         setState(() {
                           currentText = value;
                         });
                       },
                       beforeTextPaste: (text) {
-                        print("Allowing to paste $text");
                         return true;
                       },
                     ),
@@ -190,9 +187,6 @@ class _OtpState extends State<Otp> {
                       height: 50,
                       child: FlatButton(
                         onPressed: () async {
-                          print(currentText+"=="+widget.generated.substring(1,7)  );
-                          print(currentText.compareTo(widget.generated));
-
                           if (currentText.length != 6||
                               currentText.trim() !=widget.generated.substring(1,7)  ) {
                            errorController.add(ErrorAnimationType.shake);

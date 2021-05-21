@@ -56,11 +56,7 @@ class GenerateTokens {
               " " +
               i.endTime);
       int hours = et.difference(st).inSeconds;
-      print(st.toString() + " " + et.toString());
-      print("line 59 page generatetoken.dart");
       dynamic interval = ((hours) / i.noOfPatients).toString().split('.');
-      print(et.difference(st).inMinutes);
-      print(interval);
       for (int j = 0; j < i.noOfPatients; j++) {
         final token = Token(
             fees: tokens.fees,

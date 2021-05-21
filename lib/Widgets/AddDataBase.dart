@@ -25,7 +25,6 @@ class AddDataBase extends StatelessWidget {
                 icon: Icon(Icons.arrow_forward_ios),
               ),
               onTap: () {
-                print("add database line 29");
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -49,7 +48,6 @@ class AddDataBase extends StatelessWidget {
               title: Text('Examination Table'),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
-                print(docId);
                 showDialog(
                   context: context,
                   barrierDismissible: true,
@@ -65,7 +63,6 @@ class AddDataBase extends StatelessWidget {
               trailing: IconButton(
                   icon: Icon(Icons.arrow_forward_ios), onPressed: null),
               onTap: () {
-                print(docId);
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
