@@ -260,21 +260,23 @@ class _HomeConnectorState extends State<HomeConnector>
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            patient.updateCompleteStatus(widget.token.guid);
-            tokenDB.updateCompleteStatus(widget.token.guid);
-            setState(() {});
-            changeScreen(
-                context,
-                PatientReport(
-                  patientId: widget.token.guid,
-                  token: widget.token,
-                  advices: advices,
-                ));
-          },
-          child: Icon(Icons.print, color: Colors.white),
-        ));
+        floatingActionButton: tabController.index == (tabs.length - 1)
+            ? FloatingActionButton(
+                onPressed: () async {
+                  patient.updateCompleteStatus(widget.token.guid);
+                  tokenDB.updateCompleteStatus(widget.token.guid);
+                  setState(() {});
+                  changeScreen(
+                      context,
+                      PatientReport(
+                        patientId: widget.token.guid,
+                        token: widget.token,
+                        advices: advices,
+                      ));
+                },
+                child: Icon(Icons.print, color: Colors.white),
+              )
+            : null);
   }
 }
 

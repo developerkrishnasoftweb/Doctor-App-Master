@@ -78,13 +78,13 @@ class _PatientReportState extends State<PatientReport> {
     final docUser = DoctorLoginData.fromJson(json.decode(doctors));
     pw.ThemeData myTheme = pw.ThemeData.withFont(
       base: pw.Font.ttf(await rootBundle
-          .load("fonts${Platform.pathSeparator}OpenSans-Regular.ttf")),
+          .load("fonts${Platform.pathSeparator}NotoSans-Regular.ttf")),
       bold: pw.Font.ttf(await rootBundle
-          .load("fonts${Platform.pathSeparator}OpenSans-Bold.ttf")),
+          .load("fonts${Platform.pathSeparator}NotoSans-Bold.ttf")),
       italic: pw.Font.ttf(await rootBundle
-          .load("fonts${Platform.pathSeparator}OpenSans-Italic.ttf")),
+          .load("fonts${Platform.pathSeparator}NotoSans-Italic.ttf")),
       boldItalic: pw.Font.ttf(await rootBundle
-          .load("fonts${Platform.pathSeparator}OpenSans-BoldItalic.ttf")),
+          .load("fonts${Platform.pathSeparator}NotoSans-BoldItalic.ttf")),
     );
     pdf = pw.Document(theme: myTheme);
     final rootImage = await rootBundle.load('images/getcure logo.png');
@@ -240,10 +240,12 @@ class _PatientReportState extends State<PatientReport> {
                             i <
                                 (patientsVisitData?.examination?.data?.length ??
                                     0);
-                            i++)
+                            i++) ...[
+                              // pw.Text('${patientsVisitData.examination.data[i].parameters[0].title}'),
                           bulletItem(
                               "${patientsVisitData.examination.data[i].title}",
                               pdfConfig?.examinationValue),
+                        ],
 
                         // Allergies section
                         header("ALLERGIES", pdfConfig?.allergiesLable),
@@ -307,17 +309,17 @@ class _PatientReportState extends State<PatientReport> {
                                   (patientsVisitData?.medication?.data[i]
                                           ?.medicines?.length ??
                                       0);
-                              j++)
+                              j++) ...[
                             bulletItem(
                                 "${patientsVisitData.medication.data[i].medicines[j].title} (${patientsVisitData.medication.data[i].medicines[j].dose} ${patientsVisitData.medication.data[i].medicines[j].unit} ${patientsVisitData.medication.data[i].medicines[j].frequency} ${patientsVisitData.medication.data[i].medicines[j].duration})",
                                 pdfConfig?.madicationValue)
+                          ]
                         ],
 
                         // Medial Advice
                         header("MEDICAL ADVICE", pdfConfig?.adviceLable),
                         for (int i = 0; i < widget.advices.length; i++)
-                          bulletItem(
-                              "${widget.advices[i].advice}",
+                          bulletItem("${widget.advices[i].advice}",
                               pdfConfig?.adviceValue),
                       ])),
                 ]),
