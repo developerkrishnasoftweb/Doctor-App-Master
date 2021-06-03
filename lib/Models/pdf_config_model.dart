@@ -43,6 +43,7 @@ class PdfConfig {
       lifestyleLable,
       lifestyleValue,
       examinationLable,
+      examinationKey,
       examinationValue,
       noticableLable,
       noticableValue,
@@ -92,6 +93,7 @@ class PdfConfig {
       this.lifestyleLable,
       this.lifestyleValue,
       this.examinationLable,
+      this.examinationKey,
       this.examinationValue,
       this.noticableLable,
       this.noticableValue,
@@ -147,6 +149,7 @@ class PdfConfig {
     lifestyleLable = TextPdfConfig.fromJson(json['lifestyleLable']);
     lifestyleValue = TextPdfConfig.fromJson(json['lifestyleValue']);
     examinationLable = TextPdfConfig.fromJson(json['examinationLable']);
+    examinationKey = TextPdfConfig.fromJson(json['examinationKey']);
     examinationValue = TextPdfConfig.fromJson(json['examinationValue']);
     noticableLable = TextPdfConfig.fromJson(json['noticableLable']);
     noticableValue = TextPdfConfig.fromJson(json['noticableValue']);

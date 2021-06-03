@@ -241,10 +241,19 @@ class _PatientReportState extends State<PatientReport> {
                                 (patientsVisitData?.examination?.data?.length ??
                                     0);
                             i++) ...[
-                              // pw.Text('${patientsVisitData.examination.data[i].parameters[0].title}'),
                           bulletItem(
                               "${patientsVisitData.examination.data[i].title}",
-                              pdfConfig?.examinationValue),
+                              pdfConfig?.examinationKey,
+                              showBullets: false),
+                          for (int j = 0;
+                              j <
+                                  patientsVisitData
+                                      .examination.data[i].parameters.length;
+                              j++)
+                            bulletItem(
+                                patientsVisitData
+                                    .examination.data[i].parameters[j].title,
+                                pdfConfig?.examinationValue)
                         ],
 
                         // Allergies section
@@ -335,6 +344,7 @@ class _PatientReportState extends State<PatientReport> {
 
   @override
   Widget build(BuildContext context) {
+    // print(patientsVisitData.examination.data[1].parameters[0].references);
     return Scaffold(
       appBar: AppBar(
           title: Text("Patient Report", style: TextStyle(color: white)),
@@ -448,7 +458,8 @@ class _PatientReportState extends State<PatientReport> {
         : pw.SizedBox();
   }
 
-  pw.Widget bulletItem(String value, TextPdfConfig bulletItemConfig) {
+  pw.Widget bulletItem(String value, TextPdfConfig bulletItemConfig,
+      {bool showBullets = true, pw.TextStyle textStyle}) {
     if (bulletItemConfig == null) {
       bulletItemConfig = TextPdfConfig();
     }
@@ -457,11 +468,12 @@ class _PatientReportState extends State<PatientReport> {
             margin: bulletItemConfig.margin,
             padding: bulletItemConfig.padding,
             alignment: pw.Alignment.centerLeft,
-            child: pw.Text("\u2022 $value",
+            child: pw.Text("${showBullets ? '\u2022 ' : ''}$value",
                 style: pw.TextStyle(
-                    color:
-                        bulletItemConfig.color ?? PdfColor.fromInt(0xff555555),
-                    fontSize: bulletItemConfig.fontSize),
+                        color: bulletItemConfig.color ??
+                            PdfColor.fromInt(0xff555555),
+                        fontSize: bulletItemConfig.fontSize)
+                    .merge(textStyle),
                 softWrap: true,
                 maxLines: 3))
         : pw.SizedBox();
