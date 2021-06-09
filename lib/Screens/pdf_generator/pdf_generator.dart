@@ -1,7 +1,6 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui' as ui;
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +19,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart' as sync;
 
 class PatientReport extends StatefulWidget {
   final String patientId;
@@ -336,10 +336,46 @@ class _PatientReportState extends State<PatientReport> {
         }));
     final tempPDF =
         File('${directory.path + Platform.pathSeparator}report.pdf');
-    await tempPDF.writeAsBytes(await pdf.save());
+    await tempPDF.writeAsBytes(await _addWatermarkToPDF(await pdf.save()));
     setState(() {
       generatedPDF = tempPDF;
     });
+  }
+
+  Future<List<int>> _addWatermarkToPDF(Uint8List file) async {
+    //Load the document
+    ByteData data = file.buffer.asByteData();
+    sync.PdfDocument document = sync.PdfDocument(
+        inputBytes:
+            data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+    //Get first page from document
+    sync.PdfPage page = document.pages[0];
+    //Create PDF graphics for the page
+    sync.PdfGraphics graphics = page.graphics;
+    //Save the graphics state for the watermark text
+    graphics.save();
+    //Set transparency level for the text
+    graphics.setTransparency(0.4);
+    //Rotate the text to -40 Degree
+    // graphics.rotateTransform(-40);
+    //Draw the watermark text to the desired position over the PDF page with red color
+    final rootImage = await rootBundle.load('images/getcure logo.png');
+    ByteData byteData = rootImage.buffer.asByteData();
+    graphics.drawImage(
+        sync.PdfBitmap(byteData.buffer
+            .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
+        Rect.fromLTWH(
+            page.getClientSize().width / 4,
+            page.getClientSize().height / 4,
+            page.getClientSize().width / 2,
+            page.getClientSize().height / 2));
+    //Restore the graphics
+    graphics.restore();
+    //Save the docuemnt
+    List<int> bytes = document.save();
+    document.dispose();
+    //Dispose the document.
+    return bytes;
   }
 
   @override

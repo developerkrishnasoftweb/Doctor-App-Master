@@ -123,6 +123,7 @@ Future<PdfConfig> getPdfConfig() async {
     String docId = pref.getString('docId');
     if (docId != null) {
       var response = await http.get(GET_PDF_CONFIG + docId);
+      print(GET_PDF_CONFIG + docId);
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         PdfConfig pdfConfig;
