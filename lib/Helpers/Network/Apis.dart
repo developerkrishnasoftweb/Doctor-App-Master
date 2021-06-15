@@ -1,4 +1,4 @@
-const BASEURL = "https://getcure.herokuapp.com";
+const BASEURL = "https://www.getcurebackend.in";
 
 // list of endpoints:
 

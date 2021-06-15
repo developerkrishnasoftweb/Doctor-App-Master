@@ -29,23 +29,33 @@ import 'package:intl/intl.dart';
 import 'package:getcure_doctor/Database/PatientsTable.dart' as pot;
 import 'package:getcure_doctor/Database/PatientsVisitTable.dart';
 
+const Map<String, String> headers = const {
+  "Content-Type": "application/x-www-form-urlencoded"
+};
+
+Encoding encoding = Encoding.getByName("utf-8");
+
 Future<bool> updatedetails(id, name, age, gender, degree, mob, email, lang,
     experience, designation) async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   String tk = pref.getString('docToken');
-  var response = await http.put(DOCTORENJOYDAYE, headers: {
-    HttpHeaders.authorizationHeader: tk
-  }, body: {
-    "name": name,
-    "age": age,
-    "gender": gender,
-    "degree": degree,
-    "mobile_no": mob,
-    "email": email,
-    "language": lang,
-    "experience": experience,
-    "designation": designation
-  });
+  var response = await http.put(DOCTORENJOYDAYE,
+      headers: {
+        HttpHeaders.authorizationHeader: tk,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: {
+        "name": name,
+        "age": age,
+        "gender": gender,
+        "degree": degree,
+        "mobile_no": mob,
+        "email": email,
+        "language": lang,
+        "experience": experience,
+        "designation": designation
+      },
+      encoding: encoding);
   if (response.statusCode == 200) {
     GetMyProfile getMyProfile =
         GetMyProfile.fromJson(json.decode(response.body));
@@ -64,12 +74,16 @@ Future<bool> updatedetails(id, name, age, gender, degree, mob, email, lang,
 Future<bool> updateFees(String clinicDoctorId, opdFees, emergencyFees) async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   String tk = pref.getString('docToken');
-  var response = await http.put(FEESUPDATE + clinicDoctorId, headers: {
-    HttpHeaders.authorizationHeader: tk
-  }, body: {
-    "consultation_fee": opdFees,
-    "emergency_fee": emergencyFees,
-  });
+  var response = await http.put(FEESUPDATE + clinicDoctorId,
+      headers: {
+        HttpHeaders.authorizationHeader: tk,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: {
+        "consultation_fee": opdFees,
+        "emergency_fee": emergencyFees,
+      },
+      encoding: encoding);
   if (response.statusCode == 200) {
     var res = await http.get(GETDOCTOR, headers: {"Authorization": tk});
     GetMyProfile getMyProfile = GetMyProfile.fromJson(json.decode(res.body));
@@ -86,8 +100,10 @@ Future<bool> updateFees(String clinicDoctorId, opdFees, emergencyFees) async {
 
 Future<bool> loginDoctor(mobNo, pass) async {
   try {
-    var response = await http
-        .post(LOGINDOCTOR, body: {"emailOrPhone": mobNo, "password": pass});
+    var response = await http.post(LOGINDOCTOR,
+        body: {"emailOrPhone": mobNo, "password": pass},
+        encoding: encoding,
+        headers: headers);
     if (response.statusCode == 200) {
       DoctorLogin doctor = DoctorLogin.fromJson(json.decode(response.body));
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -185,7 +201,12 @@ Future<bool> addClinicByCode(String gcc) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('signtoken');
   var response = await http.post(ADDCLINICBYCODE,
-      headers: {"Authorization": token}, body: {"clinic_code": gcc});
+      headers: {
+        "Authorization": token,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: {"clinic_code": gcc},
+      encoding: encoding);
   if (response.statusCode == 200) {
     return true;
   } else {
@@ -267,7 +288,11 @@ Future addAdvices(String title, String symptoms) async {
   String docId = pref.getString('docId');
   if (token != null && docId != null) {
     var response = await http.post(GET_ADVICES,
-        headers: {"Authorization": token, "Content-Type": "application/json"},
+        headers: {
+          "Authorization": token,
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        encoding: encoding,
         body: jsonEncode({
           "title": title,
           "symptoms": symptoms.split(", "),
@@ -307,8 +332,8 @@ Future addAdvices(String title, String symptoms) async {
 // // }
 // }
 Future<String> generateOtp(mobno) async {
-  var response = await http.post(OTP, body: {"mobile_no": mobno});
-
+  var response = await http.post(OTP,
+      body: {"mobile_no": mobno}, encoding: encoding, headers: headers);
 
   if (response.statusCode == 200) {
     return response.body;
@@ -324,7 +349,9 @@ getToken() async {
 
 Future<bool> signupDoctor(mobno, otp, password) async {
   var response = await http.post(SIGNUP,
-      body: {"mobile_no": mobno, "password": password, "otp": otp});
+      body: {"mobile_no": mobno, "password": password, "otp": otp},
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      encoding: Encoding.getByName("utf-8"));
 
   if (response.statusCode == 200) {
     DoctorLogin doctor = DoctorLogin.fromJson(json.decode(response.body));
@@ -401,7 +428,11 @@ Future<bool> addClinic(clinicName, type, eoy, nob, nod, cityId, cityName,
   String token = prefs.getString('signtoken');
   var response = await http.post(
     ADDCLINIC,
-    headers: {"Authorization": token},
+    headers: {
+      "Authorization": token,
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    encoding: encoding,
     body: {
       "name": clinicName.toString(),
       "state_id": cityId.toString(),
@@ -418,7 +449,6 @@ Future<bool> addClinic(clinicName, type, eoy, nob, nod, cityId, cityName,
     },
   );
 
-
   if (response.statusCode == 200) {
     return true;
   } else {
@@ -430,24 +460,28 @@ Future<String> bookToken(name, age, mobileno, address, vtype, atype, tno, ttime,
     tdate, btype, docid, gender, fee) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  var response = await http.post(TOKENSBOOKING, headers: {
-    "Authorization": token
-  }, body: {
-    "patient[name]": name,
-    "patient[age]": age.toString(),
-    "patient[gender]": gender,
-    "patient[address]": address,
-    "patient[mobile_no]": mobileno.toString(),
-    "fees": fee,
-    "visit_type": vtype,
-    "booking_type": btype,
-    "appointment_type": atype,
-    "date": DateFormat('yyyy-MM-dd').format(tdate).toString(),
-    "time": DateFormat.Hms().format(tdate).toString(),
-    "token_no": tno.toString(),
-    "clinic_doctor_id": docid.toString(),
-    "is_present": 'true'
-  });
+  var response = await http.post(TOKENSBOOKING,
+      headers: {
+        "Authorization": token,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: {
+        "patient[name]": name,
+        "patient[age]": age.toString(),
+        "patient[gender]": gender,
+        "patient[address]": address,
+        "patient[mobile_no]": mobileno.toString(),
+        "fees": fee,
+        "visit_type": vtype,
+        "booking_type": btype,
+        "appointment_type": atype,
+        "date": DateFormat('yyyy-MM-dd').format(tdate).toString(),
+        "time": DateFormat.Hms().format(tdate).toString(),
+        "token_no": tno.toString(),
+        "clinic_doctor_id": docid.toString(),
+        "is_present": 'true'
+      },
+      encoding: encoding);
 
   if (response.statusCode == 200) {
     return json.decode(response.body)["data"]["patient_id"];
@@ -608,7 +642,6 @@ Future<void> getTokens(date, TokenDB db, String clinicDocid,
               clinicDoctorId: i.clinicDoctorId);
           patient.insert(p);
         } else {
-
           PatientsVisitData r = result.last;
           final p = PatientsVisitData(
             fee: i.fees,
@@ -692,7 +725,6 @@ Future doctorTimings(SendTime st, clinicdocId) async {
     "doctor_timings": json.encode(body),
   });
 
-
   if (response.statusCode == 200) {
     var res = await http.get(GETDOCTOR, headers: {"Authorization": token});
     if (res.statusCode == 200) {
@@ -712,7 +744,6 @@ Future<bool> sendHolidays(DocHoli ans, docId) async {
   String token = pref.getString('docToken');
   var response = await http.put(DOCTORENJOYDAYE,
       headers: {"Authorization": token}, body: {"holidays": sendHO});
-
 
   if (response.statusCode == 200) {
     SenHolidayUpdateModel docData =
@@ -812,9 +843,6 @@ Future<bool> sendImagesUrl(SendImageDataModel send) async {
   var response = await http.put(DOCTORENJOYDAYE,
       headers: {"Authorization": token},
       body: {"identity_verification_url": ans});
-
-
-
 
   if (response.statusCode == 200) {
     return true;
