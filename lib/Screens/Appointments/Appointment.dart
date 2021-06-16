@@ -26,7 +26,9 @@ import 'package:getcure_doctor/Database/TokenTable.dart';
 class Appointments extends StatefulWidget {
   final TokenDB database;
   final PatientsDB patientDatabase;
+
   const Appointments({this.database, this.patientDatabase});
+
   @override
   _AppointmentsState createState() => _AppointmentsState();
 }
@@ -39,6 +41,7 @@ class _AppointmentsState extends State<Appointments> {
 
   Timer T;
   List<ClinicDoctor> dropdown = [];
+
   getdoctors() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.reload();
@@ -144,6 +147,7 @@ class _AppointmentsState extends State<Appointments> {
   }
 
   int docId = 0;
+
   @override
   void dispose() {
     T.cancel();
@@ -184,12 +188,15 @@ class _AppointmentsState extends State<Appointments> {
       countComplete = countComplete;
     });
   }
+
   bool _isInAsyncCall = false;
   ClinicDoctor _selecteddoc;
+
   //ClinicDoctor dropdownvalue = ClinicDoctor(doctorName: '');
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   var datePicked = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     final p = Provider.of<PatientsDB>(context);
@@ -210,7 +217,7 @@ class _AppointmentsState extends State<Appointments> {
         clinicDoctor: dropdown,
         date: datePicked,
         getDoctors: callOnTimingsUpdate,
-        clinicDocId:  _selecteddoc == null ? 0 : _selecteddoc.id,
+        clinicDocId: _selecteddoc == null ? 0 : _selecteddoc.id,
         docUser: docUser,
       ),
       appBar: AppBar(
@@ -273,7 +280,7 @@ class _AppointmentsState extends State<Appointments> {
                     widget.database, _selecteddoc.clinicId);
                 fetchExamination(_selecteddoc.doctorId.toString(), edb);
                 fetchMedication(_selecteddoc.doctorId.toString(), mdb);
-                fetchData(_selecteddoc.doctorId, sdb,_selecteddoc.id);
+                fetchData(_selecteddoc.doctorId, sdb, _selecteddoc.id);
                 fetchHabits(_selecteddoc.doctorId.toString(), hdb);
                 fetchFeedback(
                     _selecteddoc.id.toString(), fdb, _selecteddoc.doctorId);
@@ -289,7 +296,7 @@ class _AppointmentsState extends State<Appointments> {
             onPressed: () async {
               // syncPatient(p, widget.database, pv);
               setState(() {
-                _isInAsyncCall=true;
+                _isInAsyncCall = true;
               });
               getAdvices(context);
               syncPatient(p, widget.database, pv).then((res) {
@@ -312,7 +319,7 @@ class _AppointmentsState extends State<Appointments> {
                           duration: Duration(seconds: 5),
                         ));
                         setState(() {
-                          _isInAsyncCall=false;
+                          _isInAsyncCall = false;
                         });
                       } else {
                         _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -324,7 +331,7 @@ class _AppointmentsState extends State<Appointments> {
                           duration: Duration(seconds: 5),
                         ));
                         setState(() {
-                          _isInAsyncCall=false;
+                          _isInAsyncCall = false;
                         });
                       }
                     } else {
@@ -337,7 +344,7 @@ class _AppointmentsState extends State<Appointments> {
                         duration: Duration(seconds: 5),
                       ));
                       setState(() {
-                          _isInAsyncCall=false;
+                        _isInAsyncCall = false;
                       });
                     }
                   });
@@ -351,7 +358,7 @@ class _AppointmentsState extends State<Appointments> {
                     duration: Duration(seconds: 5),
                   ));
                   setState(() {
-                    _isInAsyncCall=false;
+                    _isInAsyncCall = false;
                   });
                 }
               });
@@ -363,7 +370,7 @@ class _AppointmentsState extends State<Appointments> {
       body: Builder(builder: (BuildContext context) {
         return ModalProgressHUD(
           inAsyncCall: _isInAsyncCall,
-                  child: ListView(
+          child: ListView(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -382,10 +389,11 @@ class _AppointmentsState extends State<Appointments> {
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(color: orangep, width: 2.0)),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 20.0, right: 0),
+                            padding:
+                                const EdgeInsets.only(left: 20.0, right: 0),
                             child: FittedBox(
-                              fit:BoxFit.scaleDown,
-                                                          child: Center(
+                              fit: BoxFit.scaleDown,
+                              child: Center(
                                   child: Text(
                                 'Dr.' +
                                     (_selecteddoc == null
@@ -408,15 +416,15 @@ class _AppointmentsState extends State<Appointments> {
                               borderRadius: BorderRadius.circular(50),
                               border: Border.all(color: orangep)),
                           child: Center(
-                              child: CircleAvatar(
-                                  backgroundImage:docUser!=null&& docUser.imageUrl !=
-                                          null
-                                      ? NetworkImage(
-                                          docUser.imageUrl)
-                                      : NetworkImage(
-                                          "https://img.icons8.com/windows/452/person-male.png"),
-                                  maxRadius: 50.0,
-                                ),),
+                            child: CircleAvatar(
+                              backgroundImage: docUser != null &&
+                                      docUser.imageUrl != null
+                                  ? NetworkImage(docUser.imageUrl)
+                                  : NetworkImage(
+                                      "https://img.icons8.com/windows/452/person-male.png"),
+                              maxRadius: 50.0,
+                            ),
+                          ),
                         ),
                       ),
                       Positioned(
@@ -470,7 +478,8 @@ class _AppointmentsState extends State<Appointments> {
                                     height: 35,
                                     decoration: BoxDecoration(
                                         color: white,
-                                        borderRadius: BorderRadius.circular(20)),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
                                     child: Icon(
                                       Icons.calendar_today,
                                       color: pcolor,
@@ -631,8 +640,8 @@ class _AppointmentsState extends State<Appointments> {
                 scrollDirection: Axis.horizontal,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child:
-                      TokenTable(count: counting, query: query, date: datePicked),
+                  child: TokenTable(
+                      count: counting, query: query, date: datePicked),
                 ),
               )
             ],

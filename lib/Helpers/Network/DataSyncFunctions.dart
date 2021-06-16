@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:getcure_doctor/Database/ExaminationTable.dart';
 import 'package:getcure_doctor/Database/FeedBackTable.dart';
 import 'package:getcure_doctor/Database/HabitsTable.dart';
@@ -22,6 +24,7 @@ import 'package:getcure_doctor/Models/SyncModels/SymptomsSync.dart';
 import 'package:getcure_doctor/Models/SyncModels/SyncCancelled.dart';
 import 'package:getcure_doctor/Models/SyncModels/TokensSync.dart';
 import 'package:getcure_doctor/Models/SyncModels/UGIDUpdateModel.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Requesthttp.dart';
 import 'package:http/http.dart' as http;
@@ -96,7 +99,6 @@ syncPatient(PatientsDB patientsDB, TokenDB tokenDB,
       headers: {"Authorization": token},
       body: {"patients": json.encode(patientDataSync.toJson()['data'])});
 
-
   if (response.statusCode == 200) {
     GuidUpdating guidUpdate = GuidUpdating.fromJson(json.decode(response.body));
     for (var id in guidUpdate.patientIds) {
@@ -131,8 +133,7 @@ syncCancelled(TokenDB tokenDB, int id) async {
     for (var i in tokenList) {
       tokenDB.updateStatus(i.id);
     }
-  } else {
-  }
+  } else {}
 }
 
 syncExamination(ExaminationsDB examinationsDB) async {
@@ -157,7 +158,6 @@ syncExamination(ExaminationsDB examinationsDB) async {
   });
 
   if (response.statusCode == 200) {
-
     for (var i in list) {
       examinationsDB.updateStatus(i.id);
     }
@@ -264,7 +264,8 @@ syncMedicines(MedicinesDB medicinesDB) async {
         doctorId: i.doctorId,
         interactionDrugs: [
           // i.interactionDrugs
-        ], //TODO: string to array  interaction drug
+        ],
+        //TODO: string to array  interaction drug
         salt: i.salt,
         title: i.title));
   }
@@ -279,7 +280,6 @@ syncMedicines(MedicinesDB medicinesDB) async {
     }
     return true;
   } else {
-
     return false;
   }
 }
@@ -323,7 +323,6 @@ syncFeedBack(FeedBackDB feedBackDB) async {
     }
     return true;
   } else {
-
     return false;
   }
 }
@@ -377,13 +376,11 @@ syncPatientVisit(PatientsVisitDB patientsVisitDB) async {
       body: {"patient_visits": json.encode(patientVisitSync.toJson()['data'])});
 
   if (response.statusCode == 200) {
-
     for (var i in list) {
       patientsVisitDB.updateStatus(i.id);
     }
     return true;
   } else {
-
     return false;
   }
 }
@@ -419,7 +416,8 @@ fetchData(int docId, SymptomsDB symptomsDB, int clinicDocId) async {
   if (response.statusCode == 200) {
     SymptomSync symptomSync = SymptomSync.fromJson(json.decode(response.body));
     for (var i in symptomSync.symptoms) {
-      symptomsDB.addBrief(i.title, setVisibility(i.visibilityPeriod), docId, clinicDocId);
+      symptomsDB.addBrief(
+          i.title, setVisibility(i.visibilityPeriod), docId, clinicDocId);
     }
   }
 }
@@ -531,11 +529,8 @@ fetchPatientsVisit(String clinicDocId, PatientsVisitDB pvDB) async {
   );
 
   if (response.statusCode == 200) {
-
-
     PatientVisitSync pvs =
         PatientVisitSync.fromJson(json.decode(response.body));
-
 
     for (var i in pvs.data) {
       var pvi = PatientsVisitData(
@@ -576,7 +571,6 @@ fetchPatients(String clinicDocId, PatientsDB patientsDB) async {
     headers: {"Authorization": token},
   );
   if (response.statusCode == 200) {
-
     PatientDataSync patientSync =
         PatientDataSync.fromJson(json.decode(response.body));
     for (var i in patientSync.data) {
@@ -628,7 +622,6 @@ fetchParameters(String id) async {
       parametersUpdate.data.route[i].isOnline = true;
     }
     pref.setString("parameters", json.encode(parametersUpdate));
-
   }
 }
 
@@ -708,6 +701,48 @@ syncParameters(String id) async {
       parametersUpdate.data.route[i].isOnline = true;
     }
     pref.setString("parameters", json.encode(parametersUpdate));
-  } else {
+  } else {}
+}
+
+Future<File> downloadImageToLocal(String networkPath,
+    {Function(int, int) downloadProgress}) async {
+  if (downloadProgress == null) {
+    downloadProgress = (int received, int total) {};
   }
+
+  http.Client httpClient = http.Client();
+  http.Request request = new http.Request('GET', Uri.parse(networkPath));
+  Future<http.StreamedResponse> response = httpClient.send(request);
+  String dir = (await getApplicationDocumentsDirectory()).path;
+  List<List<int>> chunks = [];
+  int downloaded = 0;
+
+  // Create file in temparory directory
+  String fileName = networkPath.split('/').last;
+  String filePath = '$dir/$fileName';
+  File file = File(filePath);
+
+  if (await file.exists()) {
+    return file;
+  } else {
+    await file.create();
+  }
+
+  response.asStream().listen((stream) {
+    stream.stream.listen((chunk) {
+      chunks.add(chunk);
+      downloaded += chunk.length;
+      downloadProgress(downloaded, stream.contentLength);
+    }, onDone: () async {
+      final Uint8List bytes = Uint8List(stream.contentLength);
+      int offset = 0;
+      for (List<int> chunk in chunks) {
+        bytes.setRange(offset, offset + chunk.length, chunk);
+        offset += chunk.length;
+      }
+      await file.writeAsBytes(bytes);
+    });
+  });
+
+  return file;
 }

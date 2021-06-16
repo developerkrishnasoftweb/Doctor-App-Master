@@ -8,6 +8,7 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:getcure_doctor/Database/PatientsVisitTable.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/AppConfig/colors.dart';
+import 'package:getcure_doctor/Helpers/Network/DataSyncFunctions.dart';
 import 'package:getcure_doctor/Helpers/Network/Requesthttp.dart';
 import 'package:getcure_doctor/Models/DoctorLogin.dart';
 import 'package:getcure_doctor/Models/PatientsVisitTableModels.dart';
@@ -87,59 +88,34 @@ class _PatientReportState extends State<PatientReport> {
           .load("fonts${Platform.pathSeparator}NotoSans-BoldItalic.ttf")),
     );
     pdf = pw.Document(theme: myTheme);
-    final rootImage = await rootBundle.load('images/getcure logo.png');
-    final image = pw.MemoryImage((rootImage).buffer.asUint8List());
 
     pdf.addPage(pw.MultiPage(
         // theme: pw.ThemeData(
         //   softWrap: true
         // ),
-        pageTheme: pw.PageTheme(
-            pageFormat: selectedPageFormat,
-            buildBackground: (context) {
-              return pw.FullPage(
-                ignoreMargins: true,
-                child: pw.CustomPaint(
-                  size: PdfPoint(
-                      selectedPageFormat.width, selectedPageFormat.height),
-                  painter: (PdfGraphics canvas, PdfPoint size) {
-                    canvas.drawImage(
-                        PdfImage.file(PdfDocument(),
-                            bytes: rootImage.buffer.asUint8List()),
-                        10,
-                        20);
-                  },
-                ),
-              );
-            }),
+        pageTheme: pw.PageTheme(pageFormat: selectedPageFormat),
         build: (context) {
           return [
             pw.SizedBox(width: double.infinity),
             pw.Padding(
-                child: pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.center,
-                    crossAxisAlignment: pw.CrossAxisAlignment.center,
-                    children: [
-                      pw.Image(image, height: 60, width: 60),
-                      pw.SizedBox(width: 10),
-                      pw.Expanded(
-                          child: pw.Column(
-                              mainAxisAlignment: pw.MainAxisAlignment.center,
-                              crossAxisAlignment: pw.CrossAxisAlignment.center,
-                              children: [
-                            pw.Text("AASTHA MULTI SPECIALIST HOSPITAL",
-                                style: pw.TextStyle(
-                                    color: PdfColor.fromInt(0xff000000),
-                                    fontSize: 23,
-                                    fontWeight: pw.FontWeight.bold),
-                                textAlign: pw.TextAlign.center),
-                            pw.Text("Address: Delhi Sharanur Road Baraut",
-                                style: pw.TextStyle(
-                                    color: PdfColor.fromInt(0xff000000),
-                                    fontSize: 20,
-                                    fontWeight: pw.FontWeight.bold)),
-                          ]))
-                    ]),
+                child: pw.Align(
+                    child: pw.Column(
+                        mainAxisAlignment: pw.MainAxisAlignment.center,
+                        crossAxisAlignment: pw.CrossAxisAlignment.center,
+                        children: [
+                          pw.Text("AASTHA MULTI SPECIALIST HOSPITAL",
+                              style: pw.TextStyle(
+                                  color: PdfColor.fromInt(0xff000000),
+                                  fontSize: 23,
+                                  fontWeight: pw.FontWeight.bold),
+                              textAlign: pw.TextAlign.center),
+                          pw.Text("Address: Delhi Sharanur Road Baraut",
+                              style: pw.TextStyle(
+                                  color: PdfColor.fromInt(0xff000000),
+                                  fontSize: 20,
+                                  fontWeight: pw.FontWeight.bold)),
+                        ]),
+                    alignment: pw.Alignment.center),
                 padding: pw.EdgeInsets.symmetric(vertical: 10)),
             pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
@@ -343,6 +319,13 @@ class _PatientReportState extends State<PatientReport> {
   }
 
   Future<List<int>> _addWatermarkToPDF(Uint8List file) async {
+    // Load url
+    File backgroundImage = await downloadImageToLocal(
+        'https://i.pinimg.com/originals/cf/b8/75/cfb875ac3b1c8575b051af65e3f00488.png',
+        downloadProgress: (received, total) {
+      print("$received of $total");
+    });
+
     //Load the document
     ByteData data = file.buffer.asByteData();
     sync.PdfDocument document = sync.PdfDocument(
@@ -359,16 +342,13 @@ class _PatientReportState extends State<PatientReport> {
     //Rotate the text to -40 Degree
     // graphics.rotateTransform(-40);
     //Draw the watermark text to the desired position over the PDF page with red color
-    final rootImage = await rootBundle.load('images/getcure logo.png');
-    ByteData byteData = rootImage.buffer.asByteData();
+    // final rootImage = await rootBundle.load('images/getcure logo.png');
+    ByteData byteData = backgroundImage.readAsBytesSync().buffer.asByteData();
     graphics.drawImage(
         sync.PdfBitmap(byteData.buffer
             .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
         Rect.fromLTWH(
-            page.getClientSize().width / 4,
-            page.getClientSize().height / 4,
-            page.getClientSize().width / 2,
-            page.getClientSize().height / 2));
+            0, 0, page.getClientSize().width, page.getClientSize().height));
     //Restore the graphics
     graphics.restore();
     //Save the docuemnt
