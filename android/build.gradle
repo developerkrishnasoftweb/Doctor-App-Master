@@ -15,6 +15,10 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+//        maven {
+//            url 'https://dl.bintray.com/sbinder/sqlite3-native-library/eu/simonbinder/sqlite3-native-library/3.32.3/sqlite3-native-library-3.32.3.aar'
+//        }
     }
 }
 

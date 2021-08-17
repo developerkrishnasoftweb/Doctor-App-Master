@@ -321,7 +321,7 @@ class _PatientReportState extends State<PatientReport> {
   Future<List<int>> _addWatermarkToPDF(Uint8List file) async {
     // Load url
     File backgroundImage = await downloadImageToLocal(
-        'https://i.pinimg.com/originals/cf/b8/75/cfb875ac3b1c8575b051af65e3f00488.png',
+        '${pdfConfig.imageURL}',
         downloadProgress: (received, total) {
       print("$received of $total");
     });
