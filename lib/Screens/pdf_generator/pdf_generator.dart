@@ -227,8 +227,7 @@ class _PatientReportState extends State<PatientReport> {
                                       .examination.data[i].parameters.length;
                               j++)
                             bulletItem(
-                                patientsVisitData
-                                    .examination.data[i].parameters[j].title,
+                                '${patientsVisitData.examination.data[i].parameters[j].title} ${patientsVisitData.examination.data[i].parameters[j].bioReference != null && patientsVisitData.examination.data[i].parameters[j].bioReference.isNotEmpty ? patientsVisitData.examination.data[i].parameters[j].bioReference[0] : ''}',
                                 pdfConfig?.examinationValue)
                         ],
 
@@ -320,8 +319,7 @@ class _PatientReportState extends State<PatientReport> {
 
   Future<List<int>> _addWatermarkToPDF(Uint8List file) async {
     // Load url
-    File backgroundImage = await downloadImageToLocal(
-        '${pdfConfig.imageURL}',
+    File backgroundImage = await downloadImageToLocal('${pdfConfig.imageURL}',
         downloadProgress: (received, total) {
       print("$received of $total");
     });
