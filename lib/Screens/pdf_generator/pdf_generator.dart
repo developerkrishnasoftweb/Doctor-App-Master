@@ -227,7 +227,7 @@ class _PatientReportState extends State<PatientReport> {
                                       .examination.data[i].parameters.length;
                               j++)
                             bulletItem(
-                                '${patientsVisitData.examination.data[i].parameters[j].title} ${patientsVisitData.examination.data[i].parameters[j].result != null && patientsVisitData.examination.data[i].parameters[j].result.isNotEmpty ? patientsVisitData.examination.data[i].parameters[j].result[0] : ''}',
+                                '${patientsVisitData.examination.data[i].parameters[j].title} ${patientsVisitData.examination.data[i].parameters[j].result != null && patientsVisitData.examination.data[i].parameters[j].result.isNotEmpty ? '${patientsVisitData.examination.data[i].parameters[j].result[0]} ${patientsVisitData.examination.data[i].parameters[j].unit}' : ''}',
                                 pdfConfig?.examinationValue)
                         ],
 
