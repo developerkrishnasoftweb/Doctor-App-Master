@@ -104,6 +104,7 @@ Future<bool> loginDoctor(mobNo, pass) async {
         body: {"emailOrPhone": mobNo, "password": pass},
         encoding: encoding,
         headers: headers);
+    print(response.body);
     if (response.statusCode == 200) {
       DoctorLogin doctor = DoctorLogin.fromJson(json.decode(response.body));
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -334,7 +335,7 @@ Future addAdvices(String title, String symptoms) async {
 Future<String> generateOtp(mobno) async {
   var response = await http.post(OTP,
       body: {"mobile_no": mobno}, encoding: encoding, headers: headers);
-
+  print(response.body);
   if (response.statusCode == 200) {
     return response.body;
   }

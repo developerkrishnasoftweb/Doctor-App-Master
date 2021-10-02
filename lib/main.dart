@@ -86,15 +86,14 @@ class _SControllerState extends State<SController> {
   isLoggedin() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String token = pref.getString('docToken');
-    if (token == null) {
-      setState(() {
+
+    setState(() {
+      if (token == null) {
         p = 'login';
-      });
-    } else {
-      setState(() {
+      } else {
         p = 'home';
-      });
-    }
+      }
+    });
   }
 
   @override

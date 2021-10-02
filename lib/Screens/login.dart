@@ -20,6 +20,7 @@ class LoginPage extends StatefulWidget {
 
   const LoginPage({Key key, this.database, this.patientDatabase})
       : super(key: key);
+
   @override
   State createState() => new LoginPageState();
 }
@@ -37,6 +38,7 @@ class LoginPageState extends State<LoginPage> {
   String errorText = "Something wrong happend";
   final RoundedLoadingButtonController _btnController =
       new RoundedLoadingButtonController();
+
   @override
   void initState() {
     errorController = StreamController<ErrorAnimationType>();
@@ -76,7 +78,7 @@ class LoginPageState extends State<LoginPage> {
       return null;
   }
 
-  void _validateInputs(TokenDB database,PatientsDB pd) async {
+  void _validateInputs(TokenDB database, PatientsDB pd) async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       bool isLoggedIn = await loginDoctor(emailOrMob, pass);
@@ -261,9 +263,9 @@ class LoginPageState extends State<LoginPage> {
                               ),
                               new TextFormField(
                                 validator: (val) =>
-                                val.isEmpty || val.length < 4
-                                    ? 'Enter a valid password'
-                                    : null,
+                                    val.isEmpty || val.length < 4
+                                        ? 'Enter a valid password'
+                                        : null,
                                 onSaved: (String val) {
                                   setState(() {
                                     pass = val;
@@ -305,9 +307,7 @@ class LoginPageState extends State<LoginPage> {
                                 ),
                                 color: orangef,
                                 onPressed: () {
-                                  _validateInputs(
-                                      database,patientDatabase
-                                  );
+                                  _validateInputs(database, patientDatabase);
                                 },
                               ),
                             ],
