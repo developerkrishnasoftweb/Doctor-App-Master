@@ -4,7 +4,7 @@ const BASEURL = "https://www.getcurebackend.in";
 
 // I) no Authorization=>
 const OTP = BASEURL +
-    "/generate-otp"; // (post request to generate random otp) (body: { mobile_no: string })
+    "/generate-otp"; //ring }) (post request to generate random otp) (body: { mobile_no: st
 const SIGNUP = BASEURL +
     "/register"; //(post request to signup or register doctor) (body: { mobile_no: string, password: string, otp: string})
 const LOGINDOCTOR = BASEURL +
@@ -56,7 +56,8 @@ const DELETETOKEN =
 const GETSTATES = BASEURL + "/states"; //(get api to view all states)
 
 const ACTIVESTATES = BASEURL + "/active-states";
-const CLINICSBYSTATES = BASEURL + "/clinics-by-state/"; //(get api to view all states)
+const CLINICSBYSTATES =
+    BASEURL + "/clinics-by-state/"; //(get api to view all states)
 const GETCITIES =
     BASEURL + "/cities/+stateId"; // (get api to view cities of a state)
 const GETSPECIAL = BASEURL + "/specialities";
@@ -85,7 +86,6 @@ const DELETEEXAMINATION =
 //20)
 const BRIEFHISTORY = BASEURL + "/brief-histories"; //(get api) (doc token),
 
-
 const GET_ADVICES = BASEURL + "/advices"; //(get api) (doc token),
 //21)
 const VISITREASON = BASEURL + "/visit-reasons"; //(get api) (doc token),
@@ -96,27 +96,30 @@ const POSTSYMPTOM = BASEURL +
 const DELETESYM = BASEURL + "/symptom/"; //(+symptomid) (delete api) (doc token)
 const GET_PDF_CONFIG = BASEURL + "/pdfs/";
 
-
 // Data sync
 
 const PATIENTVISITSYNC = BASEURL + "/patient-visits/bulk-create";
-const PATIENTDATASYNC = BASEURL +"/patient/bulk-create";
+const PATIENTDATASYNC = BASEURL + "/patient/bulk-create";
 
-const FEEDBACKSYNC = BASEURL +"/sync/feedbacks";
-const MEDANALYSIS = BASEURL+"/medicine-analysis/";
-const MEDICINESYNC = BASEURL+"/doctor-medicines";
-const HABITSYNC = BASEURL+"/habits";
-const SYMPTOMSSYNC = BASEURL+"/symptoms/bulk-create";
-const EXAMINATIONSYNC = BASEURL+"/examinations/bulk-create";
-const DISANALYSIS = BASEURL+"/disease-analysis/";
+const FEEDBACKSYNC = BASEURL + "/sync/feedbacks";
+const MEDANALYSIS = BASEURL + "/medicine-analysis/";
+const MEDICINESYNC = BASEURL + "/doctor-medicines";
+const HABITSYNC = BASEURL + "/habits";
+const SYMPTOMSSYNC = BASEURL + "/symptoms/bulk-create";
+const EXAMINATIONSYNC = BASEURL + "/examinations/bulk-create";
+const DISANALYSIS = BASEURL + "/disease-analysis/";
 const DOCTORENJOYDAYE = BASEURL + "/my-doctor-profile/";
-const DOCTORTIMING =BASEURL + "/my-clinic-timing/";
-const DOCTORAPPOINTMENTHISTORY= BASEURL + "/visits/clinic-doctor/"; //:clinicDoctorId([0-9];
-const DOCTORINVOICEAPI = BASEURL + "/doctors-invoice/"; //:clinicDoctorId([0-9]+)/doctor;
+const DOCTORTIMING = BASEURL + "/my-clinic-timing/";
+const DOCTORAPPOINTMENTHISTORY =
+    BASEURL + "/visits/clinic-doctor/"; //:clinicDoctorId([0-9];
+const DOCTORINVOICEAPI =
+    BASEURL + "/doctors-invoice/"; //:clinicDoctorId([0-9]+)/doctor;
 const UPDATEDOC = BASEURL + "/update-doctor/";
-const IMAGEDOCUPLOAD = BASEURL + "/document-upload/"; //:type="id_verification" or type="clinic_ownership"
-const CANCELTOKENFETCH = BASEURL + "/cancelled-tokens/"; //doc id?date=2020-11-29
+const IMAGEDOCUPLOAD = BASEURL +
+    "/document-upload/"; //:type="id_verification" or type="clinic_ownership"
+const CANCELTOKENFETCH =
+    BASEURL + "/cancelled-tokens/"; //doc id?date=2020-11-29
 const PARAMETERS = BASEURL + "/medicine-parameters/";
-const CANCELBULK = BASEURL +"/cancel-bulk-tokens/";//clinic doc id
-const PATIENTFEEDBACK = BASEURL +"/patient-feedback/";//clinic doc id
-const FEESUPDATE = BASEURL + "/my-fees/" ; // :clinicDoctorId([0-9]+)"
+const CANCELBULK = BASEURL + "/cancel-bulk-tokens/"; //clinic doc id
+const PATIENTFEEDBACK = BASEURL + "/patient-feedback/"; //clinic doc id
+const FEESUPDATE = BASEURL + "/my-fees/"; // :clinicDoctorId([0-9]+)"
