@@ -12,8 +12,10 @@ import 'dart:ui';
 class UpdateProfile extends StatefulWidget {
   final String docid;
   final List<ClinicDoctor> clinicDoctors;
+
   const UpdateProfile({Key key, this.docid, this.clinicDoctors})
       : super(key: key);
+
   @override
   _UpdateProfileState createState() => _UpdateProfileState();
 }
@@ -23,7 +25,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   final _formKeyFees = GlobalKey<FormState>();
   final RoundedLoadingButtonController _btnController =
       new RoundedLoadingButtonController();
-      final RoundedLoadingButtonController _feesbtnController =
+  final RoundedLoadingButtonController _feesbtnController =
       new RoundedLoadingButtonController();
   bool showPass = true;
   String name;
@@ -115,7 +117,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     }
   }
 
-
   void _validateFeesInputs() async {
     if (_formKeyFees.currentState.validate()) {
       _formKey.currentState.save();
@@ -184,14 +185,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
       designationctrl.text = designation = doctor.designation;
       genderValue = doctor.gender;
       image = doctor.imageUrl;
-      
     });
-    ClinicDoctor cli = doctor.clinicDoctor.firstWhere((element) => element.id==_selectedClinic.id);
+    ClinicDoctor cli = doctor.clinicDoctor
+        .firstWhere((element) => element.id == _selectedClinic.id);
     setState(() {
       opdFeesctrl.text = cli.consultationFee.toString();
       emergFeesctrl.text = cli.emergencyFee.toString();
     });
-    
   }
 
   @override
@@ -212,6 +212,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   TextEditingController designationctrl = TextEditingController();
   TextEditingController opdFeesctrl = TextEditingController();
   TextEditingController emergFeesctrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -792,20 +793,20 @@ class _UpdateProfileState extends State<UpdateProfile> {
     );
   }
 
-  // _selectDate(BuildContext context) async {
-  //   final DateTime picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: dob,
-  //     firstDate: DateTime(1800),
-  //     lastDate: DateTime(2080),
-  //   );
-  //   if (picked != null && picked != dob)
-  //     setState(() {
-  //       dob = picked;
-  //     });
-  //   String date = dob.toString();
-  //   print("date= " + date);
-  // }
+// _selectDate(BuildContext context) async {
+//   final DateTime picked = await showDatePicker(
+//     context: context,
+//     initialDate: dob,
+//     firstDate: DateTime(1800),
+//     lastDate: DateTime(2080),
+//   );
+//   if (picked != null && picked != dob)
+//     setState(() {
+//       dob = picked;
+//     });
+//   String date = dob.toString();
+//   print("date= " + date);
+// }
 }
 
 class ProfileHeader extends StatelessWidget {
@@ -823,6 +824,7 @@ class ProfileHeader extends StatelessWidget {
       this.subtitle,
       this.actions})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -864,13 +866,11 @@ class ProfileHeader extends StatelessWidget {
               ),
               Text(
                 title,
-                style: Theme.of(context).textTheme.title,
               ),
               if (subtitle != null) ...[
                 const SizedBox(height: 5.0),
                 Text(
                   subtitle,
-                  style: Theme.of(context).textTheme.subtitle,
                 ),
               ]
             ],
