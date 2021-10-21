@@ -123,3 +123,4 @@ const PARAMETERS = BASEURL + "/medicine-parameters/";
 const CANCELBULK = BASEURL + "/cancel-bulk-tokens/"; //clinic doc id
 const PATIENTFEEDBACK = BASEURL + "/patient-feedback/"; //clinic doc id
 const FEESUPDATE = BASEURL + "/my-fees/"; // :clinicDoctorId([0-9]+)"
+const MEDICATION_SUGGESTION = BASEURL + "/autosuggestion-medications/suggest/";

@@ -1,27 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:getcure_doctor/Database/AdviceTable.dart';
-import 'package:getcure_doctor/Database/AdviceTable.dart';
 import 'package:getcure_doctor/Database/AdviceTable.dart';
 import 'package:getcure_doctor/Database/PatientsVisitTable.dart';
 import 'package:getcure_doctor/Database/Recommendation.dart';
 import 'package:getcure_doctor/Database/SymptomsTable.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/AppConfig/colors.dart';
-import 'package:getcure_doctor/Helpers/Navigation.dart';
 import 'package:getcure_doctor/Helpers/Network/Requesthttp.dart';
 import 'package:getcure_doctor/Models/PatientsVisitTableModels.dart';
 import 'package:getcure_doctor/Widgets/MedicineSearch.dart';
 import 'package:provider/provider.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class Medication extends StatefulWidget {
   final Token token;
   final RecommendationDB recommend;
   final Function(List<AdviceData>) getAdvices;
 
-  Medication({Key key, this.token, this.recommend, this.getAdvices}) : super(key: key);
+  Medication({Key key, this.token, this.recommend, this.getAdvices})
+      : super(key: key);
 
   @override
   _MedicationState createState() => _MedicationState();
@@ -50,6 +48,7 @@ class _MedicationState extends State<Medication> {
     adviceProvider = Provider.of<AdvicesDatabase>(context, listen: false);
     patient = Provider.of<PatientsVisitDB>(context, listen: false);
     getAdvices();
+    _medicineSuggestion();
   }
 
   Future<void> getAdvices() async {
@@ -87,6 +86,55 @@ class _MedicationState extends State<Medication> {
     });
     await patient.insertAdvice(adviceData, visitData);
     widget.getAdvices(adviceData);
+  }
+
+  void _medicineSuggestion() async {
+    try {
+      final visitData = (await patient.checkPatient(widget.token.guid)).last;
+      if (visitData != null) {
+        final briefHistory =
+            visitData.briefHistory.data.map((e) => e.toJson()).toList();
+        final visitReason =
+            visitData.visitReason.data.map((e) => e.toJson()).toList();
+        final allergies =
+            visitData.allergies.data.map((e) => e.toJson()).toList();
+        final lifestyle =
+            visitData.lifestyle.data.map((e) => e.toJson()).toList();
+        final examination =
+            visitData.examination.data.map((e) => e.toJson()).toList();
+        final diagnosis =
+            visitData.diagnosis.data.map((e) => e.toJson()).toList();
+        final payload = <String, dynamic>{
+          "age": widget.token.age,
+          "gender": widget.token.gender,
+          "temperature": visitData.temperature,
+          "systolicBP": visitData.bp.split('/')[0],
+          "diastolicBP": visitData.bp.split('/')[1],
+          "pulse": visitData.pulse,
+          "weight": visitData.weight,
+          "briefHistory": briefHistory,
+          "visitReason": visitReason,
+          "allergies": allergies,
+          "lifestyle": lifestyle,
+          "examination": examination,
+          "diagnosis": diagnosis
+        };
+        final response = await getMedicationsSuggestion(payload);
+        final patientsVisitDB =
+            Provider.of<PatientsVisitDB>(context, listen: false);
+        if (response != null) {
+          response.forEach((suggestion) {
+            patientsVisitDB.updateMedication(visitData, '', suggestion);
+          });
+          setState(() {});
+        } else {
+          print('Suggestions not found!!!');
+        }
+      }
+    } catch (_) {
+      print('Error: ');
+      print(_);
+    }
   }
 
   @override
@@ -169,8 +217,7 @@ class _MedicationState extends State<Medication> {
                                       dense: true,
                                       subtitle: Text(
                                           "${md.last.medicines[index].dose} ${md.last.medicines[index].unit}  ${md.last.medicines[index].route} ${md.last.medicines[index].frequency} ${md.last.medicines[index].direction} ${md.last.medicines[index].duration}"),
-                                      onLongPress: () {
-                                      },
+                                      onLongPress: () {},
                                       trailing: IconButton(
                                           icon: Icon(Icons.cancel),
                                           onPressed: () {

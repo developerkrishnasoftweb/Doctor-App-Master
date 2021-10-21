@@ -13,6 +13,7 @@ import 'package:getcure_doctor/Models/FeedbackAnalysis.dart';
 import 'package:getcure_doctor/Models/ImageDataModel.dart';
 import 'package:getcure_doctor/Models/MYProfileModel.dart';
 import 'package:getcure_doctor/Models/MedicineAnalysisModel.dart';
+import 'package:getcure_doctor/Models/PatientsVisitTableModels.dart';
 import 'package:getcure_doctor/Models/SendHolidayUpdateModel.dart';
 import 'package:getcure_doctor/Models/SpecialitySearchSuggestion.dart' as ts;
 import 'package:getcure_doctor/Models/StateSearchSuggestion.dart';
@@ -119,6 +120,30 @@ Future<bool> loginDoctor(mobNo, pass) async {
     return false;
   } catch (_) {
     throw (_);
+  }
+}
+
+Future<List<PrescribedMedicines>> getMedicationsSuggestion(
+    Map<String, dynamic> body) async {
+  try {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String docId = pref.getString('docId');
+    final response =
+        await http.post(MEDICATION_SUGGESTION + docId, body: jsonEncode(body));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      var medicines = <PrescribedMedicines>[];
+      if (jsonResponse['data'] != null) {
+        jsonResponse['data'].forEach((v) {
+          medicines.add(PrescribedMedicines.fromJson(v));
+        });
+      }
+      return medicines;
+    } else {
+      return null;
+    }
+  } catch (_) {
+    return null;
   }
 }
 
