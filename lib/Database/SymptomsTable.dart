@@ -18,12 +18,19 @@ enum VisibilityPeriod {
 
 class Symptoms extends Table {
   IntColumn get id => integer().autoIncrement()();
+
   IntColumn get clinicDoctorId => integer()();
+
   IntColumn get doctorId => integer()();
+
   TextColumn get title => text()();
+
   IntColumn get type => intEnum<Type>()();
+
   IntColumn get visibilityPeriod => intEnum<VisibilityPeriod>()();
+
   DateTimeColumn get createdAt => dateTime().nullable()();
+
   BoolColumn get isOnline => boolean().withDefault(Constant(false))();
 }
 
@@ -38,11 +45,15 @@ LazyDatabase _openConnection() {
 @UseMoor(tables: [Symptoms])
 class SymptomsDB extends _$SymptomsDB {
   SymptomsDB() : super(_openConnection());
+
   @override
   int get schemaVersion => 1;
+
   //Fetching Data
   Stream<List<Symptom>> watchAllbookedTasks() => select(symptoms).watch();
+
   Future<List<Symptom>> watchAll() => select(symptoms).get();
+
   Stream<List<Symptom>> watchAllTasks(String q) {
     dynamic query;
     if (q.length != 0) {
@@ -52,18 +63,18 @@ class SymptomsDB extends _$SymptomsDB {
     }
     return query.watch();
   }
+
   Future<List<Symptom>> getAllSync() {
     var query = select(symptoms)..where((t) => t.isOnline.equals(false));
     return query.get();
   }
 
-Future updateStatus(int id) {
-    var query = update(symptoms)..where((t) =>t.id.equals(id));
-      return query.write(
-        SymptomsCompanion(
-        isOnline: Value(true),
-        )
-      );}
+  Future updateStatus(int id) {
+    var query = update(symptoms)..where((t) => t.id.equals(id));
+    return query.write(SymptomsCompanion(
+      isOnline: Value(true),
+    ));
+  }
 
   Stream<List<Symptom>> watchAllVisitTasks(String q) {
     dynamic query;
@@ -88,8 +99,11 @@ Future updateStatus(int id) {
   }
 
   //Inserting Data
-  void addBrief(String name, VisibilityPeriod period, int docId, int clinicDocId) async {
+  void addBrief(
+      String name, VisibilityPeriod period, int docId, int clinicDocId,
+      {int id}) async {
     Symptom object = Symptom(
+      id: id,
       doctorId: docId,
       clinicDoctorId: clinicDocId,
       type: Type.BriefHistory,
@@ -99,15 +113,14 @@ Future updateStatus(int id) {
     var q = await watchAllTask(name);
     if (q.length == 0) {
       into(symptoms).insert(object);
-    } else {
-
-    }
+    } else {}
   }
 
   Future deleteallTask() => delete(symptoms).go();
 
   //Inserting Data
-  void addVisit(String name, VisibilityPeriod period, int docId, int clinicDocId) async {
+  void addVisit(
+      String name, VisibilityPeriod period, int docId, int clinicDocId) async {
     Symptom object = Symptom(
       doctorId: docId,
       clinicDoctorId: clinicDocId,
@@ -118,9 +131,7 @@ Future updateStatus(int id) {
     var q = await watchAllTask(name);
     if (q.length == 0) {
       into(symptoms).insert(object);
-    } else {
-
-    }
+    } else {}
   }
 
   void addBriefHTTP(String name, int docID, int clinicDocId) async {
@@ -135,9 +146,7 @@ Future updateStatus(int id) {
     var q = await watchAllTask(name);
     if (q.length == 0) {
       into(symptoms).insert(object);
-    } else {
-
-    }
+    } else {}
   }
 
   void addVisitHTTP(String name, int docId, int clinicDocId) async {
@@ -152,8 +161,6 @@ Future updateStatus(int id) {
     var q = await watchAllTask(name);
     if (q.length == 0) {
       into(symptoms).insert(object);
-    } else {
-
-    }
+    } else {}
   }
 }

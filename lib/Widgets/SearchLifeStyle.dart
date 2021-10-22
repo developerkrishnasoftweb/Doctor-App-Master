@@ -44,28 +44,28 @@ class _SearchLifeStyleState extends State<SearchLifeStyle> {
         titlePadding: EdgeInsets.zero,
         scrollable: true,
         title: Container(
-            alignment: Alignment.center,
-            color: orangep,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'LifeStyle',
-                    style: TextStyle(color: white),
-                  ),
-                  IconButton(
-                      icon: Icon(Icons.cancel),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      })
-                ],
-              ),
+          alignment: Alignment.center,
+          color: orangep,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  'LifeStyle',
+                  style: TextStyle(color: white),
+                ),
+                IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+              ],
             ),
           ),
+        ),
         actions: <Widget>[
-           _buildTaskListGrid3(	
+          _buildTaskListGrid3(
               context, query, database, patientsVisit, widget.pId),
           Stack(
             // fit: StackFit.expand,
@@ -135,7 +135,7 @@ class _SearchLifeStyleState extends State<SearchLifeStyle> {
 StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
     HabitDB database, PatientsVisitDB pv, String pId, int docId) {
   return StreamBuilder(
-    stream: database.watchAllTasks(query,HType.LifeStyle),
+    stream: database.watchAllTasks(query, HType.LifeStyle),
     builder: (context, AsyncSnapshot<List<Habit>> snapshot) {
       final tasks = snapshot.data ?? List();
       return Container(
@@ -155,6 +155,7 @@ StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
               onTap: () async {
                 List<LifeStyleData> bhd = [
                   LifeStyleData(
+                    id: itemTask.id,
                     title: itemTask.title,
                     doctorId: docId,
                     type: itemTask.type.toString(),
@@ -166,7 +167,7 @@ StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
                 Fluttertoast.showToast(
                     msg: "${itemTask.title} added to list",
                     toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER ,
+                    gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
                     backgroundColor: green,
                     textColor: white,
@@ -199,117 +200,124 @@ StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
   );
 }
 
-StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid3(BuildContext context,	
-    String query, HabitDB database, PatientsVisitDB pv, String pId) {	
-  return StreamBuilder(	
-    stream: pv.getLifeStyle(pId),	
-    builder: (context, AsyncSnapshot<List<PatientsVisitData>> snapshot) {	
-      switch (snapshot.connectionState) {	
-        case ConnectionState.waiting:	
-          return CircularProgressIndicator();	
-          break;	
-        default:	
-          return Container(	
-             height: (snapshot.data.last.lifestyle == null)?0:(snapshot.data.last.lifestyle.data.length==0)?0:(snapshot.data.last.lifestyle.data.length<=3)?50:120,	
-             width: MediaQuery.of(context).size.width,	
-             child: SingleChildScrollView(	
-                             child: Wrap(	
-                 spacing: 5.0,	
-                 children: List.generate(	
-                     snapshot.data.last.lifestyle == null	
-                         ? 0	
-                         : snapshot.data.last.lifestyle.data.length,	
-                     (index) => GestureDetector(	
-                           onTap: () {	
-                             showDialog(	
-                               context: context,	
-                               builder: (BuildContext context) {	
-                                 return AlertDialog(	
-                                   title:	
-                                       Text("Are you sure you want to remove it?"),	
-                                   actions: [	
-                                     FlatButton(	
-                                       child: Text("Yes"),	
-                                       color: red,	
-                                       onPressed: () {	
-                                         pv.deleteLifeStyle(	
-                                             snapshot.data.last,	
-                                             snapshot.data.last.lifestyle	
-                                                 .data[index].title);	
-                                        //  pv.deleteDiagnosis(	
-                                        //      snapshot.data.last,	
-                                        //      snapshot.data.last.diagnosis	
-                                        //          .data[index].title);	
-                                         Navigator.pop(context);	
-                                       },	
-                                     ),	
-                                     FlatButton(	
-                                       child: Text("No"),	
-                                       color: green,	
-                                       onPressed: () => Navigator.pop(context),	
-                                     ),	
-                                   ],	
-                                 );	
-                               },	
-                             );	
-                           },	
-                           child: Container(	
-                             child: Chip(	
-                               elevation: 4,	
-                               shadowColor: Colors.grey[50],	
-                               padding: EdgeInsets.all(4),	
-                               // clipBehavior: Clip.antiAlias,	
-                               backgroundColor: orangef,	
-                               label: FittedBox(	
-                                 fit: BoxFit.fitWidth,	
-                                 child: Container(	
-                                    //  width: 60.0,	
-                                    //  height: 20,	
-                                     child: Row(	
-                                       mainAxisAlignment:	
-                                           MainAxisAlignment.spaceBetween,	
-                                       children: [	
-                                         RichText(	
-                                           textAlign: TextAlign.center,	
-                                           text: TextSpan(	
-                                             text: snapshot.data.last.lifestyle	
-                                                 .data[index].title,	
-                                             style: TextStyle(	
-                                               color: white,	
-                                               fontSize: 14,	
-                                             ),	
-                                           ),	
-                                         ),	
-                                         Padding(
-                                           padding: EdgeInsets.symmetric(horizontal: 5.0)
-                                         ),
-                                         RichText(	
-                                             textAlign: TextAlign.center,	
-                                             text: TextSpan(	
-                                               text: "X",	
-                                               style: TextStyle(	
-                                                 color: black,	
-                                                 fontSize: 14,	
-                                               ),	
-                                             )),	
-                                       ],	
-                                     )),	
-                               ),	
-                             ),	
-                           ),	
-                         )),	
-               ),	
-             ),	
-           );	
-          break;	
-      }	
-    },	
-  );	
+StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid3(BuildContext context,
+    String query, HabitDB database, PatientsVisitDB pv, String pId) {
+  return StreamBuilder(
+    stream: pv.getLifeStyle(pId),
+    builder: (context, AsyncSnapshot<List<PatientsVisitData>> snapshot) {
+      switch (snapshot.connectionState) {
+        case ConnectionState.waiting:
+          return CircularProgressIndicator();
+          break;
+        default:
+          return Container(
+            height: (snapshot.data.last.lifestyle == null)
+                ? 0
+                : (snapshot.data.last.lifestyle.data.length == 0)
+                    ? 0
+                    : (snapshot.data.last.lifestyle.data.length <= 3)
+                        ? 50
+                        : 120,
+            width: MediaQuery.of(context).size.width,
+            child: SingleChildScrollView(
+              child: Wrap(
+                spacing: 5.0,
+                children: List.generate(
+                    snapshot.data.last.lifestyle == null
+                        ? 0
+                        : snapshot.data.last.lifestyle.data.length,
+                    (index) => GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(
+                                      "Are you sure you want to remove it?"),
+                                  actions: [
+                                    FlatButton(
+                                      child: Text("Yes"),
+                                      color: red,
+                                      onPressed: () {
+                                        pv.deleteLifeStyle(
+                                            snapshot.data.last,
+                                            snapshot.data.last.lifestyle
+                                                .data[index].title);
+                                        //  pv.deleteDiagnosis(
+                                        //      snapshot.data.last,
+                                        //      snapshot.data.last.diagnosis
+                                        //          .data[index].title);
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    FlatButton(
+                                      child: Text("No"),
+                                      color: green,
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            child: Chip(
+                              elevation: 4,
+                              shadowColor: Colors.grey[50],
+                              padding: EdgeInsets.all(4),
+                              // clipBehavior: Clip.antiAlias,
+                              backgroundColor: orangef,
+                              label: FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: Container(
+                                    //  width: 60.0,
+                                    //  height: 20,
+                                    child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        text: snapshot.data.last.lifestyle
+                                            .data[index].title,
+                                        style: TextStyle(
+                                          color: white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5.0)),
+                                    RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                          text: "X",
+                                          style: TextStyle(
+                                            color: black,
+                                            fontSize: 14,
+                                          ),
+                                        )),
+                                  ],
+                                )),
+                              ),
+                            ),
+                          ),
+                        )),
+              ),
+            ),
+          );
+          break;
+      }
+    },
+  );
 }
 
 class AddLife extends StatefulWidget {
   final int docId;
   final HabitDB database;
+
   AddLife({Key key, this.docId, this.database}) : super(key: key);
 
   @override

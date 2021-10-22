@@ -15,6 +15,8 @@ class GetTimings extends StatefulWidget {
   final String type;
   final int docId;
   final String allergyOrLifeType;
+  final int id;
+
   const GetTimings(
       {Key key,
       this.briefTitle,
@@ -23,7 +25,8 @@ class GetTimings extends StatefulWidget {
       this.pId,
       this.type,
       this.docId,
-      this.allergyOrLifeType})
+      this.allergyOrLifeType,
+      this.id})
       : super(key: key);
 
   @override
@@ -61,6 +64,7 @@ class _GetTimingsState extends State<GetTimings> {
       case 'brief':
         List<BriefHistoryData> bhd = [
           BriefHistoryData(
+            id: widget.id,
             date: setDate,
             title: widget.briefTitle,
             visibleTill: widget.visibleTill,
@@ -89,6 +93,7 @@ class _GetTimingsState extends State<GetTimings> {
       case 'todayVisit':
         List<VisitReasonData> vhd = [
           VisitReasonData(
+            id: widget.id,
             date: setDate,
             title: widget.briefTitle,
             visibleTill: widget.visibleTill,
@@ -340,14 +345,14 @@ class _GetTimingsState extends State<GetTimings> {
                         onPressed: () async {
                           getTimeFun(
                               widget.type, days, months, years, recom, med);
-                               Fluttertoast.showToast(
-                    msg: "${widget.briefTitle} added to list",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER ,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: green,
-                    textColor: white,
-                    fontSize: 16.0);
+                          Fluttertoast.showToast(
+                              msg: "${widget.briefTitle} added to list",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: green,
+                              textColor: white,
+                              fontSize: 16.0);
                           Navigator.pop(context);
                         },
                       )

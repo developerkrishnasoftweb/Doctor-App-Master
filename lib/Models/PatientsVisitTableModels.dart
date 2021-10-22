@@ -28,14 +28,17 @@ class BriefHistorygenerated {
 }
 
 class BriefHistoryData {
+  int id;
   String title;
   String date;
   String visibleTill;
   bool isCured;
 
-  BriefHistoryData({this.title, this.date, this.visibleTill, this.isCured});
+  BriefHistoryData(
+      {this.id, this.title, this.date, this.visibleTill, this.isCured});
 
   BriefHistoryData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     title = json['title'];
     date = json['date'];
     visibleTill = json['visible_till'];
@@ -44,6 +47,7 @@ class BriefHistoryData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['title'] = this.title;
     data['date'] = this.date;
     data['visible_till'] = this.visibleTill;
@@ -56,6 +60,7 @@ class BriefHistoryData {
 class BriefHistoryConverter
     extends TypeConverter<BriefHistorygenerated, String> {
   const BriefHistoryConverter();
+
   @override
   BriefHistorygenerated mapToDart(String fromDb) {
     if (fromDb == null) {
@@ -150,6 +155,7 @@ class AllergyData {
 
 class AllergyConverter extends TypeConverter<Allergy, String> {
   const AllergyConverter();
+
   @override
   Allergy mapToDart(String fromDb) {
     if (fromDb == null) {
@@ -244,6 +250,7 @@ class LifeStyleData {
 
 class LifeStyleConverter extends TypeConverter<LifeStyle, String> {
   const LifeStyleConverter();
+
   @override
   LifeStyle mapToDart(String fromDb) {
     if (fromDb == null) {
@@ -325,7 +332,7 @@ class PrescribedMedicines {
   String direction;
   String frequency;
   String duration;
-  
+
   PrescribedMedicines(
       {this.medicineId,
       this.title,
@@ -364,6 +371,7 @@ class PrescribedMedicines {
 
 class MedicationConverter extends TypeConverter<Medicationgenerated, String> {
   const MedicationConverter();
+
   @override
   Medicationgenerated mapToDart(String fromDb) {
     if (fromDb == null) {
@@ -488,6 +496,7 @@ class Parameters {
 
 class ExaminationConverter extends TypeConverter<Examinationgenerated, String> {
   const ExaminationConverter();
+
   @override
   Examinationgenerated mapToDart(String fromDb) {
     if (fromDb == null) {
@@ -531,13 +540,17 @@ class VisitReasongenerated {
 }
 
 class VisitReasonData {
+  int id;
   String title;
   String date;
   String visibleTill;
   bool isCured;
-  VisitReasonData({this.title, this.date, this.visibleTill, this.isCured});
+
+  VisitReasonData(
+      {this.id, this.title, this.date, this.visibleTill, this.isCured});
 
   VisitReasonData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     title = json['title'];
     date = json['date'];
     visibleTill = json['visible_till'];
@@ -546,6 +559,7 @@ class VisitReasonData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['title'] = this.title;
     data['date'] = this.date;
     data['visible_till'] = this.visibleTill;
@@ -556,6 +570,7 @@ class VisitReasonData {
 
 class VisitReasonConverter extends TypeConverter<VisitReasongenerated, String> {
   const VisitReasonConverter();
+
   @override
   VisitReasongenerated mapToDart(String fromDb) {
     if (fromDb == null) {
@@ -626,6 +641,7 @@ class DignosisData {
 
 class DignosisConverter extends TypeConverter<Dignosisgenerated, String> {
   const DignosisConverter();
+
   @override
   Dignosisgenerated mapToDart(String fromDb) {
     if (fromDb == null) {
@@ -648,6 +664,7 @@ class DignosisConverter extends TypeConverter<Dignosisgenerated, String> {
 //Advices
 class AdvicesGenerated {
   List<AdviceData> advices;
+
   AdvicesGenerated({this.advices});
 
   AdvicesGenerated.fromJson(Map<String, dynamic> json) {
@@ -661,16 +678,18 @@ class AdvicesGenerated {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if(this.advices != null) {
+    if (this.advices != null) {
       data['data'] = this.advices.map((e) => e.toJson()).toList();
     }
     return data;
   }
 }
 
-class AdviceData{
+class AdviceData {
   String id, advice, symptoms;
+
   AdviceData({this.advice, this.id, this.symptoms});
+
   AdviceData.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toString();
     advice = json['advice']?.toString();
@@ -688,6 +707,7 @@ class AdviceData{
 
 class AdviceConverter extends TypeConverter<AdvicesGenerated, String> {
   const AdviceConverter();
+
   @override
   AdvicesGenerated mapToDart(String fromDb) {
     if (fromDb == null) {

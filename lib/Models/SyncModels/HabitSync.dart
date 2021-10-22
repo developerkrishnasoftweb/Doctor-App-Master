@@ -22,13 +22,15 @@ class HabitsSync {
 }
 
 class HabitsSyncData {
+  int id;
   int doctorId;
   String title;
   String type;
 
-  HabitsSyncData({this.doctorId, this.title, this.type});
+  HabitsSyncData({this.doctorId, this.title, this.type, this.id});
 
   HabitsSyncData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     doctorId = json['doctor_id'];
     title = json['title'];
     type = json['type'];
@@ -36,6 +38,7 @@ class HabitsSyncData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['doctor_id'] = this.doctorId;
     data['title'] = this.title;
     data['type'] = this.type;

@@ -119,17 +119,18 @@ class _MedicationState extends State<Medication> {
           "examination": examination,
           "diagnosis": diagnosis
         };
-        final response = await getMedicationsSuggestion(payload);
-        final patientsVisitDB =
-            Provider.of<PatientsVisitDB>(context, listen: false);
-        if (response != null) {
-          response.forEach((suggestion) {
-            patientsVisitDB.updateMedication(visitData, '', suggestion);
-          });
-          setState(() {});
-        } else {
-          print('Suggestions not found!!!');
-        }
+        print(payload);
+        // final response = await getMedicationsSuggestion(payload);
+        // final patientsVisitDB =
+        //     Provider.of<PatientsVisitDB>(context, listen: false);
+        // if (response != null) {
+        //   response.forEach((suggestion) {
+        //     patientsVisitDB.updateMedication(visitData, '', suggestion);
+        //   });
+        //   setState(() {});
+        // } else {
+        //   print('Suggestions not found!!!');
+        // }
       }
     } catch (_) {
       print('Error: ');

@@ -22,6 +22,7 @@ class SymptomSync {
 }
 
 class SymptomDataSync {
+  int id;
   int doctorId;
   String title;
   String visibilityPeriod;
@@ -29,6 +30,7 @@ class SymptomDataSync {
   SymptomDataSync({this.doctorId, this.title, this.visibilityPeriod});
 
   SymptomDataSync.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     doctorId = json['doctor_id'];
     title = json['title'];
     visibilityPeriod = json['visibility_period'];
@@ -36,6 +38,7 @@ class SymptomDataSync {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['doctor_id'] = this.doctorId;
     data['title'] = this.title;
     data['visibility_period'] = this.visibilityPeriod;

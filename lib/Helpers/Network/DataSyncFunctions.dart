@@ -417,7 +417,8 @@ fetchData(int docId, SymptomsDB symptomsDB, int clinicDocId) async {
     SymptomSync symptomSync = SymptomSync.fromJson(json.decode(response.body));
     for (var i in symptomSync.symptoms) {
       symptomsDB.addBrief(
-          i.title, setVisibility(i.visibilityPeriod), docId, clinicDocId);
+          i.title, setVisibility(i.visibilityPeriod), docId, clinicDocId,
+          id: i.id);
     }
   }
 }
@@ -428,11 +429,13 @@ fetchExamination(String docId, ExaminationsDB examinationsDB) async {
     BASEURL + "/examinations",
     headers: {"Authorization": token},
   );
+  print(token);
   if (response.statusCode == 200) {
     SyncExam symptomSync = SyncExam.fromJson(json.decode(response.body));
 
     for (var i in symptomSync.data) {
       var exm = Examination(
+        id: i.id,
         clinicDoctorId: i.doctorId,
         doctorId: i.doctorId,
         isOnline: true,
@@ -487,6 +490,7 @@ fetchHabits(String docId, HabitDB habitDB) async {
     HabitsSync habitSync = HabitsSync.fromJson(json.decode(response.body));
     for (var i in habitSync.habits) {
       var hb = Habit(
+          id: i.id,
           doctorId: i.doctorId,
           title: i.title,
           type: i.type == "allergy" ? HType.Allergy : HType.LifeStyle,
