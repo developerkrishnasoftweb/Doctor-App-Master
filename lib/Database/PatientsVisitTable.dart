@@ -230,7 +230,8 @@ class PatientsVisitDB extends _$PatientsVisitDB {
 
   Future<int> insertAdvice(List<AdviceData> advices, PatientsVisitData data) {
     var query = update(patientsVisit)..where((tbl) => tbl.id.equals(data.id));
-    return query.write(PatientsVisitCompanion(advices: Value(AdvicesGenerated(advices: advices))));
+    return query.write(PatientsVisitCompanion(
+        advices: Value(AdvicesGenerated(advices: advices))));
   }
 
   //Fetch Data
