@@ -97,7 +97,7 @@ class _PatientReportState extends State<PatientReport> {
         build: (context) {
           return [
             pw.SizedBox(width: double.infinity),
-            pw.Padding(
+            /*pw.Padding(
                 child: pw.Align(
                     child: pw.Column(
                         mainAxisAlignment: pw.MainAxisAlignment.center,
@@ -116,7 +116,7 @@ class _PatientReportState extends State<PatientReport> {
                                   fontWeight: pw.FontWeight.bold)),
                         ]),
                     alignment: pw.Alignment.center),
-                padding: pw.EdgeInsets.symmetric(vertical: 10)),
+                padding: pw.EdgeInsets.symmetric(vertical: 10)),*/
             pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
                 children: [

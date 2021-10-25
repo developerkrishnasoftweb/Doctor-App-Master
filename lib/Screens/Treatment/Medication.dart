@@ -92,18 +92,72 @@ class _MedicationState extends State<Medication> {
     try {
       final visitData = (await patient.checkPatient(widget.token.guid)).last;
       if (visitData != null) {
-        final briefHistory =
-            visitData.briefHistory.data.map((e) => e.toJson()).toList();
-        final visitReason =
-            visitData.visitReason.data.map((e) => e.toJson()).toList();
+        final briefHistory = visitData?.briefHistory?.data?.map((e) {
+          final json = e.toJson();
+          final duration = '${e.date}'.split(' ');
+          final values =
+              duration.where((v) => !v.contains(RegExp(r'\D+'))).toList();
+          final keys =
+              duration.where((v) => v.contains(RegExp(r'\D+'))).toList();
+
+          keys.forEach((v) {
+            final index = keys.indexOf(v);
+            if (v == 'days') {
+              json.addAll({'day': values[index]});
+            } else if (v == 'months') {
+              json.addAll({'month': values[index]});
+            } else if (v == 'years') {
+              json.addAll({'year': values[index]});
+            }
+          });
+          return json;
+        })?.toList();
+        final visitReason = visitData?.visitReason?.data?.map((e) {
+          final json = e.toJson();
+          final duration = '${e.date}'.split(' ');
+          final values =
+              duration.where((v) => !v.contains(RegExp(r'\D+'))).toList();
+          final keys =
+              duration.where((v) => v.contains(RegExp(r'\D+'))).toList();
+
+          keys.forEach((v) {
+            final index = keys.indexOf(v);
+            if (v == 'days') {
+              json.addAll({'day': values[index]});
+            } else if (v == 'months') {
+              json.addAll({'month': values[index]});
+            } else if (v == 'years') {
+              json.addAll({'year': values[index]});
+            }
+          });
+          return json;
+        })?.toList();
         final allergies =
-            visitData.allergies.data.map((e) => e.toJson()).toList();
+            visitData?.allergies?.data?.map((e) => e.toJson())?.toList();
         final lifestyle =
-            visitData.lifestyle.data.map((e) => e.toJson()).toList();
+            visitData?.lifestyle?.data?.map((e) => e.toJson())?.toList();
         final examination =
-            visitData.examination.data.map((e) => e.toJson()).toList();
-        final diagnosis =
-            visitData.diagnosis.data.map((e) => e.toJson()).toList();
+            visitData?.examination?.data?.map((e) => e.toJson())?.toList();
+        final diagnosis = visitData?.diagnosis?.data?.map((e) {
+          final json = e.toJson();
+          final duration = '${e.date}'.split(' ');
+          final values =
+              duration.where((v) => !v.contains(RegExp(r'\D+'))).toList();
+          final keys =
+              duration.where((v) => v.contains(RegExp(r'\D+'))).toList();
+
+          keys.forEach((v) {
+            final index = keys.indexOf(v);
+            if (v == 'days') {
+              json.addAll({'day': values[index]});
+            } else if (v == 'months') {
+              json.addAll({'month': values[index]});
+            } else if (v == 'years') {
+              json.addAll({'year': values[index]});
+            }
+          });
+          return json;
+        })?.toList();
         final payload = <String, dynamic>{
           "age": widget.token.age,
           "gender": widget.token.gender,
@@ -117,20 +171,29 @@ class _MedicationState extends State<Medication> {
           "allergies": allergies,
           "lifestyle": lifestyle,
           "examination": examination,
-          "diagnosis": diagnosis
+          // "diagnosis": diagnosis
         };
-        print(payload);
-        // final response = await getMedicationsSuggestion(payload);
-        // final patientsVisitDB =
-        //     Provider.of<PatientsVisitDB>(context, listen: false);
-        // if (response != null) {
-        //   response.forEach((suggestion) {
-        //     patientsVisitDB.updateMedication(visitData, '', suggestion);
-        //   });
-        //   setState(() {});
-        // } else {
-        //   print('Suggestions not found!!!');
-        // }
+        // print(jsonEncode(payload));
+        final response = await getMedicationsSuggestion(payload);
+        final patientsVisitDB =
+            Provider.of<PatientsVisitDB>(context, listen: false);
+        if (response != null) {
+          for (var suggestion in response) {
+            for (var medicine in suggestion.medications) {
+              print(medicine);
+              await patientsVisitDB.updateMedication(
+                  visitData, 'Diarrhoea', medicine);
+            }
+          }
+          // response.forEach((suggestion) {
+          //   suggestion.medications.forEach((medication) {
+          //     patientsVisitDB.updateMedication(visitData, 'Diarrhoea', medication);
+          //   });
+          // });
+          setState(() {});
+        } else {
+          print('Suggestions not found!!!');
+        }
       }
     } catch (_) {
       print('Error: ');
@@ -153,321 +216,403 @@ class _MedicationState extends State<Medication> {
             return Container(child: Center(child: Text("Loading")));
             break;
           case ConnectionState.done:
+            List<PrescribedMedicines> medicine = [];
+            if (list.data.last.diagnosis != null &&
+                list.data.last.diagnosis.data.length > 1) {
+              list.data.last.diagnosis.data.forEach((element) {
+                final index = list.data.last.diagnosis.data.indexOf(element);
+                final meds = list.data.last.medication.data.where((element) =>
+                    element.disease ==
+                    list.data.last.diagnosis.data[index].title);
+                if (meds != null && meds.isNotEmpty) {
+                  meds.forEach((med) {
+                    medicine = med.medicines;
+                  });
+                }
+              });
+            }
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  ListView.separated(
-                      itemCount: list.data.last.diagnosis == null
-                          ? 0
-                          : list.data.last.diagnosis.data.length,
-                      physics: ScrollPhysics(),
-                      shrinkWrap: true,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          height: 5,
-                        );
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        var md;
-                        if (list.data.last.medication != null) {
-                          md = list.data.last.medication.data.where((element) =>
-                              element.disease ==
-                              list.data.last.diagnosis.data[index].title);
-                        }
-                        // getCounts(list.data.last.diagnosis.data[index].title);
-                        int tcount = 0;
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            // height: 120,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                color: white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: orangef,
-                                    offset: new Offset(0.0, 0.0),
-                                    blurRadius: 5.0,
+                  if (list.data.last.diagnosis != null &&
+                      list.data.last.diagnosis.data.length == 1)
+                    ListView.separated(
+                        itemCount: list.data.last.diagnosis == null
+                            ? 0
+                            : list.data.last.diagnosis.data.length,
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            height: 5,
+                          );
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          var md;
+                          if (list.data.last.medication != null) {
+                            md = list.data.last.medication.data.where(
+                                (element) =>
+                                    element.disease ==
+                                    list.data.last.diagnosis.data[index].title);
+                          }
+                          // getCounts(list.data.last.diagnosis.data[index].title);
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              // height: 120,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  color: white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: orangef,
+                                      offset: new Offset(0.0, 0.0),
+                                      blurRadius: 5.0,
+                                    ),
+                                  ]),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 8),
+                              child: Column(
+                                // crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    list.data.last.diagnosis.data[index].title +
+                                        " (" +
+                                        list.data.last.diagnosis.data[index]
+                                            .date +
+                                        ")",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                ]),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 8),
-                            child: Column(
-                              // crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  list.data.last.diagnosis.data[index].title +
-                                      " (" +
-                                      list.data.last.diagnosis.data[index]
-                                          .date +
-                                      ")",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                ListView.builder(
-                                  itemCount: md == null || md.length == 0
-                                      ? 0
-                                      : md.last.medicines.length,
-                                  shrinkWrap: true,
-                                  physics: ScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return ListTile(
-                                      dense: true,
-                                      subtitle: Text(
-                                          "${md.last.medicines[index].dose} ${md.last.medicines[index].unit}  ${md.last.medicines[index].route} ${md.last.medicines[index].frequency} ${md.last.medicines[index].direction} ${md.last.medicines[index].duration}"),
-                                      onLongPress: () {},
-                                      trailing: IconButton(
-                                          icon: Icon(Icons.cancel),
+                                  ListView.builder(
+                                    itemCount: md == null || md.length == 0
+                                        ? 0
+                                        : md.last.medicines.length,
+                                    shrinkWrap: true,
+                                    physics: ScrollPhysics(),
+                                    padding: EdgeInsets.zero,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return ListTile(
+                                        dense: true,
+                                        subtitle: Text(
+                                            "${md.last.medicines[index].dose} ${md.last.medicines[index].unit}  ${md.last.medicines[index].route} ${md.last.medicines[index].frequency} ${md.last.medicines[index].direction} ${md.last.medicines[index].duration}"),
+                                        onLongPress: () {},
+                                        trailing: IconButton(
+                                            icon: Icon(Icons.cancel),
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                        "Are you sure you want to remove it?"),
+                                                    actions: [
+                                                      FlatButton(
+                                                        child: Text("Yes"),
+                                                        color: red,
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            patient.deleteMedicine(
+                                                                list.data.last,
+                                                                md
+                                                                    .elementAt(
+                                                                        0)
+                                                                    .disease,
+                                                                md
+                                                                    .elementAt(
+                                                                        0)
+                                                                    .medicines[
+                                                                        index]
+                                                                    .title);
+                                                          });
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                      FlatButton(
+                                                        child: Text("No"),
+                                                        color: green,
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            }),
+                                        title: Text(
+                                          "${md.last.medicines[index].title} ",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.justify,
+                                          softWrap: true,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(Icons.people),
+                                          SizedBox(
+                                            width: 2,
+                                          ),
+                                          FutureBuilder(
+                                            future: widget.recommend
+                                                .getTotalCount(list
+                                                    .data
+                                                    .last
+                                                    .diagnosis
+                                                    .data[index]
+                                                    .title),
+                                            builder: (_,
+                                                AsyncSnapshot<
+                                                        List<
+                                                            RecommendationData>>
+                                                    snapshot) {
+                                              switch (
+                                                  snapshot.connectionState) {
+                                                case ConnectionState.waiting:
+                                                  return Container(
+                                                      child: Center(
+                                                          child:
+                                                              CircularProgressIndicator()));
+                                                  break;
+                                                case ConnectionState.done:
+                                                  if (snapshot.data == null) {
+                                                    return Text('0');
+                                                  } else {
+                                                    if (snapshot.data.length ==
+                                                        0) {
+                                                      return Text("0");
+                                                    } else {
+                                                      return Text(snapshot
+                                                          .data.first.totalCount
+                                                          .toString());
+                                                    }
+                                                  }
+                                                  break;
+                                                default:
+                                                  return Text('0');
+                                              }
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.timelapse),
+                                          // SizedBox(width: 2,),
+                                          // FutureBuilder(
+                                          //   future:widget.recommend.getTotalCount(list.data.last.diagnosis.data[index].title),
+                                          //   builder: (_, AsyncSnapshot<List<RecommendationData>> snapshot){
+                                          //     switch(snapshot.connectionState){
+                                          //       case ConnectionState.waiting:
+                                          //         return Container(
+                                          //             child: Center(child: CircularProgressIndicator()));
+                                          //         break;
+                                          //       case ConnectionState.done:
+                                          //         if(snapshot.data==null){
+                                          //           return Text('0');
+                                          //         }else{
+                                          //           if(snapshot.data.length==0){
+                                          //             return Text("0");
+                                          //           }else{
+                                          //             return Text(snapshot.data.first.totalCount.toString());
+                                          //           }
+                                          //         }
+                                          //         break;
+                                          //       default:
+                                          //         return Text('0');
+                                          //     }
+                                          //   },
+                                          // )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.check_circle),
+                                          SizedBox(
+                                            width: 2,
+                                          ),
+                                          FutureBuilder(
+                                            future: widget.recommend
+                                                .getTotalCount(list
+                                                    .data
+                                                    .last
+                                                    .diagnosis
+                                                    .data[index]
+                                                    .title),
+                                            builder: (_,
+                                                AsyncSnapshot<
+                                                        List<
+                                                            RecommendationData>>
+                                                    snapshot) {
+                                              switch (
+                                                  snapshot.connectionState) {
+                                                case ConnectionState.waiting:
+                                                  return Container(
+                                                      child: Center(
+                                                          child:
+                                                              CircularProgressIndicator()));
+                                                  break;
+                                                case ConnectionState.done:
+                                                  if (snapshot.data == null) {
+                                                    return Text('0%');
+                                                  } else {
+                                                    if (snapshot.data.length ==
+                                                        0) {
+                                                      return Text("0%");
+                                                    } else {
+                                                      return Text(((snapshot
+                                                                          .data
+                                                                          .first
+                                                                          .cured /
+                                                                      snapshot
+                                                                          .data
+                                                                          .first
+                                                                          .totalCount) *
+                                                                  100)
+                                                              .toInt()
+                                                              .toString() +
+                                                          "%");
+                                                    }
+                                                  }
+                                                  break;
+                                                default:
+                                                  return Text('0%');
+                                              }
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.error_outline),
+                                          SizedBox(
+                                            width: 2,
+                                          ),
+                                          FutureBuilder(
+                                            future: widget.recommend
+                                                .getTotalCount(list
+                                                    .data
+                                                    .last
+                                                    .diagnosis
+                                                    .data[index]
+                                                    .title),
+                                            builder: (_,
+                                                AsyncSnapshot<
+                                                        List<
+                                                            RecommendationData>>
+                                                    snapshot) {
+                                              switch (
+                                                  snapshot.connectionState) {
+                                                case ConnectionState.waiting:
+                                                  return Container(
+                                                      child: Center(
+                                                          child:
+                                                              CircularProgressIndicator()));
+                                                  break;
+                                                case ConnectionState.done:
+                                                  if (snapshot.data == null) {
+                                                    return Text('0%');
+                                                  } else {
+                                                    if (snapshot.data.length ==
+                                                        0) {
+                                                      return Text("0%");
+                                                    } else {
+                                                      return Text(snapshot
+                                                              .data
+                                                              .first
+                                                              .symptomsIncreased
+                                                              .toString() +
+                                                          "%");
+                                                    }
+                                                  }
+                                                  break;
+                                                default:
+                                                  return Text('0%');
+                                              }
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                      IconButton(
+                                          icon: Icon(Icons.local_hospital),
                                           onPressed: () {
                                             showDialog(
                                               context: context,
                                               builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  title: Text(
-                                                      "Are you sure you want to remove it?"),
-                                                  actions: [
-                                                    FlatButton(
-                                                      child: Text("Yes"),
-                                                      color: red,
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          patient.deleteMedicine(
-                                                              list.data.last,
-                                                              md
-                                                                  .elementAt(0)
-                                                                  .disease,
-                                                              md
-                                                                  .elementAt(0)
-                                                                  .medicines[
-                                                                      index]
-                                                                  .title);
-                                                        });
-                                                        Navigator.pop(context);
-                                                      },
-                                                    ),
-                                                    FlatButton(
-                                                      child: Text("No"),
-                                                      color: green,
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              context),
-                                                    ),
-                                                  ],
-                                                );
+                                                return MedicineSearch(
+                                                    pId: widget.token.guid,
+                                                    docId:
+                                                        widget.token.doctorid,
+                                                    disease: list
+                                                        .data
+                                                        .last
+                                                        .diagnosis
+                                                        .data[index]
+                                                        .title,
+                                                    fun: () => setState(() {}));
                                               },
                                             );
-                                          }),
-                                      title: Text(
-                                        "${md.last.medicines[index].title} ",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.justify,
-                                        softWrap: true,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(Icons.people),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        FutureBuilder(
-                                          future: widget.recommend
-                                              .getTotalCount(list.data.last
-                                                  .diagnosis.data[index].title),
-                                          builder: (_,
-                                              AsyncSnapshot<
-                                                      List<RecommendationData>>
-                                                  snapshot) {
-                                            switch (snapshot.connectionState) {
-                                              case ConnectionState.waiting:
-                                                return Container(
-                                                    child: Center(
-                                                        child:
-                                                            CircularProgressIndicator()));
-                                                break;
-                                              case ConnectionState.done:
-                                                if (snapshot.data == null) {
-                                                  return Text('0');
-                                                } else {
-                                                  if (snapshot.data.length ==
-                                                      0) {
-                                                    return Text("0");
-                                                  } else {
-                                                    return Text(snapshot
-                                                        .data.first.totalCount
-                                                        .toString());
-                                                  }
-                                                }
-                                                break;
-                                              default:
-                                                return Text('0');
-                                            }
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.timelapse),
-                                        // SizedBox(width: 2,),
-                                        // FutureBuilder(
-                                        //   future:widget.recommend.getTotalCount(list.data.last.diagnosis.data[index].title),
-                                        //   builder: (_, AsyncSnapshot<List<RecommendationData>> snapshot){
-                                        //     switch(snapshot.connectionState){
-                                        //       case ConnectionState.waiting:
-                                        //         return Container(
-                                        //             child: Center(child: CircularProgressIndicator()));
-                                        //         break;
-                                        //       case ConnectionState.done:
-                                        //         if(snapshot.data==null){
-                                        //           return Text('0');
-                                        //         }else{
-                                        //           if(snapshot.data.length==0){
-                                        //             return Text("0");
-                                        //           }else{
-                                        //             return Text(snapshot.data.first.totalCount.toString());
-                                        //           }
-                                        //         }
-                                        //         break;
-                                        //       default:
-                                        //         return Text('0');
-                                        //     }
-                                        //   },
-                                        // )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.check_circle),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        FutureBuilder(
-                                          future: widget.recommend
-                                              .getTotalCount(list.data.last
-                                                  .diagnosis.data[index].title),
-                                          builder: (_,
-                                              AsyncSnapshot<
-                                                      List<RecommendationData>>
-                                                  snapshot) {
-                                            switch (snapshot.connectionState) {
-                                              case ConnectionState.waiting:
-                                                return Container(
-                                                    child: Center(
-                                                        child:
-                                                            CircularProgressIndicator()));
-                                                break;
-                                              case ConnectionState.done:
-                                                if (snapshot.data == null) {
-                                                  return Text('0%');
-                                                } else {
-                                                  if (snapshot.data.length ==
-                                                      0) {
-                                                    return Text("0%");
-                                                  } else {
-                                                    return Text(((snapshot
-                                                                        .data
-                                                                        .first
-                                                                        .cured /
-                                                                    snapshot
-                                                                        .data
-                                                                        .first
-                                                                        .totalCount) *
-                                                                100)
-                                                            .toInt()
-                                                            .toString() +
-                                                        "%");
-                                                  }
-                                                }
-                                                break;
-                                              default:
-                                                return Text('0%');
-                                            }
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.error_outline),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        FutureBuilder(
-                                          future: widget.recommend
-                                              .getTotalCount(list.data.last
-                                                  .diagnosis.data[index].title),
-                                          builder: (_,
-                                              AsyncSnapshot<
-                                                      List<RecommendationData>>
-                                                  snapshot) {
-                                            switch (snapshot.connectionState) {
-                                              case ConnectionState.waiting:
-                                                return Container(
-                                                    child: Center(
-                                                        child:
-                                                            CircularProgressIndicator()));
-                                                break;
-                                              case ConnectionState.done:
-                                                if (snapshot.data == null) {
-                                                  return Text('0%');
-                                                } else {
-                                                  if (snapshot.data.length ==
-                                                      0) {
-                                                    return Text("0%");
-                                                  } else {
-                                                    return Text(snapshot
-                                                            .data
-                                                            .first
-                                                            .symptomsIncreased
-                                                            .toString() +
-                                                        "%");
-                                                  }
-                                                }
-                                                break;
-                                              default:
-                                                return Text('0%');
-                                            }
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                    IconButton(
-                                        icon: Icon(Icons.local_hospital),
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return MedicineSearch(
-                                                  pId: widget.token.guid,
-                                                  docId: widget.token.doctorid,
-                                                  disease: list
-                                                      .data
-                                                      .last
-                                                      .diagnosis
-                                                      .data[index]
-                                                      .title,
-                                                  fun: () => setState(() {}));
-                                            },
-                                          );
-                                        })
-                                  ],
-                                )
-                              ],
+                                          })
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }),
+                          );
+                        })
+                  else
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        // height: 120,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: orangef,
+                                offset: new Offset(0.0, 0.0),
+                                blurRadius: 5.0,
+                              ),
+                            ]),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        child: ListView.builder(
+                          itemCount: medicine.length,
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              dense: true,
+                              subtitle: Text(
+                                  "${medicine[index].dose} ${medicine[index].unit}  ${medicine[index].route} ${medicine[index].frequency} ${medicine[index].direction} ${medicine[index].duration}"),
+                              title: Text(
+                                "${medicine[index].title} ",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.justify,
+                                softWrap: true,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
 
                   /*Advice design*/
                   list.data.last.diagnosis != null

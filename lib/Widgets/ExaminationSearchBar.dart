@@ -29,17 +29,6 @@ class _ExaminationSearchBarState extends State<ExaminationSearchBar> {
 
     return SingleChildScrollView(
       child: AlertDialog(
-        // title: Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: <Widget>[
-        //     Container(child: Text('Examination')),
-        //     InkWell(
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //         },
-        //         child: Icon(Icons.close))
-        //   ],
-        // ), 
         titlePadding: EdgeInsets.zero,
         scrollable: true,
         title: Container(

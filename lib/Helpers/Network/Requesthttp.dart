@@ -21,6 +21,7 @@ import 'package:getcure_doctor/Models/SyncModels/CancelledTokens.dart';
 import 'package:getcure_doctor/Models/TimingAddModel.dart';
 import 'package:getcure_doctor/Models/TokenMode.dart';
 import 'package:getcure_doctor/Models/pdf_config_model.dart';
+import 'package:getcure_doctor/Models/suggestions_model.dart';
 import 'package:getcure_doctor/Widgets/DoctorHoliday.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -123,7 +124,7 @@ Future<bool> loginDoctor(mobNo, pass) async {
   }
 }
 
-Future<List<PrescribedMedicines>> getMedicationsSuggestion(
+Future<List<SuggestionsModel>> getMedicationsSuggestion(
     Map<String, dynamic> body) async {
   try {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -132,10 +133,10 @@ Future<List<PrescribedMedicines>> getMedicationsSuggestion(
         await http.post(MEDICATION_SUGGESTION + docId, body: jsonEncode(body));
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
-      var medicines = <PrescribedMedicines>[];
+      var medicines = <SuggestionsModel>[];
       if (jsonResponse['data'] != null) {
         jsonResponse['data'].forEach((v) {
-          medicines.add(PrescribedMedicines.fromJson(v));
+          medicines.add(SuggestionsModel.fromJson(v));
         });
       }
       return medicines;
@@ -143,6 +144,8 @@ Future<List<PrescribedMedicines>> getMedicationsSuggestion(
       return null;
     }
   } catch (_) {
+    print("Error");
+    print(_);
     return null;
   }
 }

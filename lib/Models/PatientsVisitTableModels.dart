@@ -474,10 +474,16 @@ class Parameters {
     type = json['type'];
     method = json['method'];
     sample = json['sample'];
-    references = json['references'].cast<String>();
+    if (json['references'] != null) {
+      references = json['references'].cast<String>();
+    }
     unit = json['unit'];
-    bioReference = json['bio_reference'].cast<String>();
-    result = json['result'].cast<String>();
+    if (json['bio_reference'] != null) {
+      bioReference = json['bio_reference'].cast<String>();
+    }
+    if (json['result'] != null) {
+      result = json['result'].cast<String>();
+    }
   }
 
   Map<String, dynamic> toJson() {

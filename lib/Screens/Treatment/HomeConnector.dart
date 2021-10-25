@@ -66,7 +66,7 @@ class _HomeConnectorState extends State<HomeConnector>
     } else {
       examcount = 0;
       for (var x in testsTotal.last.examination.data) {
-        if (x.status.compareTo("Completed") != 0) {
+        if (x.status == "Completed") {
           examcount += x.parameters.length;
         }
       }
