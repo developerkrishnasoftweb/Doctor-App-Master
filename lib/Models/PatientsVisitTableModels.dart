@@ -692,12 +692,13 @@ class AdvicesGenerated {
 }
 
 class AdviceData {
-  String id, advice, symptoms;
+  int id;
+  String advice, symptoms;
 
   AdviceData({this.advice, this.id, this.symptoms});
 
   AdviceData.fromJson(Map<String, dynamic> json) {
-    id = json['id']?.toString();
+    id = json['id'];
     advice = json['advice']?.toString();
     symptoms = json['symptoms']?.toString();
   }

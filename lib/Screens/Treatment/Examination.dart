@@ -103,17 +103,26 @@ class _ExaminationState extends State<Examination> {
       "systolicBP": visitData.bp.split('/')[0],
       "diastolicBP": visitData.bp.split('/')[1],
       "pulse": visitData.pulse,
-      "weight": visitData.weight,
-      "briefHistory": briefHistory,
-      "visitReason": visitReason,
-      "allergies": allergies,
-      "lifestyle": lifestyle,
+      "weight": visitData.weight
     };
-    print(jsonEncode(payload));
+    if (briefHistory != null && briefHistory.isNotEmpty) {
+      payload.addAll({"briefHistory": briefHistory});
+    }
+
+    if (visitReason != null && visitReason.isNotEmpty) {
+      payload.addAll({"visitReason": visitReason});
+    }
+
+    if (allergies != null && allergies.isNotEmpty) {
+      payload.addAll({"allergies": allergies});
+    }
+
+    if (lifestyle != null && lifestyle.isNotEmpty) {
+      payload.addAll({"lifestyle": lifestyle});
+    }
 
     final response = await getMedicationsSuggestion(payload);
     if (response != null && response.isNotEmpty) {
-
       var bhd = <ExaminationData>[];
       response.forEach((suggestion) {
         bhd.addAll(suggestion.examination);

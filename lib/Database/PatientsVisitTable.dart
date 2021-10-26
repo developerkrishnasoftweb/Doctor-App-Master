@@ -438,6 +438,9 @@ class PatientsVisitDB extends _$PatientsVisitDB {
 
     for (var x in par) {
       if (x.title == pd.title) {
+        if (x.result == null) {
+          x.result = [];
+        }
         if (x.result.isEmpty) {
           x.result.add(text);
         } else {

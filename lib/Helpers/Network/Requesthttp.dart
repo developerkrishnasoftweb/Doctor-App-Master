@@ -129,10 +129,9 @@ Future<List<SuggestionsModel>> getMedicationsSuggestion(
   try {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String docId = pref.getString('docId');
-    final response =
-        await http.post(MEDICATION_SUGGESTION + docId, body: jsonEncode(body), headers: {
-          HttpHeaders.contentTypeHeader: "application/json"
-        });
+    final response = await http.post(MEDICATION_SUGGESTION + docId,
+        body: jsonEncode(body),
+        headers: {HttpHeaders.contentTypeHeader: "application/json"});
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       var medicines = <SuggestionsModel>[];
@@ -301,13 +300,16 @@ void getAdvices(BuildContext context) async {
     if (jsonResponse['data'] != null) {
       jsonResponse['data'].forEach((advice) async {
         String symptoms = '';
-        advice['symptoms'].forEach((v) async {
-          symptoms += "$v, ";
-        });
+        if (advice['symptoms'] != null) {
+          symptoms = advice['symptoms'].join(',');
+        }
+        // advice['symptoms'].forEach((v) async {
+        //   symptoms += "$v, ";
+        // });
         symptoms = symptoms.substring(0, symptoms.length - 2);
         await adviceProvider.truncate();
-        await adviceProvider
-            .insertAdvice(Advice(advice: advice['title'], symptoms: symptoms));
+        await adviceProvider.insertAdvice(Advice(
+            id: advice['id'], advice: advice['title'], symptoms: symptoms));
       });
     }
   }

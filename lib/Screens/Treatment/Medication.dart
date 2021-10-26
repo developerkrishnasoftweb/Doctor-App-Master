@@ -172,7 +172,7 @@ class _MedicationState extends State<Medication> {
           "allergies": allergies,
           "lifestyle": lifestyle,
           "examination": examination,
-          // "diagnosis": diagnosis
+          "diagnosis": diagnosis
         };
         // print(jsonEncode(payload));
         final response = await getMedicationsSuggestion(payload);
@@ -188,7 +188,16 @@ class _MedicationState extends State<Medication> {
               await patientsVisitDB.updateMedication(
                   visitData, _disease, medicine);
             }
+            for (var advice in visitData.advices.advices) {
+              if (!suggestion.advices
+                  .map((e) => e.id)
+                  .toList()
+                  .contains(advice.id)) {
+                await patientsVisitDB.insertAdvice([advice], visitData);
+              }
+            }
           }
+
           setState(() {});
         } else {
           print('Suggestions not found!!!');

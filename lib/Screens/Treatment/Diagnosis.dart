@@ -82,13 +82,28 @@ class _DiagnosisState extends State<Diagnosis> {
       "systolicBP": visitData.bp.split('/')[0],
       "diastolicBP": visitData.bp.split('/')[1],
       "pulse": visitData.pulse,
-      "weight": visitData.weight,
-      "briefHistory": briefHistory,
-      "visitReason": visitReason,
-      "allergies": allergies,
-      "lifestyle": lifestyle,
-      "examination": examination
+      "weight": visitData.weight
     };
+
+    if (briefHistory != null && briefHistory.isNotEmpty) {
+      payload.addAll({"briefHistory": briefHistory});
+    }
+
+    if (visitReason != null && visitReason.isNotEmpty) {
+      payload.addAll({"visitReason": visitReason});
+    }
+
+    if (allergies != null && allergies.isNotEmpty) {
+      payload.addAll({"allergies": allergies});
+    }
+
+    if (lifestyle != null && lifestyle.isNotEmpty) {
+      payload.addAll({"lifestyle": lifestyle});
+    }
+
+    if (examination != null && examination.isNotEmpty) {
+      payload.addAll({"examination": examination});
+    }
 
     final response = await getMedicationsSuggestion(payload);
     if (response != null && response.isNotEmpty) {

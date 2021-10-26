@@ -9,6 +9,7 @@ class ExamResult extends StatefulWidget {
   final ExaminationData exmdata;
   final String pid;
   final VoidCallback fun;
+
   ExamResult({Key key, this.exmdata, this.pid, this.fun}) : super(key: key);
 
   @override
@@ -73,32 +74,37 @@ class _ExamResultState extends State<ExamResult> {
                     .map<DataRow>((p) => DataRow(
                             color: MaterialStateProperty.resolveWith<Color>(
                                 (Set<MaterialState> states) {
-                              if (p.result.length != 0) {
+                              if (p.result != null && p.result.length != 0) {
                                 if (p.type == 'numeric' &&
-                                    (double.parse(p.result[0]) <
+                                    ((double.tryParse('${p.result[0]}') ??
+                                                0.0) <
                                             double.parse(p.references[0]) ||
-                                        double.parse(p.result[0]) >
+                                        (double.tryParse('${p.result[0]}') ??
+                                                0.0) >
                                             double.parse(p.references.last))) {
                                   return Colors.red[100];
                                   // } else {
                                   //   return blue;
                                   // }
-                                } else if (p.bioReference.length != 0 &&
+                                } else if (p.bioReference != null &&
+                                    p.bioReference.length != 0 &&
                                     p.type == 'radio' &&
                                     (p.result[0] != p.bioReference.first)) {
                                   return Colors.red[100];
                                 }
                               }
-                              // return grey;
+                              return grey;
                             }),
                             cells: [
                               DataCell(Text(p.title), onTap: () {}),
                               DataCell(
                                   p.type == 'numeric'
                                       ? TextFormField(
-                                          initialValue: p.result.length == 0
+                                          initialValue: p.result?.length == 0
                                               ? ""
-                                              : p.result.last,
+                                              : (p?.result?.last != null
+                                                  ? p.result.last
+                                                  : ""),
                                           keyboardType: TextInputType.number,
                                           onChanged: (val) async {
                                             String tex = "";
@@ -140,7 +146,7 @@ class _ExamResultState extends State<ExamResult> {
                                           elevation: 5,
                                           isExpanded: true,
                                           onChanged: (val) async {
-                                            setState(() { 
+                                            setState(() {
                                               _category = val;
                                               if (p.result.isNotEmpty) {
                                                 p.result[0] = val;
@@ -164,7 +170,6 @@ class _ExamResultState extends State<ExamResult> {
                                                         .exmdata.examinationId,
                                                     pd,
                                                     _category);
-                                                  
                                           },
                                         ),
                                   onTap: () {}),

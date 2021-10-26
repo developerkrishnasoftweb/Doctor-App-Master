@@ -1,5 +1,4 @@
-import 'package:getcure_doctor/Models/Appointments/DoctorAppointmentHistoryModel.dart';
-
+import 'package:getcure_doctor/Database/AdviceTable.dart';
 import 'PatientsVisitTableModels.dart';
 
 class SuggestionsModel {
@@ -12,6 +11,7 @@ class SuggestionsModel {
   List<ExaminationData> examination;
   List<DignosisData> diagnosis;
   List<PrescribedMedicines> medications;
+  List<AdviceData> advices;
 
   SuggestionsModel(
       {this.id,
@@ -22,7 +22,8 @@ class SuggestionsModel {
       this.weightGroup,
       this.examination,
       this.diagnosis,
-      this.medications});
+      this.medications,
+      this.advices});
 
   SuggestionsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -52,6 +53,15 @@ class SuggestionsModel {
       json['medications'].forEach((v) {
         medications.add(new PrescribedMedicines.fromJson(v)
           ..title = v['medicine']['title']);
+      });
+    }
+    if (json['advices'] != null) {
+      advices = <AdviceData>[];
+      json['advices'].forEach((v) {
+        advices.add(new AdviceData(
+            id: v['advice']['id'],
+            advice: v['advice']['title'],
+            symptoms: v['symptoms'].join(',')));
       });
     }
   }
