@@ -41,6 +41,7 @@ class _MedicationState extends State<Medication> {
   List<AllAdvices> advices = [];
   AdvicesDatabase adviceProvider;
   PatientsVisitDB patient;
+  String _disease = '';
 
   @override
   void initState() {
@@ -178,18 +179,16 @@ class _MedicationState extends State<Medication> {
         final patientsVisitDB =
             Provider.of<PatientsVisitDB>(context, listen: false);
         if (response != null) {
+          final list = await patient.getDiagnosis(widget.token.guid);
+          if (list.last.diagnosis != null) {
+            _disease = list.last.diagnosis.data.first.title;
+          }
           for (var suggestion in response) {
             for (var medicine in suggestion.medications) {
-              print(medicine);
               await patientsVisitDB.updateMedication(
-                  visitData, 'Diarrhoea', medicine);
+                  visitData, _disease, medicine);
             }
           }
-          // response.forEach((suggestion) {
-          //   suggestion.medications.forEach((medication) {
-          //     patientsVisitDB.updateMedication(visitData, 'Diarrhoea', medication);
-          //   });
-          // });
           setState(() {});
         } else {
           print('Suggestions not found!!!');
@@ -203,6 +202,7 @@ class _MedicationState extends State<Medication> {
 
   @override
   Widget build(BuildContext context) {
+    print(_disease);
     final sdb = Provider.of<SymptomsDB>(context);
     // advices.forEach((element) {
     //   if(element.isSelected)
@@ -573,7 +573,7 @@ class _MedicationState extends State<Medication> {
                             ),
                           );
                         })
-                  else
+                  else if (medicine.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -599,6 +599,40 @@ class _MedicationState extends State<Medication> {
                           itemBuilder: (BuildContext context, int index) {
                             return ListTile(
                               dense: true,
+                              trailing: IconButton(
+                                  icon: Icon(Icons.cancel),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(
+                                              "Are you sure you want to remove it?"),
+                                          actions: [
+                                            FlatButton(
+                                              child: Text("Yes"),
+                                              color: red,
+                                              onPressed: () {
+                                                setState(() {
+                                                  patient.deleteMedicine(
+                                                      list.data.last,
+                                                      _disease,
+                                                      medicine[index].title);
+                                                });
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            FlatButton(
+                                              child: Text("No"),
+                                              color: green,
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }),
                               subtitle: Text(
                                   "${medicine[index].dose} ${medicine[index].unit}  ${medicine[index].route} ${medicine[index].frequency} ${medicine[index].direction} ${medicine[index].duration}"),
                               title: Text(

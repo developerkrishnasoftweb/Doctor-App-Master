@@ -121,7 +121,7 @@ class _ExaminationState extends State<Examination> {
       if (bhd.isNotEmpty) {
         Examinationgenerated bh = Examinationgenerated(data: bhd);
         var p = await patient.checkPatient(widget.token.guid);
-        patient.updateExamination(p.last, bh);
+        await patient.updateExamination(p.last, bh);
         setState(() {});
       }
     }

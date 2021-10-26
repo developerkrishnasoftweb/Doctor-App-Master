@@ -203,10 +203,10 @@ class _SymtomsState extends State<Symtoms> {
                                                         .briefHistory
                                                         .data[index]
                                                         .title);
-                                                patient.deleteDiagnosis(
-                                                    snapshot.data.last,
-                                                    snapshot.data.last.diagnosis
-                                                        .data[index].title);
+                                                // patient.deleteDiagnosis(
+                                                //     snapshot.data.last,
+                                                //     snapshot.data.last.diagnosis
+                                                //         .data[index].title);
                                                 Navigator.pop(context);
                                               },
                                             ),

@@ -77,18 +77,20 @@ class _GetTimingsState extends State<GetTimings> {
         var p = await widget.pv.checkPatient(widget.pId);
         widget.pv.updateBriefHistory(p.last, bh);
 
-        List<DignosisData> bhdd = [
-          DignosisData(
-            date: setDate,
-            title: widget.briefTitle,
-            visibleTill: widget.visibleTill,
-            isCured: _radioValue == "Since" ? false : true,
-          )
-        ];
-        Dignosisgenerated bht = Dignosisgenerated(data: bhdd);
-        var pp = await widget.pv.checkPatient(widget.pId);
-
-        widget.pv.updateDiagnosis(pp.last, bht, recom, med);
+        /// Uncomment these line
+        /// if diagnosis should be added while adding brief history
+        ///
+        // List<DignosisData> bhdd = [
+        //   DignosisData(
+        //     date: setDate,
+        //     title: widget.briefTitle,
+        //     visibleTill: widget.visibleTill,
+        //     isCured: _radioValue == "Since" ? false : true,
+        //   )
+        // ];
+        // Dignosisgenerated bht = Dignosisgenerated(data: bhdd);
+        // var pp = await widget.pv.checkPatient(widget.pId);
+        // widget.pv.updateDiagnosis(pp.last, bht, recom, med);
         break;
       case 'todayVisit':
         List<VisitReasonData> vhd = [

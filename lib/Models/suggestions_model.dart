@@ -1,3 +1,5 @@
+import 'package:getcure_doctor/Models/Appointments/DoctorAppointmentHistoryModel.dart';
+
 import 'PatientsVisitTableModels.dart';
 
 class SuggestionsModel {
@@ -8,7 +10,7 @@ class SuggestionsModel {
   String ageGroup;
   String weightGroup;
   List<ExaminationData> examination;
-  List diagnosis;
+  List<DignosisData> diagnosis;
   List<PrescribedMedicines> medications;
 
   SuggestionsModel(
@@ -32,12 +34,18 @@ class SuggestionsModel {
     if (json['examination'] != null) {
       examination = <ExaminationData>[];
       json['examination'].forEach((v) {
-        print(v['examination']);
         examination.add(new ExaminationData.fromJson(v['examination']));
       });
     }
     if (json['diagonis'] != null) {
-      diagnosis = json['diagonis'];
+      diagnosis = <DignosisData>[];
+      json['diagonis'].forEach((v) {
+        diagnosis.add(new DignosisData(
+            date: v['symptom']['date'] ?? '',
+            isCured: v['symptom']['is_cured'] ?? false,
+            title: v['symptom']['title'],
+            visibleTill: v['symptom']['visible_till'] ?? ''));
+      });
     }
     if (json['medications'] != null) {
       medications = <PrescribedMedicines>[];

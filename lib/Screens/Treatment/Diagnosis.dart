@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:getcure_doctor/Database/MedicinesTable.dart';
 import 'package:getcure_doctor/Database/PatientsVisitTable.dart';
+import 'package:getcure_doctor/Database/Recommendation.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Helpers/AppConfig/colors.dart';
+import 'package:getcure_doctor/Helpers/Network/Requesthttp.dart';
+import 'package:getcure_doctor/Models/PatientsVisitTableModels.dart';
 import 'package:getcure_doctor/Widgets/SearchBarDiagnosis.dart';
 import 'package:provider/provider.dart';
 
 class Diagnosis extends StatefulWidget {
   final Token token;
   final int clinicDocId;
+
   Diagnosis({Key key, this.token, this.clinicDocId}) : super(key: key);
 
   @override
@@ -16,7 +21,95 @@ class Diagnosis extends StatefulWidget {
 
 class _DiagnosisState extends State<Diagnosis> {
   @override
+  void initState() {
+    super.initState();
+    _getSuggestion();
+  }
+
+  void _getSuggestion() async {
+    final patient = Provider.of<PatientsVisitDB>(context, listen: false);
+
+    PatientsVisitData visitData =
+        (await patient.getDiagnosis(widget.token.guid)).last;
+    final briefHistory = visitData?.briefHistory?.data?.map((e) {
+      final json = e.toJson();
+      final duration = '${e.date}'.split(' ');
+      final values =
+          duration.where((v) => !v.contains(RegExp(r'\D+'))).toList();
+      final keys = duration.where((v) => v.contains(RegExp(r'\D+'))).toList();
+
+      keys.forEach((v) {
+        final index = keys.indexOf(v);
+        if (v == 'days') {
+          json.addAll({'day': values[index]});
+        } else if (v == 'months') {
+          json.addAll({'month': values[index]});
+        } else if (v == 'years') {
+          json.addAll({'year': values[index]});
+        }
+      });
+      return json;
+    })?.toList();
+    final visitReason = visitData?.visitReason?.data?.map((e) {
+      final json = e.toJson();
+      final duration = '${e.date}'.split(' ');
+      final values =
+          duration.where((v) => !v.contains(RegExp(r'\D+'))).toList();
+      final keys = duration.where((v) => v.contains(RegExp(r'\D+'))).toList();
+
+      keys.forEach((v) {
+        final index = keys.indexOf(v);
+        if (v == 'days') {
+          json.addAll({'day': values[index]});
+        } else if (v == 'months') {
+          json.addAll({'month': values[index]});
+        } else if (v == 'years') {
+          json.addAll({'year': values[index]});
+        }
+      });
+      return json;
+    })?.toList();
+    final allergies =
+        visitData?.allergies?.data?.map((e) => e.toJson())?.toList();
+    final lifestyle =
+        visitData?.lifestyle?.data?.map((e) => e.toJson())?.toList();
+    final examination =
+        visitData?.examination?.data?.map((e) => e.toJson())?.toList();
+    var payload = <String, dynamic>{
+      "age": widget.token.age,
+      "gender": widget.token.gender,
+      "temperature": visitData.temperature,
+      "systolicBP": visitData.bp.split('/')[0],
+      "diastolicBP": visitData.bp.split('/')[1],
+      "pulse": visitData.pulse,
+      "weight": visitData.weight,
+      "briefHistory": briefHistory,
+      "visitReason": visitReason,
+      "allergies": allergies,
+      "lifestyle": lifestyle,
+      "examination": examination
+    };
+
+    final response = await getMedicationsSuggestion(payload);
+    if (response != null && response.isNotEmpty) {
+      List<DignosisData> bhdd = [];
+
+      response.forEach((suggestion) {
+        bhdd.addAll(suggestion.diagnosis);
+      });
+      if (bhdd.isNotEmpty) {
+        final recom = Provider.of<RecommendationDB>(context, listen: false);
+        final med = Provider.of<MedicinesDB>(context, listen: false);
+        Dignosisgenerated bht = Dignosisgenerated(data: bhdd);
+        await patient.updateDiagnosis(visitData, bht, recom, med);
+        setState(() {});
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // _getSuggestion();
     final patient = Provider.of<PatientsVisitDB>(context);
 
     return SingleChildScrollView(
@@ -29,7 +122,7 @@ class _DiagnosisState extends State<Diagnosis> {
               children: <Widget>[
                 Flexible(
                   child: ExpansionTile(
-                    initiallyExpanded: true,
+                      initiallyExpanded: true,
                       title: Text('Diagnosis'),
                       trailing: IconButton(
                           icon: Icon(
@@ -49,7 +142,7 @@ class _DiagnosisState extends State<Diagnosis> {
                             );
                           }),
                       children: [
-                          StreamBuilder(
+                        StreamBuilder(
                           stream: patient.getBriefHistory(widget.token.guid),
                           builder: (BuildContext context,
                               AsyncSnapshot<List<PatientsVisitData>> snapshot) {
