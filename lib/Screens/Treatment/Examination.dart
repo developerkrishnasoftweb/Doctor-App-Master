@@ -109,7 +109,7 @@ class _ExaminationState extends State<Examination> {
       "allergies": allergies,
       "lifestyle": lifestyle,
     };
-
+    print(jsonEncode(payload));
 
     final response = await getMedicationsSuggestion(payload);
     if (response != null && response.isNotEmpty) {

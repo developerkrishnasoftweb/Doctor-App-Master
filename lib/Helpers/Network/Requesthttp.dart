@@ -130,7 +130,9 @@ Future<List<SuggestionsModel>> getMedicationsSuggestion(
     SharedPreferences pref = await SharedPreferences.getInstance();
     String docId = pref.getString('docId');
     final response =
-        await http.post(MEDICATION_SUGGESTION + docId, body: jsonEncode(body));
+        await http.post(MEDICATION_SUGGESTION + docId, body: jsonEncode(body), headers: {
+          HttpHeaders.contentTypeHeader: "application/json"
+        });
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       var medicines = <SuggestionsModel>[];
