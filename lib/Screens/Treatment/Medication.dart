@@ -188,14 +188,19 @@ class _MedicationState extends State<Medication> {
               await patientsVisitDB.updateMedication(
                   visitData, _disease, medicine);
             }
-            for (var advice in visitData.advices.advices) {
-              if (!suggestion.advices
+            for (var advice in suggestion.advices) {
+              if (!visitData.advices.advices
                   .map((e) => e.id)
                   .toList()
                   .contains(advice.id)) {
                 await patientsVisitDB.insertAdvice([advice], visitData);
               }
             }
+            visitData.advices.advices.forEach((advice) {
+              advices.add(AllAdvices(
+                  advice: Advice.fromJson(advice.toJson()), isSelected: true));
+            });
+            widget.getAdvices(visitData.advices.advices);
           }
 
           setState(() {});
@@ -209,9 +214,14 @@ class _MedicationState extends State<Medication> {
     }
   }
 
+  _dummy() async {
+    final visitData = (await patient.checkPatient(widget.token.guid)).last;
+    print(visitData.advices.advices);
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(_disease);
+    _dummy();
     final sdb = Provider.of<SymptomsDB>(context);
     // advices.forEach((element) {
     //   if(element.isSelected)

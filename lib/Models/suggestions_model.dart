@@ -58,10 +58,12 @@ class SuggestionsModel {
     if (json['advices'] != null) {
       advices = <AdviceData>[];
       json['advices'].forEach((v) {
-        advices.add(new AdviceData(
-            id: v['advice']['id'],
-            advice: v['advice']['title'],
-            symptoms: v['symptoms'].join(',')));
+        if (v['advice'] != null) {
+          advices.add(new AdviceData(
+              id: v['advice']['id'],
+              advice: v['advice']['title'],
+              symptoms: v['advice']['symptoms'].join(',')));
+        }
       });
     }
   }
