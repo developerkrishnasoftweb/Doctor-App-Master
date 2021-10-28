@@ -189,18 +189,24 @@ class _MedicationState extends State<Medication> {
                   visitData, _disease, medicine);
             }
             for (var advice in suggestion.advices) {
-              if (!visitData.advices.advices
-                  .map((e) => e.id)
-                  .toList()
-                  .contains(advice.id)) {
+              if (visitData?.advices?.advices != null &&
+                  !visitData.advices.advices
+                      .map((e) => e.id)
+                      .toList()
+                      .contains(advice.id)) {
+                await patientsVisitDB.insertAdvice([advice], visitData);
+              } else {
                 await patientsVisitDB.insertAdvice([advice], visitData);
               }
             }
-            visitData.advices.advices.forEach((advice) {
-              advices.add(AllAdvices(
-                  advice: Advice.fromJson(advice.toJson()), isSelected: true));
-            });
-            widget.getAdvices(visitData.advices.advices);
+            if (visitData?.advices?.advices != null) {
+              visitData.advices.advices.forEach((advice) {
+                advices.add(AllAdvices(
+                    advice: Advice.fromJson(advice.toJson()),
+                    isSelected: true));
+              });
+              widget.getAdvices(visitData.advices.advices);
+            }
           }
 
           setState(() {});
@@ -214,14 +220,8 @@ class _MedicationState extends State<Medication> {
     }
   }
 
-  _dummy() async {
-    final visitData = (await patient.checkPatient(widget.token.guid)).last;
-    print(visitData.advices.advices);
-  }
-
   @override
   Widget build(BuildContext context) {
-    _dummy();
     final sdb = Provider.of<SymptomsDB>(context);
     // advices.forEach((element) {
     //   if(element.isSelected)
@@ -610,59 +610,81 @@ class _MedicationState extends State<Medication> {
                             ]),
                         padding:
                             EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                        child: ListView.builder(
-                          itemCount: medicine.length,
-                          shrinkWrap: true,
-                          physics: ScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              dense: true,
-                              trailing: IconButton(
-                                  icon: Icon(Icons.cancel),
+                        child: Column(
+                          children: [
+                            ListView.builder(
+                              itemCount: medicine.length,
+                              shrinkWrap: true,
+                              physics: ScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (BuildContext context, int index) {
+                                return ListTile(
+                                  dense: true,
+                                  trailing: IconButton(
+                                      icon: Icon(Icons.cancel),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                  "Are you sure you want to remove it?"),
+                                              actions: [
+                                                FlatButton(
+                                                  child: Text("Yes"),
+                                                  color: red,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      patient.deleteMedicine(
+                                                          list.data.last,
+                                                          _disease,
+                                                          medicine[index]
+                                                              .title);
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                                FlatButton(
+                                                  child: Text("No"),
+                                                  color: green,
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }),
+                                  subtitle: Text(
+                                      "${medicine[index].dose} ${medicine[index].unit}  ${medicine[index].route} ${medicine[index].frequency} ${medicine[index].direction} ${medicine[index].duration}"),
+                                  title: Text(
+                                    "${medicine[index].title} ",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.justify,
+                                    softWrap: true,
+                                  ),
+                                );
+                              },
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: IconButton(
+                                  icon: Icon(Icons.local_hospital),
                                   onPressed: () {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text(
-                                              "Are you sure you want to remove it?"),
-                                          actions: [
-                                            FlatButton(
-                                              child: Text("Yes"),
-                                              color: red,
-                                              onPressed: () {
-                                                setState(() {
-                                                  patient.deleteMedicine(
-                                                      list.data.last,
-                                                      _disease,
-                                                      medicine[index].title);
-                                                });
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                            FlatButton(
-                                              child: Text("No"),
-                                              color: green,
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                            ),
-                                          ],
-                                        );
+                                        return MedicineSearch(
+                                            pId: widget.token.guid,
+                                            docId: widget.token.doctorid,
+                                            disease: _disease,
+                                            fun: () => setState(() {}));
                                       },
                                     );
                                   }),
-                              subtitle: Text(
-                                  "${medicine[index].dose} ${medicine[index].unit}  ${medicine[index].route} ${medicine[index].frequency} ${medicine[index].direction} ${medicine[index].duration}"),
-                              title: Text(
-                                "${medicine[index].title} ",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.justify,
-                                softWrap: true,
-                              ),
-                            );
-                          },
+                            )
+                          ],
                         ),
                       ),
                     ),
