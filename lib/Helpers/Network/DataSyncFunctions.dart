@@ -527,6 +527,7 @@ fetchFeedback(String clinicDocId, FeedBackDB feedDB, int doctorId) async {
 
 fetchPatientsVisit(String clinicDocId, PatientsVisitDB pvDB) async {
   String token = await getToken();
+  print(token);
   var response = await http.get(
     BASEURL + "/visits/clinic-doctor/" + clinicDocId,
     headers: {"Authorization": token},

@@ -187,7 +187,6 @@ Future<PdfConfig> getPdfConfig() async {
       return null;
     }
   } catch (e) {
-    throw ('Error in config $e');
     var configData = pref.getString('pdfConfig');
     if (configData != null) {
       return PdfConfig.fromJson(jsonDecode(configData));
