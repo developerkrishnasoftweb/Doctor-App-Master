@@ -174,7 +174,7 @@ class _MedicationState extends State<Medication> {
           "examination": examination,
           "diagnosis": diagnosis
         };
-        // print(jsonEncode(payload));
+        print(examination);
         final response = await getMedicationsSuggestion(payload);
         final patientsVisitDB =
             Provider.of<PatientsVisitDB>(context, listen: false);
@@ -199,13 +199,15 @@ class _MedicationState extends State<Medication> {
                 await patientsVisitDB.insertAdvice([advice], visitData);
               }
             }
-            if (visitData?.advices?.advices != null) {
-              visitData.advices.advices.forEach((advice) {
+            PatientsVisitData vd =
+                (await patient.checkPatient(widget.token.guid)).last;
+            if (vd?.advices?.advices != null) {
+              vd.advices.advices.forEach((advice) {
                 advices.add(AllAdvices(
                     advice: Advice.fromJson(advice.toJson()),
                     isSelected: true));
               });
-              widget.getAdvices(visitData.advices.advices);
+              widget.getAdvices(vd.advices.advices);
             }
           }
 
