@@ -137,8 +137,14 @@ class _MedicationState extends State<Medication> {
             visitData?.allergies?.data?.map((e) => e.toJson())?.toList();
         final lifestyle =
             visitData?.lifestyle?.data?.map((e) => e.toJson())?.toList();
-        final examination =
-            visitData?.examination?.data?.map((e) => e.toJson())?.toList();
+        final examination = visitData?.examination?.data?.map((e) {
+          e.parameters.forEach((parameter) {
+            if (parameter.result == null) {
+              parameter.result = [];
+            }
+          });
+          return e.toJson();
+        })?.toList();
         final diagnosis = visitData?.diagnosis?.data?.map((e) {
           final json = e.toJson();
           final duration = '${e.date}'.split(' ');
