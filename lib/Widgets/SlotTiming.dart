@@ -19,6 +19,7 @@ class _SlotTimingsState extends State<SlotTimings> {
     for (int i = 0; i <=12; i++) {
       slots.add(start.add(Duration(hours: i)));
     }
+    print(slots);
   }
 
   @override
@@ -59,7 +60,7 @@ class _SlotTimingsState extends State<SlotTimings> {
                       });
                     },
                   ),
-                  
+
                 ],
               ),
             )

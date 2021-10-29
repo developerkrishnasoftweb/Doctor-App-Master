@@ -36,11 +36,17 @@ class LoginPageState extends State<LoginPage> {
   StreamController<ErrorAnimationType> errorController;
   bool hasError = false;
   String errorText = "Something wrong happend";
+
+  TextEditingController mobileNO = TextEditingController();
+  TextEditingController password = TextEditingController();
+
   final RoundedLoadingButtonController _btnController =
       new RoundedLoadingButtonController();
 
   @override
   void initState() {
+    mobileNO.text = '8006622123';
+    password.text = '12345678';
     errorController = StreamController<ErrorAnimationType>();
     super.initState();
   }
@@ -48,6 +54,7 @@ class LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     //errorController.close();
+
     super.dispose();
   }
 
@@ -80,9 +87,11 @@ class LoginPageState extends State<LoginPage> {
 
   void _validateInputs(TokenDB database, PatientsDB pd) async {
     if (_formKey.currentState.validate()) {
+      //print(pass);
       _formKey.currentState.save();
       bool isLoggedIn = await loginDoctor(emailOrMob, pass);
       if (!isLoggedIn) {
+        //print('hello');
         errorController.add(ErrorAnimationType.shake);
         setState(() {
           hasError = true;
@@ -105,10 +114,12 @@ class LoginPageState extends State<LoginPage> {
                     patientDatabase: pd,
                   )));
         } else {
+          //print('not');
           _btnController.reset();
         }
       }
     } else {
+      //print('not2');
       _btnController.reset();
     }
   }
@@ -225,6 +236,7 @@ class LoginPageState extends State<LoginPage> {
                             children: <Widget>[
                               SizedBox(height: 10.0),
                               new TextFormField(
+                                controller: mobileNO,
                                 style: TextStyle(color: Colors.black),
                                 decoration: InputDecoration(
                                   hintText: 'Email Id or Mobile Number',
@@ -239,9 +251,7 @@ class LoginPageState extends State<LoginPage> {
                                 ),
                                 validator: validateMobile,
                                 onSaved: (String val) {
-                                  setState(() {
-                                    emailOrMob = val;
-                                  });
+                                  emailOrMob = val;
                                 },
                                 onTap: () {
                                   setState(() {
@@ -262,14 +272,13 @@ class LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               new TextFormField(
+                                controller: password,
                                 validator: (val) =>
                                     val.isEmpty || val.length < 4
                                         ? 'Enter a valid password'
                                         : null,
                                 onSaved: (String val) {
-                                  setState(() {
-                                    pass = val;
-                                  });
+                                  pass = val;
                                 },
                                 decoration: new InputDecoration(
                                   hintText: 'Enter Password',

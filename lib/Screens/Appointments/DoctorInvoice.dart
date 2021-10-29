@@ -10,15 +10,15 @@ import 'package:http/http.dart' as http;
 class DoctorInvoice extends StatefulWidget {
   final String id;
   final String name;
-  const DoctorInvoice({Key key, this.id,this.name}) : super(key: key);
+
+  const DoctorInvoice({Key key, this.id, this.name}) : super(key: key);
 
   @override
   _DoctorInvoiceState createState() => _DoctorInvoiceState();
 }
 
 class _DoctorInvoiceState extends State<DoctorInvoice> {
-
-  void initState(){
+  void initState() {
     super.initState();
     getcounts();
   }
@@ -32,14 +32,18 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
   var datePicked = DateTime.now();
   var datePickedend = DateTime.now().add(Duration(days: 1));
   DoctorInvoiceModel docmodel;
+
   void getcounts() async {
     countfee = 0;
     countemerg = 0;
     countnewVisit = 0;
     followUp = 0;
     totalAppointments = 0;
-    docmodel = await getDocVoice(widget.id,datePicked.toString().substring(0,10), datePickedend.toString().substring(0,10));
-    
+    docmodel = await getDocVoice(
+        widget.id,
+        datePicked.toString().substring(0, 10),
+        datePickedend.toString().substring(0, 10));
+
     for (int i = 0; i < docmodel.data.length; i++) {
       countfee += docmodel.data[i].feesCollected;
     }
@@ -72,7 +76,7 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: datePicked,
-      firstDate: DateTime.now().subtract(Duration(days:365 )),
+      firstDate: DateTime.now().subtract(Duration(days: 365)),
       lastDate: DateTime(2030),
     );
     if (picked != null && picked != datePicked)
@@ -80,6 +84,7 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
         datePicked = picked;
       });
     String date = datePicked.toString();
+    //print("date= " + date);
     getcounts();
   }
 
@@ -87,7 +92,7 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: datePickedend,
-      firstDate: DateTime.now().subtract(Duration(days:365 )),
+      firstDate: DateTime.now().subtract(Duration(days: 365)),
       lastDate: DateTime(2030),
     );
     if (picked != null && picked != datePickedend)
@@ -95,8 +100,10 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
         datePickedend = picked;
       });
     String date = datePickedend.toString();
+    //print("date= " + date);
     getcounts();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,9 +136,11 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 5.0, right: 5),
                           child: Center(
-                            child: Text('Dr.' +widget.name,
-                             style: TextStyle(color: black, fontSize: 18),
-                            overflow: TextOverflow.ellipsis, ),
+                            child: Text(
+                              'Dr.' + widget.name,
+                              style: TextStyle(color: black, fontSize: 18),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             // child: DropdownButton<FrontDocData>(
                             //   value:
                             //       dropdownvalue == null ? null : dropdownvalue,
@@ -158,7 +167,7 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
                             //         padding: const EdgeInsets.only(left:8.0),
                             //         child: Text(
                             //            value.doctorName,
-                            //            textAlign: TextAlign.center, 
+                            //            textAlign: TextAlign.center,
                             //            style: TextStyle(fontSize:17.0 ), ),
                             //       ),
                             //     );
@@ -184,7 +193,6 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
                         )),
                       ),
                     ),
-                    
                   ],
                 ),
               ),
@@ -249,7 +257,6 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
                     ],
                   )),
             ),
-    
             Center(
               child: Container(
                 height: 80,
@@ -271,7 +278,6 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
                           padding: const EdgeInsets.all(9.0),
                           child: GestureDetector(
                             onTap: () async {
-                              
                               _selectDateStart(context);
                               // getcounts();
                             },
@@ -300,7 +306,6 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
                         Text(' to '),
                         GestureDetector(
                           onTap: () async {
-                            
                             _selectDateEnd(context);
                             // getcounts();
                           },
@@ -336,7 +341,10 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DrInvoiceTable(
-                  fetchinvoice: getDocVoice(widget.id,datePicked.toString().substring(0,10), datePickedend.toString().substring(0,10)),
+                  fetchinvoice: getDocVoice(
+                      widget.id,
+                      datePicked.toString().substring(0, 10),
+                      datePickedend.toString().substring(0, 10)),
                 ),
               ),
             )
@@ -346,4 +354,3 @@ class _DoctorInvoiceState extends State<DoctorInvoice> {
     );
   }
 }
-

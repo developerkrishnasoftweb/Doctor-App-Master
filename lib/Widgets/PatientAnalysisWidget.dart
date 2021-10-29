@@ -49,11 +49,11 @@ class _PatientAnalysisWidgetState extends State<PatientAnalysisWidget> {
                     );
                     selected != null
                         ? setState(() {
-                            st = selected;
-                          })
+                      st = selected;
+                    })
                         : setState(() {
-                            st = st;
-                          });
+                      st = st;
+                    });
                   },
                   child: Text(
                     "${DateFormat('dd-MM-yyyy').format(st).toString()} ",
@@ -77,11 +77,11 @@ class _PatientAnalysisWidgetState extends State<PatientAnalysisWidget> {
                     );
                     selected != null
                         ? setState(() {
-                            et = selected;
-                          })
+                      et = selected;
+                    })
                         : setState(() {
-                            et = et;
-                          });
+                      et = et;
+                    });
                   },
                   child: Text(
                     DateFormat('dd-MM-yyyy').format(et).toString(),
@@ -123,16 +123,16 @@ class _PatientAnalysisWidgetState extends State<PatientAnalysisWidget> {
                               Text("Q${index+1} " + snapshot.data.data[index].question),
                               ListView.builder(
                                 itemCount:
-                                    snapshot.data.data[index].options.length,
+                                snapshot.data.data[index].options.length,
                                 shrinkWrap: true,
                                 itemBuilder: (BuildContext context, int ind) {
                                   return ListTile(
                                     leading: Text(
-                                      snapshot.data.data[index].options[ind]
-                                          .title),
-                                        title: Text(
-                                      snapshot.data.data[index].options[ind]
-                                          .count.toString()+" %"),
+                                        snapshot.data.data[index].options[ind]
+                                            .title),
+                                    title: Text(
+                                        snapshot.data.data[index].options[ind]
+                                            .count.toString()+" %"),
                                   );
                                 },
                               ),

@@ -6,14 +6,14 @@ class DisplayLists extends StatefulWidget {
   final TokenDB token;
   final PageController pageController;
   final int tokenNo;
-  final Function changePages; 
+  final Function changePages;
   final DateTime date;
   DisplayLists(
       {Key key,
-      this.token,
-      this.pageController,
-      this.tokenNo,
-      this.changePages, this.date})
+        this.token,
+        this.pageController,
+        this.tokenNo,
+        this.changePages, this.date})
       : super(key: key);
 
   @override
@@ -30,7 +30,8 @@ class _DisplayListsState extends State<DisplayLists> {
 
   void getAllEntries() async {
     List<Token> lists =
-        await widget.token.getAllBookedTokens().then((value) => ans = value);
+    await widget.token.getAllBookedTokens().then((value) => ans = value);
+    //print(ans);
   }
 
   @override
@@ -90,75 +91,75 @@ class _DisplayListsState extends State<DisplayLists> {
                                       child: ListTile(
                                         onTap: index==0?(){}:() async{
                                           List<Token> checkList = await widget.token.getAllbookedTasks(widget.date);
-                                              int iWantIndex = checkList.indexOf(snapshot.data[index-1]);
-                                              widget.changePages(iWantIndex);
+                                          int iWantIndex = checkList.indexOf(snapshot.data[index-1]);
+                                          widget.changePages(iWantIndex);
                                         },
                                         title: index==0?Text("Patient Name",style: TextStyle(fontWeight: FontWeight.bold), ) :
                                         Text(snapshot.data[index-1].name,
                                             style: TextStyle(
                                                 color: (snapshot
-                                                        .data[index-1].isOnline)
+                                                    .data[index-1].isOnline)
                                                     ? (green)
                                                     : (snapshot.data[index-1]
-                                                                .cancelled ==
-                                                            (true)
-                                                        ? (grey)
-                                                        : (snapshot.data[index-1]
-                                                                    .appointmenttype ==
-                                                                ('emergency')
-                                                            ? (red)
-                                                            : (snapshot
-                                                                        .data[
-                                                                            index-1]
-                                                                        .bookedtype ==
-                                                                    ('on call')
-                                                                ? orangef
-                                                                : blueGrey))))),
-                                        trailing:index==0?Text("Address",style: TextStyle(fontWeight: FontWeight.bold),) 
-                                        : Text(
+                                                    .cancelled ==
+                                                    (true)
+                                                    ? (grey)
+                                                    : (snapshot.data[index-1]
+                                                    .appointmenttype ==
+                                                    ('emergency')
+                                                    ? (red)
+                                                    : (snapshot
+                                                    .data[
+                                                index-1]
+                                                    .bookedtype ==
+                                                    ('on call')
+                                                    ? orangef
+                                                    : blueGrey))))),
+                                        trailing:index==0?Text("Address",style: TextStyle(fontWeight: FontWeight.bold),)
+                                            : Text(
                                             snapshot.data[index-1].address
                                                 .toString(),
                                             style: TextStyle(
                                                 color: (snapshot
-                                                        .data[index-1].isOnline)
+                                                    .data[index-1].isOnline)
                                                     ? (green)
                                                     : (snapshot.data[index-1]
-                                                                .cancelled ==
-                                                            (true)
-                                                        ? (grey)
-                                                        : (snapshot.data[index-1]
-                                                                    .appointmenttype ==
-                                                                ('emergency')
-                                                            ? (red)
-                                                            : (snapshot
-                                                                        .data[
-                                                                            index-1]
-                                                                        .bookedtype ==
-                                                                    ('on call')
-                                                                ? orangef
-                                                                : blueGrey))))),
+                                                    .cancelled ==
+                                                    (true)
+                                                    ? (grey)
+                                                    : (snapshot.data[index-1]
+                                                    .appointmenttype ==
+                                                    ('emergency')
+                                                    ? (red)
+                                                    : (snapshot
+                                                    .data[
+                                                index-1]
+                                                    .bookedtype ==
+                                                    ('on call')
+                                                    ? orangef
+                                                    : blueGrey))))),
                                         leading:index==0?Text("T.No.",style: TextStyle(fontWeight: FontWeight.bold),) :  Text(
                                             snapshot.data[index].tokenno
                                                 .toString(),
                                             style: TextStyle(
                                                 color: (snapshot
-                                                        .data[index-1].isOnline)
+                                                    .data[index-1].isOnline)
                                                     ? (green)
                                                     : (snapshot.data[index-1]
-                                                                .cancelled ==
-                                                            (true)
-                                                        ? (grey)
-                                                        : (snapshot.data[index-1]
-                                                                    .appointmenttype ==
-                                                                ('emergency')
-                                                            ? (red)
-                                                            : (snapshot
-                                                                        .data[
-                                                                            index-1]
-                                                                        .bookedtype ==
-                                                                    ('on call')
-                                                                ? orangef
-                                                                : blueGrey))))),
+                                                    .cancelled ==
+                                                    (true)
+                                                    ? (grey)
+                                                    : (snapshot.data[index-1]
+                                                    .appointmenttype ==
+                                                    ('emergency')
+                                                    ? (red)
+                                                    : (snapshot
+                                                    .data[
+                                                index-1]
+                                                    .bookedtype ==
+                                                    ('on call')
+                                                    ? orangef
+                                                    : blueGrey))))),
                                       ),
                                     );
                                   },
@@ -198,74 +199,74 @@ class _DisplayListsState extends State<DisplayLists> {
                                       (BuildContext context, int index) {
                                     return ListTile(
                                       onTap: index==0?(){}: () async{
-                                          List<Token> checkList = await widget.token.getAllbookedTasks(widget.date);
-                                              int iWantIndex = checkList.indexOf(snapshot.data[index-1]);
-                                              widget.changePages(iWantIndex);
-                                        },
-                                      title: index==0?Text("Patient Name",style: TextStyle(fontWeight: FontWeight.bold), ) 
-                                      :Text(snapshot.data[index-1].name,
+                                        List<Token> checkList = await widget.token.getAllbookedTasks(widget.date);
+                                        int iWantIndex = checkList.indexOf(snapshot.data[index-1]);
+                                        widget.changePages(iWantIndex);
+                                      },
+                                      title: index==0?Text("Patient Name",style: TextStyle(fontWeight: FontWeight.bold), )
+                                          :Text(snapshot.data[index-1].name,
                                           style: TextStyle(
                                               color: (snapshot
-                                                      .data[index-1].isOnline)
+                                                  .data[index-1].isOnline)
                                                   ? (green)
                                                   : (snapshot.data[index-1]
-                                                              .cancelled ==
-                                                          (true)
-                                                      ? (grey)
-                                                      : (snapshot.data[index-1]
-                                                                  .appointmenttype ==
-                                                              ('emergency')
-                                                          ? (red)
-                                                          : (snapshot
-                                                                      .data[index-1]
-                                                                      .bookedtype ==
-                                                                  ('on call')
-                                                              ? orangef
-                                                              : blueGrey))))),
+                                                  .cancelled ==
+                                                  (true)
+                                                  ? (grey)
+                                                  : (snapshot.data[index-1]
+                                                  .appointmenttype ==
+                                                  ('emergency')
+                                                  ? (red)
+                                                  : (snapshot
+                                                  .data[index-1]
+                                                  .bookedtype ==
+                                                  ('on call')
+                                                  ? orangef
+                                                  : blueGrey))))),
                                       trailing:index==0?Text("Address",style: TextStyle(fontWeight: FontWeight.bold),) :Text(
                                           snapshot.data[index-1].address
                                               .toString(),
                                           style: TextStyle(
                                               color: (snapshot
-                                                      .data[index-1].isOnline)
+                                                  .data[index-1].isOnline)
                                                   ? (green)
                                                   : (snapshot.data[index-1]
-                                                              .cancelled ==
-                                                          (true)
-                                                      ? (grey)
-                                                      : (snapshot.data[index-1]
-                                                                  .appointmenttype ==
-                                                              ('emergency')
-                                                          ? (red)
-                                                          : (snapshot
-                                                                      .data[
-                                                                          index-1]
-                                                                      .bookedtype ==
-                                                                  ('on call')
-                                                              ? orangef
-                                                              : blueGrey))))),
+                                                  .cancelled ==
+                                                  (true)
+                                                  ? (grey)
+                                                  : (snapshot.data[index-1]
+                                                  .appointmenttype ==
+                                                  ('emergency')
+                                                  ? (red)
+                                                  : (snapshot
+                                                  .data[
+                                              index-1]
+                                                  .bookedtype ==
+                                                  ('on call')
+                                                  ? orangef
+                                                  : blueGrey))))),
                                       leading:index==0?Text("T.No.",style: TextStyle(fontWeight: FontWeight.bold),) : Text(
                                           snapshot.data[index-1].tokenno
                                               .toString(),
                                           style: TextStyle(
                                               color: (snapshot
-                                                      .data[index-1].isOnline)
+                                                  .data[index-1].isOnline)
                                                   ? (green)
                                                   : (snapshot.data[index-1]
-                                                              .cancelled ==
-                                                          (true)
-                                                      ? (grey)
-                                                      : (snapshot.data[index-1]
-                                                                  .appointmenttype ==
-                                                              ('emergency')
-                                                          ? (red)
-                                                          : (snapshot
-                                                                      .data[
-                                                                          index-1]
-                                                                      .bookedtype ==
-                                                                  ('on call')
-                                                              ? orangef
-                                                              : blueGrey))))),
+                                                  .cancelled ==
+                                                  (true)
+                                                  ? (grey)
+                                                  : (snapshot.data[index-1]
+                                                  .appointmenttype ==
+                                                  ('emergency')
+                                                  ? (red)
+                                                  : (snapshot
+                                                  .data[
+                                              index-1]
+                                                  .bookedtype ==
+                                                  ('on call')
+                                                  ? orangef
+                                                  : blueGrey))))),
                                     );
                                   },
                                 );
@@ -305,70 +306,70 @@ class _DisplayListsState extends State<DisplayLists> {
                                       onTap: () {
                                         widget.changePages(index-1);
                                       },
-                                      title: index==0?Text("Patient Name",style: TextStyle(fontWeight: FontWeight.bold), ) 
-                                      :Text(snapshot.data[index-1].name,
+                                      title: index==0?Text("Patient Name",style: TextStyle(fontWeight: FontWeight.bold), )
+                                          :Text(snapshot.data[index-1].name,
                                           style: TextStyle(
                                               color: (snapshot
-                                                      .data[index-1].isOnline)
+                                                  .data[index-1].isOnline)
                                                   ? (green)
                                                   : (snapshot.data[index-1]
-                                                              .cancelled ==
-                                                          (true)
-                                                      ? (grey)
-                                                      : (snapshot.data[index-1]
-                                                                  .appointmenttype ==
-                                                              ('emergency')
-                                                          ? (red)
-                                                          : (snapshot
-                                                                      .data[index-1]
-                                                                      .bookedtype ==
-                                                                  ('on call')
-                                                              ? orangef
-                                                              : blueGrey))))),
+                                                  .cancelled ==
+                                                  (true)
+                                                  ? (grey)
+                                                  : (snapshot.data[index-1]
+                                                  .appointmenttype ==
+                                                  ('emergency')
+                                                  ? (red)
+                                                  : (snapshot
+                                                  .data[index-1]
+                                                  .bookedtype ==
+                                                  ('on call')
+                                                  ? orangef
+                                                  : blueGrey))))),
                                       trailing:index==0?Text("Address",style: TextStyle(fontWeight: FontWeight.bold),) :Text(
                                           snapshot.data[index-1].address
                                               .toString(),
                                           style: TextStyle(
                                               color: (snapshot
-                                                      .data[index-1].isOnline)
+                                                  .data[index-1].isOnline)
                                                   ? (green)
                                                   : (snapshot.data[index-1]
-                                                              .cancelled ==
-                                                          (true)
-                                                      ? (grey)
-                                                      : (snapshot.data[index-1]
-                                                                  .appointmenttype ==
-                                                              ('emergency')
-                                                          ? (red)
-                                                          : (snapshot
-                                                                      .data[
-                                                                          index-1]
-                                                                      .bookedtype ==
-                                                                  ('on call')
-                                                              ? orangef
-                                                              : blueGrey))))),
+                                                  .cancelled ==
+                                                  (true)
+                                                  ? (grey)
+                                                  : (snapshot.data[index-1]
+                                                  .appointmenttype ==
+                                                  ('emergency')
+                                                  ? (red)
+                                                  : (snapshot
+                                                  .data[
+                                              index-1]
+                                                  .bookedtype ==
+                                                  ('on call')
+                                                  ? orangef
+                                                  : blueGrey))))),
                                       leading:index==0?Text("T.No.",style: TextStyle(fontWeight: FontWeight.bold),) : Text(
                                           snapshot.data[index-1].tokenno
                                               .toString(),
                                           style: TextStyle(
                                               color: (snapshot
-                                                      .data[index-1].isOnline)
+                                                  .data[index-1].isOnline)
                                                   ? (green)
                                                   : (snapshot.data[index-1]
-                                                              .cancelled ==
-                                                          (true)
-                                                      ? (grey)
-                                                      : (snapshot.data[index-1]
-                                                                  .appointmenttype ==
-                                                              ('emergency')
-                                                          ? (red)
-                                                          : (snapshot
-                                                                      .data[
-                                                                          index-1]
-                                                                      .bookedtype ==
-                                                                  ('on call')
-                                                              ? orangef
-                                                              : blueGrey))))),
+                                                  .cancelled ==
+                                                  (true)
+                                                  ? (grey)
+                                                  : (snapshot.data[index-1]
+                                                  .appointmenttype ==
+                                                  ('emergency')
+                                                  ? (red)
+                                                  : (snapshot
+                                                  .data[
+                                              index-1]
+                                                  .bookedtype ==
+                                                  ('on call')
+                                                  ? orangef
+                                                  : blueGrey))))),
                                     );
                                   },
                                 );

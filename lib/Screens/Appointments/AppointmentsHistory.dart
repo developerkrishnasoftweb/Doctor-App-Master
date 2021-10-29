@@ -10,9 +10,13 @@ import 'package:intl/intl.dart';
 class DoctorAppointmentHistory extends StatefulWidget {
   final List<ClinicDoctor> clinicDoctor;
   final DoctorLoginData docUser;
-  const DoctorAppointmentHistory({Key key, this.clinicDoctor,this.docUser}) : super(key: key);
+
+  const DoctorAppointmentHistory({Key key, this.clinicDoctor, this.docUser})
+      : super(key: key);
+
   @override
-  _DoctorAppointmentHistoryState createState() => _DoctorAppointmentHistoryState();
+  _DoctorAppointmentHistoryState createState() =>
+      _DoctorAppointmentHistoryState();
 }
 
 class _DoctorAppointmentHistoryState extends State<DoctorAppointmentHistory> {
@@ -32,47 +36,52 @@ class _DoctorAppointmentHistoryState extends State<DoctorAppointmentHistory> {
 
   String query = "";
   ClinicDoctor dropdownvalue;
-  DateTime selectedDate ;
-  DateTime selectedDateEnd ;
-  
+  DateTime selectedDate;
+
+  DateTime selectedDateEnd;
+
   _selectDateStart(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime.now().subtract(Duration(days:365 )),
+      firstDate: DateTime.now().subtract(Duration(days: 365)),
       lastDate: DateTime(2030),
     );
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
-        countvalues();  
+        countvalues();
       });
     String date = selectedDate.toString();
+    print("date= " + date);
   }
 
   _selectDateEnd(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDateEnd,
-      firstDate: DateTime.now().subtract(Duration(days:365 )),
+      firstDate: DateTime.now().subtract(Duration(days: 365)),
       lastDate: DateTime(2030),
     );
     if (picked != null && picked != selectedDateEnd)
       setState(() {
         selectedDateEnd = picked;
-        countvalues();  
+        countvalues();
       });
     String date = selectedDateEnd.toString();
+    print("date= " + date);
   }
+
   int countTotal = 0;
   int countCancelled = 0;
   int countCompleted = 0;
-  int upcomingCount=0;
+  int upcomingCount = 0;
+
   void countvalues() async {
     countTotal = 0;
     countCancelled = 0;
     countCompleted = 0;
-    upcomingCount=0;
+    upcomingCount = 0;
     DoctorAppointmentHistoryModel daily = await appointmenthistoryfetch(
         selectedDate.toString().substring(0, 11),
         selectedDateEnd.toString().substring(0, 11),
@@ -127,11 +136,12 @@ class _DoctorAppointmentHistoryState extends State<DoctorAppointmentHistory> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20.0, right: 0),
                           child: FittedBox(
-                            fit:BoxFit.fitWidth,
-                              child: Center(
+                            fit: BoxFit.fitWidth,
+                            child: Center(
                               child: DropdownButton<ClinicDoctor>(
-                                value:
-                                    dropdownvalue == null ? null : dropdownvalue,
+                                value: dropdownvalue == null
+                                    ? null
+                                    : dropdownvalue,
                                 hint: Text('Select Doctor'),
                                 elevation: 16,
                                 onChanged: (ClinicDoctor newValue) {
@@ -168,16 +178,13 @@ class _DoctorAppointmentHistoryState extends State<DoctorAppointmentHistory> {
                             border: Border.all(color: orangep)),
                         child: Center(
                           child: CircleAvatar(
-                                backgroundImage: widget
-                                            .docUser.imageUrl !=
-                                        null
-                                    ? NetworkImage(
-                                        widget.docUser.imageUrl)
-                                    : NetworkImage(
-                                        "https://img.icons8.com/windows/452/person-male.png"),
-                                maxRadius: 50.0,
-                              ),
-                            ),
+                            backgroundImage: widget.docUser.imageUrl != null
+                                ? NetworkImage(widget.docUser.imageUrl)
+                                : NetworkImage(
+                                    "https://img.icons8.com/windows/452/person-male.png"),
+                            maxRadius: 50.0,
+                          ),
+                        ),
                       ),
                     ),
                     Positioned(
@@ -333,7 +340,6 @@ class _DoctorAppointmentHistoryState extends State<DoctorAppointmentHistory> {
                             countCancelled,
                             'Cancel Appointment',
                           ),
-                          
                         ],
                       ),
                       Row(

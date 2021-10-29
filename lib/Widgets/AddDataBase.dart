@@ -8,7 +8,8 @@ import 'AddMedicine.dart';
 class AddDataBase extends StatelessWidget {
   final int docId;
   final int clinicDocId;
-  const AddDataBase({Key key, this.docId,this.clinicDocId }) : super(key: key);
+
+  const AddDataBase({Key key, this.docId, this.clinicDocId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +26,14 @@ class AddDataBase extends StatelessWidget {
                 icon: Icon(Icons.arrow_forward_ios),
               ),
               onTap: () {
+                //print("add database line 29");
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AddToSymptoms(docId: docId,
-                    clinicDocId: clinicDocId, );
+                    return AddToSymptoms(
+                      docId: docId,
+                      clinicDocId: clinicDocId,
+                    );
                   },
                 );
               }),
@@ -48,6 +52,7 @@ class AddDataBase extends StatelessWidget {
               title: Text('Examination Table'),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
+                //print(docId);
                 showDialog(
                   context: context,
                   barrierDismissible: true,
@@ -63,6 +68,7 @@ class AddDataBase extends StatelessWidget {
               trailing: IconButton(
                   icon: Icon(Icons.arrow_forward_ios), onPressed: null),
               onTap: () {
+                //print(docId);
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {

@@ -71,277 +71,277 @@ class _PatientVisitDialogState extends State<PatientVisitDialog> {
                               child: Center(
                                 child: Text("Noticeable",textAlign: TextAlign.center,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
+                                    TextStyle(fontWeight: FontWeight.bold)),
                               ),
                             ),
                             Wrap(
                               alignment: WrapAlignment.spaceBetween,
                               // crossAxisAlignment: WrapCrossAlignment.start,
-                              children: 
+                              children:
                               [...List.generate(
                                   (widget.pd.length == 0)
                                       ? 0
                                       : (widget.pd.last.visitReason == null)
-                                          ? (0)
-                                          : (widget.pd.last.visitReason.data.length == 0
-                                              ? (0)
-                                              : widget.pd.last.visitReason.data.length),
-                                  (index) => Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 2.0),
-                                        child: Container(
-                                          child: (widget.pd.length == 0)
-                                              ? 0
-                                              : (widget.pd.last.visitReason.data == null)
-                                                  ? 0
-                                                  : widget.pd.last.visitReason.data
-                                                              .length ==
-                                                          0
-                                                      ? Text('No Data')
-                                                      : !widget.pd.last.visitReason
-                                                              .data[index].isCured
-                                                          ? RichText(
-                                                              text: TextSpan(
-                                                                  text:
-                                                                      "${widget.pd.last.visitReason.data[index].title} ",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          15.0,
-                                                                      color: black),
-                                                                  children: <
-                                                                      TextSpan>[
-                                                                    TextSpan(
-                                                                      text:
-                                                                          "(${widget.pd.last.visitReason.data[index].date.trim()})",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              15.0,
-                                                                          color:
-                                                                              orangef),
-                                                                    )
-                                                                  ]),
-                                                            )
-                                                          : Container(),
+                                      ? (0)
+                                      : (widget.pd.last.visitReason.data.length == 0
+                                      ? (0)
+                                      : widget.pd.last.visitReason.data.length),
+                                      (index) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 2.0),
+                                    child: Container(
+                                      child: (widget.pd.length == 0)
+                                          ? 0
+                                          : (widget.pd.last.visitReason.data == null)
+                                          ? 0
+                                          : widget.pd.last.visitReason.data
+                                          .length ==
+                                          0
+                                          ? Text('No Data')
+                                          : !widget.pd.last.visitReason
+                                          .data[index].isCured
+                                          ? RichText(
+                                        text: TextSpan(
+                                            text:
+                                            "${widget.pd.last.visitReason.data[index].title} ",
+                                            style: TextStyle(
+                                                fontSize:
+                                                15.0,
+                                                color: black),
+                                            children: <
+                                                TextSpan>[
+                                              TextSpan(
+                                                text:
+                                                "(${widget.pd.last.visitReason.data[index].date.trim()})",
+                                                style: TextStyle(
+                                                    fontSize:
+                                                    15.0,
+                                                    color:
+                                                    orangef),
+                                              )
+                                            ]),
+                                      )
+                                          : Container(),
+                                    ),
+                                  )),
+                                double.parse(widget.pd.last.temperature) > 99 ||
+                                    double.parse(widget.pd.last.temperature) < 97
+                                    ? RichText(
+                                  text: TextSpan(
+                                      text: "Temp- ",
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: black),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: (widget.pd.length == 0)
+                                              ? "0"
+                                              : "${widget.pd.last.temperature}",
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              color: orangef),
+                                        )
+                                      ]),
+                                )
+                                    : Container(),
+                                int.parse(widget.pd.last.bp.split('/')[0]) > 120 ||
+                                    int.parse(widget.pd.last.bp.split('/')[0]) <
+                                        90 ||
+                                    int.parse(widget.pd.last.bp.split('/')[1]) >
+                                        80 ||
+                                    int.parse(widget.pd.last.bp.split('/')[1]) < 60
+                                    ? RichText(
+                                  text: TextSpan(
+                                      text: "B.P- ",
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: black),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: (widget.pd.length == 0)
+                                              ? "0"
+                                              : "${widget.pd.last.bp}",
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              color: orangef),
+                                        )
+                                      ]),
+                                )
+                                    : Container(),
+
+                                (widget.pd.last.pulse!=null && widget.pd.last.pulse!="")?  int.parse(widget.pd.last.pulse) > 100 ||
+                                    int.parse(widget.pd.last.pulse) < 60
+                                    ? RichText(
+                                  text: TextSpan(
+                                      text: "Pulse- ",
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: black),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: (widget.pd.length == 0)
+                                              ? "0"
+                                              : "${widget.pd.last.pulse.toString()}",
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              color: orangep),
+                                        )
+                                      ]),
+                                )
+                                    : Container():Container(),
+                                (widget.pd.last.weight!=null && widget.pd.last.weight!="" &&int.parse(widget.pd.last.weight)!=0) ?(int.parse(widget.pd.last.weight) > 99 ||
+                                    int.parse(widget.pd.last.weight) < 40)
+                                    ? RichText(
+                                  text: TextSpan(
+                                      text: "Weight- ",
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: black),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: (widget.pd.length == 0)
+                                              ? "0"
+                                              : "${widget.pd.last.weight.toString()}",
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              color: orangep),
+                                        )
+                                      ]),
+                                )
+                                    : Container():Container(),
+
+
+                                Wrap(
+                                    alignment: WrapAlignment.start,
+                                    // crossAxisAlignment: WrapCrossAlignment.start,
+                                    children: [
+                                      widget.pd.length == 0 ||  widget.pd.last.allergies == null?   Container():
+                                      RichText(
+                                        text: TextSpan(
+                                          text: "Allergies: ",
+                                          style:
+                                          TextStyle(fontSize: 15.0, color: black),
                                         ),
-                                      )),
-                                       double.parse(widget.pd.last.temperature) > 99 ||
-                                      double.parse(widget.pd.last.temperature) < 97
-                                  ? RichText(
-                                      text: TextSpan(
-                                          text: "Temp- ",
-                                          style: TextStyle(
-                                              fontSize: 15.0, color: black),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: (widget.pd.length == 0)
-                                                  ? "0"
-                                                  : "${widget.pd.last.temperature}",
-                                              style: TextStyle(
-                                                  fontSize: 15.0,
-                                                  color: orangef),
-                                            )
-                                          ]),
-                                    )
-                                  : Container(),
-                              int.parse(widget.pd.last.bp.split('/')[0]) > 120 ||
-                                      int.parse(widget.pd.last.bp.split('/')[0]) <
-                                          90 ||
-                                      int.parse(widget.pd.last.bp.split('/')[1]) >
-                                          80 ||
-                                      int.parse(widget.pd.last.bp.split('/')[1]) < 60
-                                  ? RichText(
-                                      text: TextSpan(
-                                          text: "B.P- ",
-                                          style: TextStyle(
-                                              fontSize: 15.0, color: black),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: (widget.pd.length == 0)
-                                                  ? "0"
-                                                  : "${widget.pd.last.bp}",
-                                              style: TextStyle(
-                                                  fontSize: 15.0,
-                                                  color: orangef),
-                                            )
-                                          ]),
-                                    )
-                                  : Container(),
+                                      ),
+                                      ...List.generate(
+                                          (widget.pd.length == 0)
+                                              ? 0
+                                              : (widget.pd.last.allergies == null)
 
-                             (widget.pd.last.pulse!=null && widget.pd.last.pulse!="")?  int.parse(widget.pd.last.pulse) > 100 ||
-                                      int.parse(widget.pd.last.pulse) < 60
-                                  ? RichText(
-                                      text: TextSpan(
-                                          text: "Pulse- ",
-                                          style: TextStyle(
-                                              fontSize: 15.0, color: black),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: (widget.pd.length == 0)
-                                                  ? "0"
-                                                  : "${widget.pd.last.pulse.toString()}",
-                                              style: TextStyle(
-                                                  fontSize: 15.0,
-                                                  color: orangep),
-                                            )
-                                          ]),
-                                    )
-                                  : Container():Container(),
-                              (widget.pd.last.weight!=null && widget.pd.last.weight!="" &&int.parse(widget.pd.last.weight)!=0) ?(int.parse(widget.pd.last.weight) > 99 ||
-                                      int.parse(widget.pd.last.weight) < 40) 
-                                  ? RichText(
-                                      text: TextSpan(
-                                          text: "Weight- ",
-                                          style: TextStyle(
-                                              fontSize: 15.0, color: black),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: (widget.pd.length == 0)
-                                                  ? "0"
-                                                  : "${widget.pd.last.weight.toString()}",
-                                              style: TextStyle(
-                                                  fontSize: 15.0,
-                                                  color: orangep),
-                                            )
-                                          ]),
-                                    )
-                                  : Container():Container(),
-                              
-                          
-                              Wrap(
-                                alignment: WrapAlignment.start,
-                                // crossAxisAlignment: WrapCrossAlignment.start,
-                                children: [
-                                  widget.pd.length == 0 ||  widget.pd.last.allergies == null?   Container():
-                          RichText(
-                                text: TextSpan(
-                                  text: "Allergies: ",
-                                  style:
-                                      TextStyle(fontSize: 15.0, color: black),
+                                              ? 0
+                                              : (widget.pd.last.allergies.data.length ==
+                                              0
+                                              ? 0
+                                              : widget.pd.last.allergies.data
+                                              .length),
+                                              (index) => Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10.0),
+                                            child: Container(
+                                              child: (widget.pd.length == 0)
+                                                  ? 0
+                                                  : (widget.pd.last.allergies.data ==
+                                                  null)
+                                                  ? 0
+                                                  : widget.pd.last.allergies.data
+                                                  .length ==
+                                                  0
+                                                  ? Text('No Data')
+                                                  : RichText(
+                                                text: TextSpan(
+                                                  text:
+                                                  "•${widget.pd.last.allergies.data[index].title} ",
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                      15.0,
+                                                      color: black),
+                                                ),
+                                              ),
+                                            ),
+                                          )),]
                                 ),
-                              ),
-                                  ...List.generate(
-                                    (widget.pd.length == 0)
-                                        ? 0
-                                        : (widget.pd.last.allergies == null)
 
-                                            ? 0
-                                            : (widget.pd.last.allergies.data.length ==
-                                                    0
-                                                ? 0
-                                                : widget.pd.last.allergies.data
-                                                    .length),
-                                    (index) => Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
-                                          child: Container(
-                                            child: (widget.pd.length == 0)
-                                                ? 0
-                                                : (widget.pd.last.allergies.data ==
-                                                        null)
-                                                    ? 0
-                                                    : widget.pd.last.allergies.data
-                                                                .length ==
-                                                            0
-                                                        ? Text('No Data')
-                                                        : RichText(
-                                                            text: TextSpan(
-                                                              text:
-                                                                  "•${widget.pd.last.allergies.data[index].title} ",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  color: black),
-                                                            ),
-                                                          ),
-                                          ),
-                                        )),]
-                              ),
-                              
-                          
-                              Wrap(
-                                alignment: WrapAlignment.spaceBetween,
-                                // crossAxisAlignment: WrapCrossAlignment.start,
-                                children:[ 
-                                  widget.pd.length == 0 || widget.pd.last.lifestyle == null?Container(): RichText(
-                                text: TextSpan(
-                                  text: "LifeStyle: ",
-                                  style:
-                                      TextStyle(fontSize: 15.0, color: black),
-                                ),
-                              ),
-                                  ...List.generate(
-                                    (widget.pd.length == 0)
-                                        ? 0
-                                        : (widget.pd.last.lifestyle == null)
 
-                                            ? 0
-                                            : (widget.pd.last.lifestyle.data.length ==
-                                                    0
-                                                ? 0
-                                                : widget.pd.last.lifestyle.data
-                                                    .length),
-                                    (index) => Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 3.0),
-                                          child: Container(
-                                            child: (widget.pd.length == 0)
-                                                ? 0
-                                                : (widget.pd.last.lifestyle.data ==
-                                                        null)
-                                                    ? 0
-                                                    : widget.pd.last.lifestyle.data
-                                                                .length ==
-                                                            0
-                                                        ? Text('No Data')
-                                                        : RichText(
-                                                            text: TextSpan(
-                                                              text:
-                                                                  "•${widget.pd.last.lifestyle.data[index].title} ",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  color: black),
-                                                            ),
-                                                          ),
-                                          ),
-                                        )),]
-                              )
-                                      ],
+                                Wrap(
+                                    alignment: WrapAlignment.spaceBetween,
+                                    // crossAxisAlignment: WrapCrossAlignment.start,
+                                    children:[
+                                      widget.pd.length == 0 || widget.pd.last.lifestyle == null?Container(): RichText(
+                                        text: TextSpan(
+                                          text: "LifeStyle: ",
+                                          style:
+                                          TextStyle(fontSize: 15.0, color: black),
+                                        ),
+                                      ),
+                                      ...List.generate(
+                                          (widget.pd.length == 0)
+                                              ? 0
+                                              : (widget.pd.last.lifestyle == null)
+
+                                              ? 0
+                                              : (widget.pd.last.lifestyle.data.length ==
+                                              0
+                                              ? 0
+                                              : widget.pd.last.lifestyle.data
+                                              .length),
+                                              (index) => Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 3.0),
+                                            child: Container(
+                                              child: (widget.pd.length == 0)
+                                                  ? 0
+                                                  : (widget.pd.last.lifestyle.data ==
+                                                  null)
+                                                  ? 0
+                                                  : widget.pd.last.lifestyle.data
+                                                  .length ==
+                                                  0
+                                                  ? Text('No Data')
+                                                  : RichText(
+                                                text: TextSpan(
+                                                  text:
+                                                  "•${widget.pd.last.lifestyle.data[index].title} ",
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                      15.0,
+                                                      color: black),
+                                                ),
+                                              ),
+                                            ),
+                                          )),]
+                                )
+                              ],
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Center(
                                 child: Text("Diagnosis",
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
+                                    TextStyle(fontWeight: FontWeight.bold)),
                               ),
                             ),
                             ListView.builder(
                               itemCount:snapshot.data[index].diagnosis==null?0:
-                                  snapshot.data[index].diagnosis.data.length,
+                              snapshot.data[index].diagnosis.data.length,
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               itemBuilder: (BuildContext context, int dIndex) {
                                 return RichText(
                                   text: TextSpan(
-                                    text: snapshot.data[index].diagnosis.data[dIndex]
+                                      text: snapshot.data[index].diagnosis.data[dIndex]
                                           .title,
-                                          style: TextStyle(
-                                            color:black,
-                                            fontSize: 15
-                                          ),             
-                                    children: [
-                                      TextSpan(
-                                        text: "  (" +
-                                      snapshot.data[index].diagnosis
-                                          .data[dIndex].date +
-                                      ")",
                                       style: TextStyle(
-                                        color: orangef
-                                      )
+                                          color:black,
+                                          fontSize: 15
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                            text: "  (" +
+                                                snapshot.data[index].diagnosis
+                                                    .data[dIndex].date +
+                                                ")",
+                                            style: TextStyle(
+                                                color: orangef
+                                            )
 
-                                      )
-                                    ]                     
+                                        )
+                                      ]
                                   ),
                                 );
                               },
@@ -351,12 +351,12 @@ class _PatientVisitDialogState extends State<PatientVisitDialog> {
                               child: Center(
                                 child: Text("Medication",
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
+                                    TextStyle(fontWeight: FontWeight.bold)),
                               ),
                             ),
                             ListView.builder(
                               itemCount:snapshot.data[index].medication==null?0:
-                                  snapshot.data[index].medication.data.length,
+                              snapshot.data[index].medication.data.length,
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               itemBuilder: (BuildContext context, int mIndex) {
@@ -380,11 +380,11 @@ class _PatientVisitDialogState extends State<PatientVisitDialog> {
                                         maxLines: 2,
                                       ),
                                       subtitle: Text(snapshot
-                                              .data[index]
-                                              .medication
-                                              .data[mIndex]
-                                              .medicines[pmIndex]
-                                              .dose +
+                                          .data[index]
+                                          .medication
+                                          .data[mIndex]
+                                          .medicines[pmIndex]
+                                          .dose +
                                           snapshot
                                               .data[index]
                                               .medication
@@ -415,10 +415,10 @@ class _PatientVisitDialogState extends State<PatientVisitDialog> {
                                               .data[mIndex]
                                               .medicines[pmIndex]
                                               .unit,
-                                              style: TextStyle(
-                                                color:blue
-                                              ),
-                                              ),
+                                        style: TextStyle(
+                                            color:blue
+                                        ),
+                                      ),
                                     );
                                   },
                                 );

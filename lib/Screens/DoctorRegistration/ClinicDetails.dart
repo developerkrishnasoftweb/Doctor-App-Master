@@ -17,6 +17,7 @@ class ClinicDetails extends StatefulWidget {
 
 class _ClinicDetailsState extends State<ClinicDetails> {
   List<StateData> suggestions = [];
+
   Future<List<StateData>> getSuggestions() async {
     suggestions = await getStateinfo();
     return suggestions;

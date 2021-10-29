@@ -9,8 +9,10 @@ import 'package:multiselect_formfield/multiselect_formfield.dart';
 class CreateProfile extends StatefulWidget {
   final List<StateData> suggestionsstate;
   final List<SpecialityData> suggestionspec;
+
   const CreateProfile({Key key, this.suggestionsstate, this.suggestionspec})
       : super(key: key);
+
   @override
   _CreateProfileState createState() =>
       _CreateProfileState(suggestionsstate, suggestionspec);
@@ -31,26 +33,30 @@ class _CreateProfileState extends State<CreateProfile> {
             title: new Text(suggestion.title),
           ),
           padding: EdgeInsets.all(8.0)),
-      itemSorter: (a, b) => a.id == b.id ? 0 : a.id > b.id ? -1 : 1,
+      itemSorter: (a, b) => a.id == b.id
+          ? 0
+          : a.id > b.id
+              ? -1
+              : 1,
       itemFilter: (suggestion, input) =>
           suggestion.title.toLowerCase().startsWith(input.toLowerCase()),
     );
-
-    
   }
 
-  
   GlobalKey key = new GlobalKey<AutoCompleteTextFieldState<StateData>>();
   GlobalKey lkey = new GlobalKey<AutoCompleteTextFieldState<SpecialityData>>();
+
   //GlobalKey ekey = new GlobalKey<AutoCompleteTextFieldState<LocalitySearch>>();
 
   AutoCompleteTextField<StateData> cityTextField;
   AutoCompleteTextField<SpecialityData> specialityTextField;
+
   //AutoCompleteTextField<LocalitySearch> educationTextField;
 
   StateData selected;
+
   //LocalitySearch eselected;
-  List<dynamic> specselected=[];
+  List<dynamic> specselected = [];
 
   String city = '';
   String gender = '';
@@ -59,11 +65,12 @@ class _CreateProfileState extends State<CreateProfile> {
   String fullname = '';
   String experience = '';
   String education = '';
+
   //String locality = '';
   bool _autoValidate = false;
   bool isSelected = false;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  
+
   @override
   void initState() {
     getSuggestions();
@@ -72,15 +79,18 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   List<StateData> suggestionstate = [];
+
   getSuggestions() async {
     var sugst = await getStateinfo();
     setState(() {
       suggestionstate = sugst;
     });
+    //print(suggestionstate);
     //  return suggestionstate;
   }
 
   List<SpecialityData> suggestionspec = [];
+
   getSuggestionsspec() async {
     var sugspec = await getSpeciality();
     setState(() {
@@ -199,26 +209,26 @@ class _CreateProfileState extends State<CreateProfile> {
                                 ],
                               ),
                       ),
-                      
-                      
+
                       Padding(
-                        padding: const EdgeInsets.only( right: 15,left: 15),
+                        padding: const EdgeInsets.only(right: 15, left: 15),
                         child: MultiSelectFormField(
                           autovalidate: false,
                           title: Text("speciality"),
                           // titleText: "speciality",
-                          dataSource: widget.suggestionspec.map((e) => {"title":e.title,"id":e.id}).toList(),
+                          dataSource: widget.suggestionspec
+                              .map((e) => {"title": e.title, "id": e.id})
+                              .toList(),
                           textField: 'title',
                           valueField: 'title',
                           okButtonLabel: 'DONE',
                           cancelButtonLabel: 'CANCEL',
                           onSaved: (value) {
                             if (value == null) return;
-                           setState(() {
-                             specselected = value;
-                           });
+                            setState(() {
+                              specselected = value;
+                            });
                           },
-
                         ),
                       ),
                       Padding(
@@ -322,8 +332,9 @@ class _CreateProfileState extends State<CreateProfile> {
                       style: new TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
+                      //print(specselected.map((e) => e.toString()).toList());
                       List<String> test = [];
-                      for(var i in specselected){
+                      for (var i in specselected) {
                         test.add(i.toString());
                       }
                       if (_formKey.currentState.validate()) {

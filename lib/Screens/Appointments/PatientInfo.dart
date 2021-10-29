@@ -26,6 +26,7 @@ class _PatientInfoState extends State<PatientInfo>
   final controller = PageController(
     initialPage: 0,
   );
+
   List<Widget> tabsFun(BuildContext context) {
     final tabpages = <Widget>[
       // Symtoms(),
@@ -288,6 +289,7 @@ class CustomBoxes extends StatefulWidget {
   final String unit;
   final String value;
   final Icon icon;
+
   CustomBoxes({this.label, this.value, this.unit, this.icon});
 
   @override

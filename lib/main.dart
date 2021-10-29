@@ -1,6 +1,4 @@
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
-import 'package:getcure_doctor/Database/AdviceTable.dart';
 import 'package:getcure_doctor/Database/ExaminationTable.dart';
 import 'package:getcure_doctor/Database/FeedBackTable.dart';
 import 'package:getcure_doctor/Database/HabitsTable.dart';
@@ -13,13 +11,11 @@ import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Screens/Appointments/Appointment.dart';
 import 'package:getcure_doctor/Screens/login.dart';
 import 'package:getcure_doctor/provider/ExaminationProvider.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
   runApp(MultiProvider(providers: [
     Provider<TokenDB>(
       create: (context) => TokenDB(),
@@ -30,9 +26,6 @@ void main() {
       create: (context) => PatientsVisitDB(),
       dispose: (context, db) => db.close(),
     ),
-    Provider(
-        create: (context) => AdvicesDatabase(),
-        dispose: (context, db) => db.close()),
     Provider<PatientsDB>(
       create: (context) => PatientsDB(),
       dispose: (context, db) => db.close(),
@@ -86,14 +79,16 @@ class _SControllerState extends State<SController> {
   isLoggedin() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String token = pref.getString('docToken');
-
-    setState(() {
-      if (token == null) {
+    print(token);
+    if (token == null) {
+      setState(() {
         p = 'login';
-      } else {
+      });
+    } else {
+      setState(() {
         p = 'home';
-      }
-    });
+      });
+    }
   }
 
   @override
@@ -113,10 +108,6 @@ class _SControllerState extends State<SController> {
           database: database,
           patientDatabase: patientDatabase,
         );
-      // return Appointments(
-      //   database: database,
-      //   patientDatabase: patientDatabase,
-      // );
       case 'home':
         return Appointments(
           database: database,

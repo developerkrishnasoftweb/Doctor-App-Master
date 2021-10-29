@@ -17,12 +17,12 @@ class SelectMedicine extends StatefulWidget {
   final PatientsVisitDB pv;
   SelectMedicine(
       {Key key,
-      this.medicine,
-      this.docId,
-      this.pv,
-      this.pId,
-      this.fun,
-      this.disease})
+        this.medicine,
+        this.docId,
+        this.pv,
+        this.pId,
+        this.fun,
+        this.disease})
       : super(key: key);
 
   @override
@@ -53,7 +53,7 @@ class _SelectMedicineState extends State<SelectMedicine> {
       duration = doc.medicineDurations;
       _duration=widget.medicine.defaultDuration;
       category = doc.medicineCategories;
-      
+
     });
   }
 
@@ -207,7 +207,7 @@ class _SelectMedicineState extends State<SelectMedicine> {
           onPressed: () async {
             PrescribedMedicines pm = PrescribedMedicines(
                 title:
-                    widget.medicine.title ?? widget.medicine.defaultDirection,
+                widget.medicine.title ?? widget.medicine.defaultDirection,
                 direction: _directions ?? widget.medicine.defaultDirection,
                 dose: _dose ?? widget.medicine.defaultDose,
                 duration: _duration ?? widget.medicine.defaultDuration,

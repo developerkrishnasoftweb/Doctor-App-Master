@@ -20,13 +20,13 @@ class SlotBooking extends StatefulWidget {
   final PatientsDB patientDatabase;
   const SlotBooking(
       {Key key,
-      this.tokenno,
-      this.time,
-      this.token,
-      this.count,
-      this.changeColorAppointment,
-      this.database,
-      this.patientDatabase});
+        this.tokenno,
+        this.time,
+        this.token,
+        this.count,
+        this.changeColorAppointment,
+        this.database,
+        this.patientDatabase});
   @override
   _SlotBookingState createState() => _SlotBookingState();
 }
@@ -70,8 +70,10 @@ class _SlotBookingState extends State<SlotBooking> {
   var listener = DataConnectionChecker().onStatusChange.listen((status) {
     switch (status) {
       case DataConnectionStatus.connected:
+        print('Data connection is available.');
         break;
       case DataConnectionStatus.disconnected:
+        print('You are disconnected from the internet.');
         break;
     }
   });
@@ -154,7 +156,8 @@ class _SlotBookingState extends State<SlotBooking> {
           break;
         default:
           choice4 = null;
-      } //Debug the choice in console
+      }
+      debugPrint(choice4); //Debug the choice in console
     });
   }
 
@@ -165,6 +168,7 @@ class _SlotBookingState extends State<SlotBooking> {
     //   tokenNo = tok.tokenno;
     // });
     if (result.isEmpty) {
+      print('absent');
       final p = PatientsVisitData(
           mobileNo: int.parse(_mobileno),
           patientName: _name,
@@ -177,7 +181,6 @@ class _SlotBookingState extends State<SlotBooking> {
           clinicDoctorId: widget.token.doctorid);
       patient.insert(p);
     } else {
-
       PatientsVisitData r = result.last;
       final p = PatientsVisitData(
         mobileNo: r.mobileNo,
@@ -207,11 +210,12 @@ class _SlotBookingState extends State<SlotBooking> {
   }
 
   final RoundedLoadingButtonController _btnController =
-      new RoundedLoadingButtonController();
+  new RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
     // final database = Provider.of<TokenDB>(context);
+    print(listener);
     return SimpleDialog(
         elevation: 20,
         titlePadding: EdgeInsets.zero,
@@ -241,7 +245,7 @@ class _SlotBookingState extends State<SlotBooking> {
                 height: 40,
                 width: MediaQuery.of(context).size.width * .75,
                 decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 child: TextFormField(
                   decoration: InputDecoration(
                       labelText: 'search existing record',
@@ -252,7 +256,7 @@ class _SlotBookingState extends State<SlotBooking> {
                       patientId = val;
                     });
                     List<Patient> doc =
-                        await widget.patientDatabase.checkPatient(patientId);
+                    await widget.patientDatabase.checkPatient(patientId);
                     // print(doc.toString());
                     if (doc.isEmpty) {
                       ctrl1.clear();
@@ -274,7 +278,7 @@ class _SlotBookingState extends State<SlotBooking> {
                         // _address = doc.address;
                         // _mobileno = doc.mobileNo.toString();
                         _radiovalue4 =
-                            doc[0].gender == Gender.Male ? 'male' : 'female';
+                        doc[0].gender == Gender.Male ? 'male' : 'female';
                       });
                     }
                   },
@@ -401,7 +405,7 @@ class _SlotBookingState extends State<SlotBooking> {
                                 if (value.isEmpty) {
                                   return 'Cannot be empty';
                                 }
-                               
+
                                 return null;
                               },
                             ),
@@ -575,6 +579,7 @@ class _SlotBookingState extends State<SlotBooking> {
                                     _radiovalue4,
                                     _fees);
                               }
+                              print("GUID" + response);
                               var pat = Patient(
                                   mobileNo: int.parse(_mobileno),
                                   name: _name,
@@ -585,6 +590,8 @@ class _SlotBookingState extends State<SlotBooking> {
                                   address: _address);
                               responsePatient = await widget.patientDatabase
                                   .createPatient2(pat);
+                              print("Patient reponse" +
+                                  responsePatient.toString());
                               await widget.database.updateData(
                                   widget.token.copyWith(
                                       name: _name,
@@ -607,7 +614,7 @@ class _SlotBookingState extends State<SlotBooking> {
 
                               _btnController.success();
                               Timer(Duration(seconds: 1),
-                                  () => Navigator.pop(context));
+                                      () => Navigator.pop(context));
                             } else {
                               _btnController.reset();
                             }
@@ -642,6 +649,7 @@ class _SlotBookingState extends State<SlotBooking> {
                                     _radiovalue4,
                                     _fees);
                               }
+                              print("GUID" + response);
                               var pat = Patient(
                                   mobileNo: int.parse(_mobileno),
                                   name: _name,
@@ -652,6 +660,8 @@ class _SlotBookingState extends State<SlotBooking> {
                                   address: _address);
                               responsePatient = await widget.patientDatabase
                                   .createPatient2(pat);
+                              print("Patient reponse" +
+                                  responsePatient.toString());
                               await widget.database.updateData(
                                   widget.token.copyWith(
                                       name: _name,
@@ -676,7 +686,7 @@ class _SlotBookingState extends State<SlotBooking> {
 
                               _btnController.success();
                               Timer(Duration(seconds: 1),
-                                  () => Navigator.pop(context));
+                                      () => Navigator.pop(context));
                             } else {
                               _btnController.reset();
                             }

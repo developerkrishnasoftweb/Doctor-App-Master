@@ -32,12 +32,12 @@ class DrawerWidget extends StatelessWidget {
   final DoctorLoginData docUser;
   const DrawerWidget(
       {Key key,
-      this.name,
-      this.clinicid,
-      this.docId,
-      this.clinicDoctor,
-      this.id,
-      this.date, this.getDoctors, this.clinicDocId, this.docUser})
+        this.name,
+        this.clinicid,
+        this.docId,
+        this.clinicDoctor,
+        this.id,
+        this.date, this.getDoctors, this.clinicDocId, this.docUser})
       : super(key: key);
 
   @override
@@ -45,6 +45,7 @@ class DrawerWidget extends StatelessWidget {
     final database = Provider.of<TokenDB>(context);
     final symptomDatabase = Provider.of<SymptomsDB>(context);
     //print(clinicid);
+    print(docId.toString());
     return Drawer(
       child: new ListView(
         children: <Widget>[
@@ -52,21 +53,21 @@ class DrawerWidget extends StatelessWidget {
             decoration: BoxDecoration(color: orangef),
             accountEmail: Text(docUser.email),
             currentAccountPicture:
-                Container(child: CircleAvatar(
-                                backgroundImage: docUser.imageUrl !=
-                                        null
-                                    ? NetworkImage(
-                                        docUser.imageUrl)
-                                    : NetworkImage(
-                                        "https://img.icons8.com/windows/452/person-male.png"),
-                                maxRadius: 50.0,
-                              ),
-                ),
+            Container(child: CircleAvatar(
+              backgroundImage: docUser.imageUrl !=
+                  null
+                  ? NetworkImage(
+                  docUser.imageUrl)
+                  : NetworkImage(
+                  "https://img.icons8.com/windows/452/person-male.png"),
+              maxRadius: 50.0,
+            ),
+            ),
             accountName: new Text(
               "Dr. $name",
               style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
             ),
-            
+
           ),
           ListTile(
             title: Text('Doctor Section'),
@@ -87,7 +88,7 @@ class DrawerWidget extends StatelessWidget {
                   ));
             },
           ),
-         
+
           ListTile(
             title: Text('Add Database'),
             trailing: Icon(Icons.data_usage),
@@ -164,7 +165,7 @@ class DrawerWidget extends StatelessWidget {
                       create: (context) => Holiday(),
                       child: DoctorHolidays(
                         docId: docId,
-                        
+
                       )));
 // >>>>>>> master
             },

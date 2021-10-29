@@ -29,7 +29,7 @@ class _OtpState extends State<Otp> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
-   errorController = StreamController<ErrorAnimationType>();
+    errorController = StreamController<ErrorAnimationType>();
     super.initState();
   }
 
@@ -46,6 +46,7 @@ class _OtpState extends State<Otp> {
   );
   @override
   Widget build(BuildContext context) {
+    print(widget.generated);
     return Scaffold(
       backgroundColor: Colors.white,
       key: scaffoldKey,
@@ -66,15 +67,15 @@ class _OtpState extends State<Otp> {
                       alignment: Alignment.topLeft,
                       child: Container(
                           child: Stack(
-                        children: <Widget>[
-                          Positioned(
-                            top: 15.0,
-                            left: 0.0,
-                            child: Container(
-                                height: 45.0, width: 45.0, color: orangef),
-                          ),
-                        ],
-                      ))),
+                            children: <Widget>[
+                              Positioned(
+                                top: 15.0,
+                                left: 0.0,
+                                child: Container(
+                                    height: 45.0, width: 45.0, color: orangef),
+                              ),
+                            ],
+                          ))),
                   Align(
                     alignment: Alignment.topRight,
                     child: cont,
@@ -83,15 +84,15 @@ class _OtpState extends State<Otp> {
                       alignment: Alignment.topRight,
                       child: Container(
                           child: Stack(
-                        children: <Widget>[
-                          Positioned(
-                            top: 23.0,
-                            right: 25.0,
-                            child: Container(
-                                height: 40.0, width: 40.0, color: pcolor),
-                          ),
-                        ],
-                      ))),
+                            children: <Widget>[
+                              Positioned(
+                                top: 23.0,
+                                right: 25.0,
+                                child: Container(
+                                    height: 40.0, width: 40.0, color: pcolor),
+                              ),
+                            ],
+                          ))),
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: cont,
@@ -108,15 +109,15 @@ class _OtpState extends State<Otp> {
                       alignment: Alignment.bottomRight,
                       child: Container(
                           child: Stack(
-                        children: <Widget>[
-                          Positioned(
-                            bottom: 15.0,
-                            right: 0.0,
-                            child: Container(
-                                height: 70.0, width: 15.0, color: pcolor),
-                          ),
-                        ],
-                      ))),
+                            children: <Widget>[
+                              Positioned(
+                                bottom: 15.0,
+                                right: 0.0,
+                                child: Container(
+                                    height: 70.0, width: 15.0, color: pcolor),
+                              ),
+                            ],
+                          ))),
                 ],
               ),
             ),
@@ -163,11 +164,13 @@ class _OtpState extends State<Otp> {
                       errorAnimationController: errorController,
                       controller: textEditingController,
                       onChanged: (value) {
+                        print(value);
                         setState(() {
                           currentText = value;
                         });
                       },
                       beforeTextPaste: (text) {
+                        print("Allowing to paste $text");
                         return true;
                       },
                     ),
@@ -177,7 +180,7 @@ class _OtpState extends State<Otp> {
                     child: Text(
                       hasError ? errorText : "",
                       style:
-                          TextStyle(color: Colors.red.shade300, fontSize: 15),
+                      TextStyle(color: Colors.red.shade300, fontSize: 15),
                     ),
                   ),
                   Container(
@@ -187,9 +190,12 @@ class _OtpState extends State<Otp> {
                       height: 50,
                       child: FlatButton(
                         onPressed: () async {
+                          print(currentText+"=="+widget.generated.substring(1,7)  );
+                          print(currentText.compareTo(widget.generated));
+
                           if (currentText.length != 6||
                               currentText.trim() !=widget.generated.substring(1,7)  ) {
-                           errorController.add(ErrorAnimationType.shake);
+                            errorController.add(ErrorAnimationType.shake);
                             setState(() {
                               hasError = true;
                             });
@@ -215,12 +221,12 @@ class _OtpState extends State<Otp> {
                         },
                         child: Center(
                             child: Text(
-                          "VERIFY".toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        )),
+                              "VERIFY".toUpperCase(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            )),
                       ),
                     ),
                     decoration: BoxDecoration(

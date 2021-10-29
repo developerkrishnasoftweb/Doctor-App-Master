@@ -15,11 +15,11 @@ class ExamNotice extends StatefulWidget {
 
 class _ExamNoticeState extends State<ExamNotice> {
   // List<PatientsVisitData> pd = [];
-  
+
 
   @override
   void initState() {
-    
+
     super.initState();
   }
 
@@ -58,47 +58,47 @@ class _ExamNoticeState extends State<ExamNotice> {
                               (widget.pd.isEmpty)
                                   ? (0)
                                   :  (widget.pd.last.briefHistory == null)? (0)
-                                      : (widget.pd.last.briefHistory.data.length == 0) 
-                                          ? (0)
-                                          : (widget.pd.last.briefHistory.data.length) ,
-                              (index) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0),
-                                    child: Container(
-                                      child: (widget.pd.length == 0)
-                                          ? 0
-                                          : (widget.pd.last.briefHistory.data == null)
-                                              ? 0
-                                              : widget.pd.last.briefHistory.data
-                                                          .length ==
-                                                      0
-                                                  ? Text('No Data')
-                                                  : !widget.pd.last.briefHistory
-                                                          .data[index].isCured
-                                                      ? RichText(
-                                                          text: TextSpan(
-                                                              text:
-                                                                  "•${widget.pd.last.briefHistory.data[index].title} ",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  color: black),
-                                                              children: <
-                                                                  TextSpan>[
-                                                                TextSpan(
-                                                                  text:
-                                                                      "(${widget.pd.last.briefHistory.data[index].date.trim()})",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          15.0,
-                                                                      color:
-                                                                          orangef),
-                                                                )
-                                                              ]),
-                                                        )
-                                                      : Container(),
-                                    ),
-                                  )),
+                                  : (widget.pd.last.briefHistory.data.length == 0)
+                                  ? (0)
+                                  : (widget.pd.last.briefHistory.data.length) ,
+                                  (index) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Container(
+                                  child: (widget.pd.length == 0)
+                                      ? 0
+                                      : (widget.pd.last.briefHistory.data == null)
+                                      ? 0
+                                      : widget.pd.last.briefHistory.data
+                                      .length ==
+                                      0
+                                      ? Text('No Data')
+                                      : !widget.pd.last.briefHistory
+                                      .data[index].isCured
+                                      ? RichText(
+                                    text: TextSpan(
+                                        text:
+                                        "•${widget.pd.last.briefHistory.data[index].title} ",
+                                        style: TextStyle(
+                                            fontSize:
+                                            15.0,
+                                            color: black),
+                                        children: <
+                                            TextSpan>[
+                                          TextSpan(
+                                            text:
+                                            "(${widget.pd.last.briefHistory.data[index].date.trim()})",
+                                            style: TextStyle(
+                                                fontSize:
+                                                15.0,
+                                                color:
+                                                orangef),
+                                          )
+                                        ]),
+                                  )
+                                      : Container(),
+                                ),
+                              )),
                         ))
                   ],
                 ),
@@ -106,14 +106,14 @@ class _ExamNoticeState extends State<ExamNotice> {
             ),
           ),
           Container(
-            height: 5.0,
+            height:1.0,
             decoration:
-                BoxDecoration(border: Border(bottom: BorderSide(color: black))),
+            BoxDecoration(border: Border(bottom: BorderSide(color: black))),
           ),
           Expanded(
             flex: 3,
             child: Container(
-              color: Colors.grey[300],
+              color: Colors.white,
               width: MediaQuery.of(context).size.width,
               child: FittedBox(
                 child: Column(
@@ -129,58 +129,51 @@ class _ExamNoticeState extends State<ExamNotice> {
                         child: Wrap(
                           alignment: WrapAlignment.spaceBetween,
                           children: List.generate(
-                            (widget.pd.isEmpty)
+                              (widget.pd.isEmpty)
                                   ? (0)
                                   :  (widget.pd.last.visitReason == null)
-                                      ? (0)
-                                      : (widget.pd.last.visitReason.data.length == 0) 
-                                          ? (0)
-                                          : (widget.pd.last.visitReason.data.length) ,
-                              
-                              (index) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0),
-                                    child: Container(
-                                      child: (widget.pd.length == 0)
-                                          ? 0
-                                          : (widget.pd.last.visitReason.data == null)
-                                              ? 0
-                                              : widget.pd.last.visitReason.data
-                                                          .length ==
-                                                      0
-                                                  ? Text('No Visit')
-                                                  : !widget.pd.last.visitReason
-                                                          .data[index].isCured
-                                                      ? RichText(
-                                                          text: TextSpan(
-                                                              text:
-                                                                  "•${widget.pd.last.visitReason.data[index].title} ",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  color: black),
-                                                              children: <
-                                                                  TextSpan>[
-                                                                TextSpan(
-                                                                  text:
-                                                                      "(${widget.pd.last.visitReason.data[index].date.trim()})",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          15.0,
-                                                                      color:
-                                                                          orangep),
-                                                                )
-                                                              ]),
-                                                        )
-                                                      : Container(),
-                                      // Text(
-                                      //     "•${pd.last.visitReason.data[index].title} ( ${pd.last.visitReason.data[index].date})",
-                                      //     style: TextStyle(
-                                      //         fontSize: 15.0,
-                                      //         color: black),
-                                      //   ),
-                                    ),
-                                  )),
+                                  ? (0)
+                                  : (widget.pd.last.visitReason.data.length == 0)
+                                  ? (0)
+                                  : (widget.pd.last.visitReason.data.length) ,
+
+                                  (index) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Container(
+                                  child: (widget.pd.length == 0) ? 0 : (widget.pd.last.visitReason.data == null) ? 0 : widget.pd.last.visitReason.data.length == 0 ? Text('No Visit')
+                                      : !widget.pd.last.visitReason
+                                      .data[index].isCured
+                                      ? RichText(
+                                    text: TextSpan(
+                                        text:
+                                        "•${widget.pd.last.visitReason.data[index].title} ",
+                                        style: TextStyle(
+                                            fontSize:
+                                            15.0,
+                                            color: black),
+                                        children: <
+                                            TextSpan>[
+                                          TextSpan(
+                                            text:
+                                            "(${widget.pd.last.visitReason.data[index].date.trim()})",
+                                            style: TextStyle(
+                                                fontSize:
+                                                15.0,
+                                                color:
+                                                orangep),
+                                          )
+                                        ]),
+                                  )
+                                      : Container(),
+                                  // Text(
+                                  //     "•${pd.last.visitReason.data[index].title} ( ${pd.last.visitReason.data[index].date})",
+                                  //     style: TextStyle(
+                                  //         fontSize: 15.0,
+                                  //         color: black),
+                                  //   ),
+                                ),
+                              )),
                         ))
                   ],
                 ),

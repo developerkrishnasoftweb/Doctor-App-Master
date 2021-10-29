@@ -79,6 +79,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
       _radioValue2 = widget.visitType;
       _radioValue3 = widget.initialBookigType;
       _radiovalue4 = widget.gender;
+      print('gender  update screen : ${widget.gender}');
     });
     myFocusNode = FocusNode();
     super.initState();
@@ -136,7 +137,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
   }
 
   final RoundedLoadingButtonController _btnController =
-      new RoundedLoadingButtonController();
+  new RoundedLoadingButtonController();
 
   void radioButtonChanges4(String value) {
     setState(() {
@@ -176,7 +177,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width<=360.0? MediaQuery.of(context).size.width*0.10
-                :MediaQuery.of(context).size.width* .17,
+                    :MediaQuery.of(context).size.width* .17,
               ),
               IconButton(
                   icon: Icon(Icons.edit),
@@ -330,7 +331,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                   ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                                      child: Row(
+                    child: Row(
                       children: <Widget>[
                         Text('Gender:'),
                         SizedBox(
@@ -362,7 +363,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                   ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                                      child: Row(
+                    child: Row(
                       children: <Widget>[
                         Text('Appointment \nType:'),
                         Radio(
@@ -391,7 +392,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                   ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                                      child: Row(
+                    child: Row(
                       children: <Widget>[
                         Text('Visit Type:'),
                         SizedBox(
@@ -423,7 +424,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                   ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                                      child: Row(
+                    child: Row(
                       children: <Widget>[
                         Text('Booked Type:'),
                         Radio(
@@ -481,6 +482,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                               ),
                               _name);
                           database.insertTask(Token(
+                            gender: widget.token.gender,
                             clinicid: widget.token.clinicid,
                             name: widget.token.name,
                             tokenno: widget.token.tokenno,
@@ -503,7 +505,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                           });
                           _btnController.success();
                           Timer(Duration(seconds: 1),
-                              () => Navigator.of(context).pop());
+                                  () => Navigator.of(context).pop());
                         },
                       ),
                       RoundedLoadingButton(
@@ -528,13 +530,14 @@ class _UpdateBookingState extends State<UpdateBooking> {
                                     appointmenttype: _radioValue,
                                     visittype: _radioValue2,
                                     bookedtype: _radioValue3,
+                                    gender: _radiovalue4,
                                     booked: true,
                                     isOnline: result,
                                     updatedAt: DateTime.now()),
                                 _name);
                             _btnController.success();
                             Timer(Duration(seconds: 1),
-                                () => Navigator.of(context).pop());
+                                    () => Navigator.of(context).pop());
                           } else {
                             _btnController.reset();
                           }
@@ -576,7 +579,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                                 _name);
                             _btnController.success();
                             Timer(Duration(seconds: 1),
-                                () => Navigator.of(context).pop());
+                                    () => Navigator.of(context).pop());
                           } else {
                             _btnController.reset();
                           }

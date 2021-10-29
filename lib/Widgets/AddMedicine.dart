@@ -12,6 +12,7 @@ class AddMedicine extends StatefulWidget {
   final String pId;
   final int docId;
   final MedicinesDB database;
+
   AddMedicine({Key key, this.pId, this.docId, this.database});
 
   @override
@@ -22,6 +23,7 @@ class _AddMedicineState extends State<AddMedicine> {
   ClinicDoctor doc;
 
   List<int> selectedItems = [];
+
   getParameters() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String doctors = pref.getString('parameters');
@@ -47,6 +49,7 @@ class _AddMedicineState extends State<AddMedicine> {
       _duration = duration.first;
       _category = category.first;
     });
+    print(duration);
   }
 
   addParameter(String parameter, String type, String value) async {
@@ -99,8 +102,10 @@ class _AddMedicineState extends State<AddMedicine> {
         break;
       default:
     }
+    print('done');
     pref.remove('parameters');
     pref.setString('parameters', json.encode(parametersUpdate));
+    print(pref.getString("parameters"));
     getParameters();
   }
 
@@ -248,7 +253,6 @@ class _AddMedicineState extends State<AddMedicine> {
                               });
                             },
                             closeButton: (selectedItems) {
-                             
                               return Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -280,7 +284,6 @@ class _AddMedicineState extends State<AddMedicine> {
                                 BoxConstraints.tight(Size.fromHeight(350)),
                           );
                         }
-                        
                       }),
 
                   // Text(selectedItems.toString()),
@@ -503,6 +506,9 @@ class _AddMedicineState extends State<AddMedicine> {
                   ),
                   FlatButton(
                       onPressed: () {
+                        print('hello');
+                        print(selectedItems.toString());
+                        print(selectedItems.map((e) => interactionDrugList[e]));
                         Medicine medicine = new Medicine(
                             category: _category,
                             clinicDoctorId: widget.docId,

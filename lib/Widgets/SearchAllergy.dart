@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 class SearchAllergy extends StatefulWidget {
   final String pId;
   final int docId;
-
   SearchAllergy({Key key, this.pId, this.docId}) : super(key: key);
 
   @override
@@ -135,8 +134,9 @@ class _SearchAllergyState extends State<SearchAllergy> {
 StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
     HabitDB database, PatientsVisitDB pv, String pId, int docId) {
   return StreamBuilder(
-    stream: database.watchAllTasks(query, HType.Allergy),
+    stream: database.watchAllTasks(query,HType.Allergy),
     builder: (context, AsyncSnapshot<List<Habit>> snapshot) {
+      //print(query);
       final tasks = snapshot.data ?? List();
       return Container(
         alignment: Alignment.topLeft,
@@ -155,7 +155,6 @@ StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
               onTap: () async {
                 List<AllergyData> bhd = [
                   AllergyData(
-                    id: itemTask.id,
                     title: itemTask.title,
                     doctorId: docId,
                     type: itemTask.type.toString(),
@@ -167,7 +166,7 @@ StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
                 Fluttertoast.showToast(
                     msg: "${itemTask.title} added to list",
                     toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
+                    gravity: ToastGravity.CENTER ,
                     timeInSecForIosWeb: 1,
                     backgroundColor: green,
                     textColor: white,
@@ -198,13 +197,9 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid2(BuildContext context,
           break;
         default:
           return Container(
-            height: (snapshot.data.last.allergies == null)
-                ? 0
-                : (snapshot.data.last.allergies.data.length == 0)
-                    ? 0
-                    : (snapshot.data.last.allergies.data.length <= 3)
-                        ? 60
-                        : 120,
+            height: (snapshot.data.last.allergies == null)?
+            0:(snapshot.data.last.allergies.data.length==0)?
+            0:(snapshot.data.last.allergies.data.length<=3)?60:120,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               child: Wrap(
@@ -213,55 +208,55 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid2(BuildContext context,
                     snapshot.data.last.allergies == null
                         ? 0
                         : snapshot.data.last.allergies.data.length,
-                    (index) => GestureDetector(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text(
-                                      "Are you sure you want to remove it?"),
-                                  actions: [
-                                    FlatButton(
-                                      child: Text("Yes"),
-                                      color: red,
-                                      onPressed: () {
-                                        pv.deleteallergy(
-                                            snapshot.data.last,
-                                            snapshot.data.last.allergies
-                                                .data[index].title);
-                                        //  pv.deleteDiagnosis(
-                                        //      snapshot.data.last,
-                                        //      snapshot.data.last.diagnosis
-                                        //          .data[index].title);
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    FlatButton(
-                                      child: Text("No"),
-                                      color: green,
-                                      onPressed: () => Navigator.pop(context),
-                                    ),
-                                  ],
-                                );
-                              },
+                        (index) => GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title:
+                              Text("Are you sure you want to remove it?"),
+                              actions: [
+                                FlatButton(
+                                  child: Text("Yes"),
+                                  color: red,
+                                  onPressed: () {
+                                    pv.deleteallergy(
+                                        snapshot.data.last,
+                                        snapshot.data.last.allergies
+                                            .data[index].title);
+                                    //  pv.deleteDiagnosis(
+                                    //      snapshot.data.last,
+                                    //      snapshot.data.last.diagnosis
+                                    //          .data[index].title);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                FlatButton(
+                                  child: Text("No"),
+                                  color: green,
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
                             );
                           },
-                          child: Container(
-                            child: Chip(
-                              elevation: 4,
-                              shadowColor: Colors.grey[50],
-                              padding: EdgeInsets.all(4),
-                              // clipBehavior: Clip.antiAlias,
-                              backgroundColor: orangef,
-                              label: FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Container(
-                                    //  width: 60.0,
-                                    //  height: 20,
-                                    child: Row(
+                        );
+                      },
+                      child: Container(
+                        child: Chip(
+                          elevation: 4,
+                          shadowColor: Colors.grey[50],
+                          padding: EdgeInsets.all(4),
+                          // clipBehavior: Clip.antiAlias,
+                          backgroundColor: orangef,
+                          label: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Container(
+                              //  width: 60.0,
+                              //  height: 20,
+                                child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     RichText(
                                       textAlign: TextAlign.center,
@@ -275,8 +270,8 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid2(BuildContext context,
                                       ),
                                     ),
                                     Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 5.0)),
+                                        padding: EdgeInsets.symmetric(horizontal: 5.0)
+                                    ),
                                     RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
@@ -288,10 +283,10 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid2(BuildContext context,
                                         )),
                                   ],
                                 )),
-                              ),
-                            ),
                           ),
-                        )),
+                        ),
+                      ),
+                    )),
               ),
             ),
           );
@@ -304,7 +299,6 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid2(BuildContext context,
 class AddAllergies extends StatefulWidget {
   final int docId;
   final HabitDB database;
-
   AddAllergies({Key key, this.docId, this.database}) : super(key: key);
 
   @override
@@ -351,7 +345,7 @@ class _AddAllergiesState extends State<AddAllergies> {
                   height: 40,
                   width: MediaQuery.of(context).size.width * .75,
                   decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Enter Allergy Name',

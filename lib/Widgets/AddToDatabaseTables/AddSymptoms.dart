@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 class AddToSymptoms extends StatefulWidget {
   final int docId;
   final int clinicDocId;
-  const AddToSymptoms({Key key, this.docId,this.clinicDocId }) : super(key: key);
+
+  const AddToSymptoms({Key key, this.docId, this.clinicDocId})
+      : super(key: key);
 
   @override
   _AddToSymptomsState createState() => _AddToSymptomsState();
@@ -36,7 +38,6 @@ class _AddToSymptomsState extends State<AddToSymptoms> {
         ),
         actions: <Widget>[
           Stack(
-           
             children: <Widget>[
               Container(
                 height: MediaQuery.of(context).size.height * 0.7,
@@ -64,8 +65,7 @@ class _AddToSymptomsState extends State<AddToSymptoms> {
                         // },
                       ),
                     ),
-                    _buildTaskList(
-                        context, query, database),
+                    _buildTaskList(context, query, database),
                   ],
                 ),
               ),
@@ -100,11 +100,12 @@ class _AddToSymptomsState extends State<AddToSymptoms> {
   }
 }
 
-StreamBuilder<List<Symptom>> _buildTaskList(BuildContext context, String query,
-    SymptomsDB database) {
+StreamBuilder<List<Symptom>> _buildTaskList(
+    BuildContext context, String query, SymptomsDB database) {
   return StreamBuilder(
     stream: database.watchAllVisitTasks(query),
     builder: (context, AsyncSnapshot<List<Symptom>> snapshot) {
+      print(query);
       final tasks = snapshot.data ?? List();
       return Container(
         height: MediaQuery.of(context).size.height * 0.6,
@@ -133,7 +134,8 @@ StreamBuilder<List<Symptom>> _buildTaskList(BuildContext context, String query,
 class AddSymptoms extends StatefulWidget {
   final int docId;
   final int clinicDocId;
-  AddSymptoms({Key key, this.docId, this.clinicDocId }) : super(key: key);
+
+  AddSymptoms({Key key, this.docId, this.clinicDocId}) : super(key: key);
 
   @override
   _AddSymptomsState createState() => _AddSymptomsState();
@@ -317,7 +319,8 @@ class _AddSymptomsState extends State<AddSymptoms> {
                       period = VisibilityPeriod.Always;
                     }
                   });
-                  database.addVisit(diseaseName, period, widget.docId,widget.clinicDocId);
+                  database.addVisit(
+                      diseaseName, period, widget.docId, widget.clinicDocId);
                   Navigator.pop(context);
                 }),
           ),

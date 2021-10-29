@@ -14,11 +14,11 @@ class SlotsWidget extends StatelessWidget {
   final PatientsDB patientDatabase;
   const SlotsWidget(
       {Key key,
-      this.itemTask,
-      this.database,
-      this.count,
-      this.colorChange,
-      this.patientDatabase})
+        this.itemTask,
+        this.database,
+        this.count,
+        this.colorChange,
+        this.patientDatabase})
       : super(key: key);
 
   @override
@@ -37,8 +37,8 @@ class SlotsWidget extends StatelessWidget {
                 database: database,
                 patientDatabase: patientDatabase)),
         child: Container(
-          height: 50,
-          width: 50,
+          height: 30,
+          width: 67,
           decoration: BoxDecoration(
               color: pcolor, borderRadius: BorderRadius.circular(5)),
           child: Column(
@@ -49,10 +49,10 @@ class SlotsWidget extends StatelessWidget {
               ),
               Text(itemTask.tokenno.toString(),
                   style: TextStyle(
-                      color: white, fontSize: 20, fontWeight: FontWeight.bold)),
+                      color: white,   fontSize: 18.5, fontWeight: FontWeight.bold)),
               Text(DateFormat.jm().format(itemTask.tokentime).toString(),
                   style: TextStyle(
-                      color: white, fontSize: 14, fontWeight: FontWeight.w300))
+                      color: white, fontSize: 14, fontWeight: FontWeight.bold))
             ],
           ),
         ),

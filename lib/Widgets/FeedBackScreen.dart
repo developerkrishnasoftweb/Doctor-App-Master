@@ -45,7 +45,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
           createdAt: DateTime.now());
 
       RecommendationData check =
-          await recom.check(widget.pat.feedBack.data[i].disease,med);
+      await recom.check(widget.pat.feedBack.data[i].disease,med);
       if (check != null) {
         recom.updateData(widget.pat.feedBack.data[i].disease,feedback[i],med,check);
       } else {
@@ -102,6 +102,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
             padding: const EdgeInsets.all(8.0),
             child: FlatButton(
               onPressed: () {
+                print(feedback);
                 fback(feed, recom);
                 // for (int i = 0; i < widget.pat.feedBack.data.length; i++) {
                 //   FeedBackData object = FeedBackData(
@@ -170,6 +171,7 @@ class _ResponseInputState extends State<ResponseInput> {
       widget.feedback[widget.index] = choice;
       debugPrint(choice);
     });
+    print(widget.feedback);
   }
 
   @override

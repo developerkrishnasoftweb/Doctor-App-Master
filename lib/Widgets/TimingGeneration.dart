@@ -140,35 +140,35 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                                 child: Text(
-                              "Monday",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            )),
+                                  "Monday",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 18),
+                                )),
                           ),
                           profile == null || profile.data == null
                               ? Text('No Previous Timings')
                               : profile.data.clinicDoctor
-                                      .where((t) =>
-                                          t.id.toString() ==
-                                          widget.clinicDoctorId)
-                                      .first
-                                      .doctorTimings
-                                      .isEmpty
-                                  ? Text('No Previous Timings')
-                                  : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .where((element) =>
-                                                  element.day == "monday")
-                                              .first
-                                              .slots
-                                              .length ==
-                                          0
-                                      ? Text('No Previous Timings')
-                                      : Text('OldTimings'),
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .isEmpty
+                              ? Text('No Previous Timings')
+                              : profile.data.clinicDoctor
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .where((element) =>
+                          element.day == "monday")
+                              .first
+                              .slots
+                              .length ==
+                              0
+                              ? Text('No Previous Timings')
+                              : Text('OldTimings'),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SingleChildScrollView(
@@ -177,159 +177,159 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: profile == null
                                     ? 0
                                     : profile.data.clinicDoctor
-                                            .where((t) =>
-                                                t.id.toString() ==
-                                                widget.clinicDoctorId)
-                                            .first
-                                            .doctorTimings
-                                            .isEmpty
-                                        ? 0
-                                        : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .where((element) =>
-                                                        element.day == "monday")
-                                                    .first
-                                                    .slots
-                                                    .length ==
-                                                0
-                                            ? 0
-                                            : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isEmpty
-                                                ? 0
-                                                : profile.data.clinicDoctor
-                                                            .where((t) =>
-                                                                t.id.toString() ==
-                                                                widget
-                                                                    .clinicDoctorId)
-                                                            .first
-                                                            .doctorTimings
-                                                            .where((element) =>
-                                                                element.day ==
-                                                                "monday")
-                                                            .first
-                                                            .slots
-                                                            .length <=
-                                                        3
-                                                    ? 70
-                                                    : 150,
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day == "monday")
+                                    .first
+                                    .slots
+                                    .length ==
+                                    0
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget
+                                        .clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "monday")
+                                    .first
+                                    .slots
+                                    .length <=
+                                    3
+                                    ? 70
+                                    : 150,
                                 child: ListView.builder(
                                   physics: ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: profile == null
                                       ? 0
                                       : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .isEmpty
-                                          ? 0
-                                          : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "monday")
-                                                      .first
-                                                      .slots ==
-                                                  null
-                                              ? 0
-                                              : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .isEmpty
-                                                  ? 0
-                                                  : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "monday")
-                                                      .first
-                                                      .slots
-                                                      .length,
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "monday")
+                                      .first
+                                      .slots ==
+                                      null
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "monday")
+                                      .first
+                                      .slots
+                                      .length,
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: [
-                                            Text("${index + 1}) " +
-                                                (profile.data.clinicDoctor
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Text("${index + 1}) " +
+                                                    (profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .isEmpty
-                                                    ? ''
-                                                    : profile.data.clinicDoctor
+                                                        ? ''
+                                                        : profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .where((element) =>
-                                                            element.day ==
-                                                            "monday")
+                                                    element.day ==
+                                                        "monday")
                                                         .first
                                                         .slots[index]
                                                         .toString())),
-                                            IconButton(
-                                              icon: Icon(
-                                                  Icons.remove_circle_outline,
-                                                  color: red),
-                                              onPressed: () {
-                                                if (profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
+                                                IconButton(
+                                                  icon: Icon(
+                                                      Icons.remove_circle_outline,
+                                                      color: red),
+                                                  onPressed: () {
+                                                    if (profile.data.clinicDoctor
+                                                        .where((t) =>
+                                                    t.id.toString() ==
                                                         widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isNotEmpty) {
-                                                  profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
+                                                        .first
+                                                        .doctorTimings
+                                                        .isNotEmpty) {
+                                                      profile.data.clinicDoctor
+                                                          .where((t) =>
+                                                      t.id.toString() ==
                                                           widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
+                                                          .first
+                                                          .doctorTimings
+                                                          .where((element) =>
+                                                      element.day ==
                                                           "monday")
-                                                      .first
-                                                      .slots
-                                                      .removeAt(index);
-                                                }
-                                                setState(() {});
-                                              },
-                                            )
+                                                          .first
+                                                          .slots
+                                                          .removeAt(index);
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ],
-                                    ));
+                                        ));
                                   },
                                 ),
                               ),
@@ -450,8 +450,8 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: time.mondaydata.length == 0
                                     ? 0
                                     : time.mondaydata.length <= 3
-                                        ? 50
-                                        : 150,
+                                    ? 50
+                                    : 150,
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: time.mondaydata == null
@@ -460,11 +460,11 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Text("${index + 1}) " +
-                                            time.mondaydata[index].toString()),
-                                      ],
-                                    ));
+                                          children: [
+                                            Text("${index + 1}) " +
+                                                time.mondaydata[index].toString()),
+                                          ],
+                                        ));
                                   },
                                 ),
                               ),
@@ -489,35 +489,35 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                                 child: Text(
-                              "Tuesday",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            )),
+                                  "Tuesday",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 18),
+                                )),
                           ),
                           profile == null
                               ? Text('No Previous Timings')
                               : profile.data.clinicDoctor
-                                      .where((t) =>
-                                          t.id.toString() ==
-                                          widget.clinicDoctorId)
-                                      .first
-                                      .doctorTimings
-                                      .isEmpty
-                                  ? Text('No Previous Timings')
-                                  : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .where((element) =>
-                                                  element.day == "tuesday")
-                                              .first
-                                              .slots
-                                              .length ==
-                                          0
-                                      ? Text('No Previous Timings')
-                                      : Text('OldTimings'),
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .isEmpty
+                              ? Text('No Previous Timings')
+                              : profile.data.clinicDoctor
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .where((element) =>
+                          element.day == "tuesday")
+                              .first
+                              .slots
+                              .length ==
+                              0
+                              ? Text('No Previous Timings')
+                              : Text('OldTimings'),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SingleChildScrollView(
@@ -526,160 +526,160 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: profile == null
                                     ? 0
                                     : profile.data.clinicDoctor
-                                            .where((t) =>
-                                                t.id.toString() ==
-                                                widget.clinicDoctorId)
-                                            .first
-                                            .doctorTimings
-                                            .isEmpty
-                                        ? 0
-                                        : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .where((element) =>
-                                                        element.day ==
-                                                        "tuesday")
-                                                    .first
-                                                    .slots
-                                                    .length ==
-                                                0
-                                            ? 0
-                                            : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isEmpty
-                                                ? 0
-                                                : profile.data.clinicDoctor
-                                                            .where((t) =>
-                                                                t.id.toString() ==
-                                                                widget
-                                                                    .clinicDoctorId)
-                                                            .first
-                                                            .doctorTimings
-                                                            .where((element) =>
-                                                                element.day ==
-                                                                "tuesday")
-                                                            .first
-                                                            .slots
-                                                            .length <=
-                                                        3
-                                                    ? 70
-                                                    : 150,
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "tuesday")
+                                    .first
+                                    .slots
+                                    .length ==
+                                    0
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget
+                                        .clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "tuesday")
+                                    .first
+                                    .slots
+                                    .length <=
+                                    3
+                                    ? 70
+                                    : 150,
                                 child: ListView.builder(
                                   physics: ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: profile == null
                                       ? 0
                                       : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .isEmpty
-                                          ? 0
-                                          : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "tuesday")
-                                                      .first
-                                                      .slots ==
-                                                  null
-                                              ? 0
-                                              : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .isEmpty
-                                                  ? 0
-                                                  : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "tuesday")
-                                                      .first
-                                                      .slots
-                                                      .length,
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "tuesday")
+                                      .first
+                                      .slots ==
+                                      null
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "tuesday")
+                                      .first
+                                      .slots
+                                      .length,
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: [
-                                            Text("${index + 1}) " +
-                                                (profile.data.clinicDoctor
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Text("${index + 1}) " +
+                                                    (profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .isEmpty
-                                                    ? ''
-                                                    : profile.data.clinicDoctor
+                                                        ? ''
+                                                        : profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .where((element) =>
-                                                            element.day ==
-                                                            "tuesday")
+                                                    element.day ==
+                                                        "tuesday")
                                                         .first
                                                         .slots[index]
                                                         .toString())),
-                                            IconButton(
-                                              icon: Icon(
-                                                  Icons.remove_circle_outline,
-                                                  color: red),
-                                              onPressed: () {
-                                                if (profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
+                                                IconButton(
+                                                  icon: Icon(
+                                                      Icons.remove_circle_outline,
+                                                      color: red),
+                                                  onPressed: () {
+                                                    if (profile.data.clinicDoctor
+                                                        .where((t) =>
+                                                    t.id.toString() ==
                                                         widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isNotEmpty) {
-                                                  profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
+                                                        .first
+                                                        .doctorTimings
+                                                        .isNotEmpty) {
+                                                      profile.data.clinicDoctor
+                                                          .where((t) =>
+                                                      t.id.toString() ==
                                                           widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
+                                                          .first
+                                                          .doctorTimings
+                                                          .where((element) =>
+                                                      element.day ==
                                                           "tuesday")
-                                                      .first
-                                                      .slots
-                                                      .removeAt(index);
-                                                }
-                                                setState(() {});
-                                              },
-                                            )
+                                                          .first
+                                                          .slots
+                                                          .removeAt(index);
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ],
-                                    ));
+                                        ));
                                   },
                                 ),
                               ),
@@ -797,8 +797,8 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: time.tuesdaydata.length == 0
                                     ? 0
                                     : time.tuesdaydata.length <= 3
-                                        ? 50
-                                        : 150,
+                                    ? 50
+                                    : 150,
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: time.tuesdaydata == null
@@ -807,11 +807,11 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Text("${index + 1}) " +
-                                            time.tuesdaydata[index].toString()),
-                                      ],
-                                    ));
+                                          children: [
+                                            Text("${index + 1}) " +
+                                                time.tuesdaydata[index].toString()),
+                                          ],
+                                        ));
                                   },
                                 ),
                               ),
@@ -836,35 +836,35 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                                 child: Text(
-                              "Wednesday",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            )),
+                                  "Wednesday",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 18),
+                                )),
                           ),
                           profile == null
                               ? Text('No Previous Timings')
                               : profile.data.clinicDoctor
-                                      .where((t) =>
-                                          t.id.toString() ==
-                                          widget.clinicDoctorId)
-                                      .first
-                                      .doctorTimings
-                                      .isEmpty
-                                  ? Text("No Previous Timings")
-                                  : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .where((element) =>
-                                                  element.day == "wednesday")
-                                              .first
-                                              .slots
-                                              .length ==
-                                          0
-                                      ? Text('No Previous Timings')
-                                      : Text('OldTimings'),
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .isEmpty
+                              ? Text("No Previous Timings")
+                              : profile.data.clinicDoctor
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .where((element) =>
+                          element.day == "wednesday")
+                              .first
+                              .slots
+                              .length ==
+                              0
+                              ? Text('No Previous Timings')
+                              : Text('OldTimings'),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SingleChildScrollView(
@@ -873,152 +873,152 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: profile == null
                                     ? 0
                                     : profile.data.clinicDoctor
-                                            .where((t) =>
-                                                t.id.toString() ==
-                                                widget.clinicDoctorId)
-                                            .first
-                                            .doctorTimings
-                                            .isEmpty
-                                        ? 0
-                                        : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .where((element) =>
-                                                        element.day ==
-                                                        "wednesday")
-                                                    .first
-                                                    .slots
-                                                    .length ==
-                                                0
-                                            ? 0
-                                            : profile.data.clinicDoctor
-                                                        .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
-                                                        .first
-                                                        .doctorTimings
-                                                        .where((element) =>
-                                                            element.day ==
-                                                            "wednesday")
-                                                        .first
-                                                        .slots
-                                                        .length <=
-                                                    3
-                                                ? 70
-                                                : 150,
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "wednesday")
+                                    .first
+                                    .slots
+                                    .length ==
+                                    0
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget
+                                        .clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "wednesday")
+                                    .first
+                                    .slots
+                                    .length <=
+                                    3
+                                    ? 70
+                                    : 150,
                                 child: ListView.builder(
                                   physics: ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: profile == null
                                       ? 0
                                       : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .isEmpty
-                                          ? 0
-                                          : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "wednesday")
-                                                      .first
-                                                      .slots ==
-                                                  null
-                                              ? 0
-                                              : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .isEmpty
-                                                  ? 0
-                                                  : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "wednesday")
-                                                      .first
-                                                      .slots
-                                                      .length,
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "wednesday")
+                                      .first
+                                      .slots ==
+                                      null
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "wednesday")
+                                      .first
+                                      .slots
+                                      .length,
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: [
-                                            Text("${index + 1}) " +
-                                                (profile.data.clinicDoctor
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Text("${index + 1}) " +
+                                                    (profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .isEmpty
-                                                    ? 0
-                                                    : profile.data.clinicDoctor
+                                                        ? 0
+                                                        : profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .where((element) =>
-                                                            element.day ==
-                                                            "wednesday")
+                                                    element.day ==
+                                                        "wednesday")
                                                         .first
                                                         .slots[index]
                                                         .toString())),
-                                            IconButton(
-                                              icon: Icon(
-                                                  Icons.remove_circle_outline,
-                                                  color: red),
-                                              onPressed: () {
-                                                if (profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
+                                                IconButton(
+                                                  icon: Icon(
+                                                      Icons.remove_circle_outline,
+                                                      color: red),
+                                                  onPressed: () {
+                                                    if (profile.data.clinicDoctor
+                                                        .where((t) =>
+                                                    t.id.toString() ==
                                                         widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isNotEmpty) {
-                                                  profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
+                                                        .first
+                                                        .doctorTimings
+                                                        .isNotEmpty) {
+                                                      profile.data.clinicDoctor
+                                                          .where((t) =>
+                                                      t.id.toString() ==
                                                           widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
+                                                          .first
+                                                          .doctorTimings
+                                                          .where((element) =>
+                                                      element.day ==
                                                           "wednesday")
-                                                      .first
-                                                      .slots
-                                                      .removeAt(index);
-                                                }
-                                                setState(() {});
-                                              },
-                                            )
+                                                          .first
+                                                          .slots
+                                                          .removeAt(index);
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ],
-                                    ));
+                                        ));
                                   },
                                 ),
                               ),
@@ -1136,8 +1136,8 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: time.wednesdaydata.length == 0
                                     ? 0
                                     : time.wednesdaydata.length <= 3
-                                        ? 50
-                                        : 150,
+                                    ? 50
+                                    : 150,
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: time.wednesdaydata == null
@@ -1146,12 +1146,12 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Text("${index + 1}) " +
-                                            time.wednesdaydata[index]
-                                                .toString()),
-                                      ],
-                                    ));
+                                          children: [
+                                            Text("${index + 1}) " +
+                                                time.wednesdaydata[index]
+                                                    .toString()),
+                                          ],
+                                        ));
                                   },
                                 ),
                               ),
@@ -1176,35 +1176,35 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                                 child: Text(
-                              "Thursday",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            )),
+                                  "Thursday",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 18),
+                                )),
                           ),
                           profile == null
                               ? Text('No Previous Timings')
                               : profile.data.clinicDoctor
-                                      .where((t) =>
-                                          t.id.toString() ==
-                                          widget.clinicDoctorId)
-                                      .first
-                                      .doctorTimings
-                                      .isEmpty
-                                  ? Text('No Previous Timings')
-                                  : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .where((element) =>
-                                                  element.day == "thursday")
-                                              .first
-                                              .slots
-                                              .length ==
-                                          0
-                                      ? Text('No Previous Timings')
-                                      : Text('OldTimings'),
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .isEmpty
+                              ? Text('No Previous Timings')
+                              : profile.data.clinicDoctor
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .where((element) =>
+                          element.day == "thursday")
+                              .first
+                              .slots
+                              .length ==
+                              0
+                              ? Text('No Previous Timings')
+                              : Text('OldTimings'),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SingleChildScrollView(
@@ -1213,152 +1213,152 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: profile == null
                                     ? 0
                                     : profile.data.clinicDoctor
-                                            .where((t) =>
-                                                t.id.toString() ==
-                                                widget.clinicDoctorId)
-                                            .first
-                                            .doctorTimings
-                                            .isEmpty
-                                        ? 0
-                                        : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .where((element) =>
-                                                        element.day ==
-                                                        "thursday")
-                                                    .first
-                                                    .slots
-                                                    .length ==
-                                                0
-                                            ? 0
-                                            : profile.data.clinicDoctor
-                                                        .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
-                                                        .first
-                                                        .doctorTimings
-                                                        .where((element) =>
-                                                            element.day ==
-                                                            "thursday")
-                                                        .first
-                                                        .slots
-                                                        .length <=
-                                                    3
-                                                ? 70
-                                                : 150,
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "thursday")
+                                    .first
+                                    .slots
+                                    .length ==
+                                    0
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget
+                                        .clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "thursday")
+                                    .first
+                                    .slots
+                                    .length <=
+                                    3
+                                    ? 70
+                                    : 150,
                                 child: ListView.builder(
                                   physics: ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: profile == null
                                       ? 0
                                       : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .isEmpty
-                                          ? 0
-                                          : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "thursday")
-                                                      .first
-                                                      .slots ==
-                                                  null
-                                              ? 0
-                                              : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .isEmpty
-                                                  ? 0
-                                                  : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "thursday")
-                                                      .first
-                                                      .slots
-                                                      .length,
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "thursday")
+                                      .first
+                                      .slots ==
+                                      null
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "thursday")
+                                      .first
+                                      .slots
+                                      .length,
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: [
-                                            Text("${index + 1}) " +
-                                                (profile.data.clinicDoctor
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Text("${index + 1}) " +
+                                                    (profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .isEmpty
-                                                    ? 0
-                                                    : profile.data.clinicDoctor
+                                                        ? 0
+                                                        : profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .where((element) =>
-                                                            element.day ==
-                                                            "thursday")
+                                                    element.day ==
+                                                        "thursday")
                                                         .first
                                                         .slots[index]
                                                         .toString())),
-                                            IconButton(
-                                              icon: Icon(
-                                                  Icons.remove_circle_outline,
-                                                  color: red),
-                                              onPressed: () {
-                                                if (profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
+                                                IconButton(
+                                                  icon: Icon(
+                                                      Icons.remove_circle_outline,
+                                                      color: red),
+                                                  onPressed: () {
+                                                    if (profile.data.clinicDoctor
+                                                        .where((t) =>
+                                                    t.id.toString() ==
                                                         widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isNotEmpty) {
-                                                  profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
+                                                        .first
+                                                        .doctorTimings
+                                                        .isNotEmpty) {
+                                                      profile.data.clinicDoctor
+                                                          .where((t) =>
+                                                      t.id.toString() ==
                                                           widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
+                                                          .first
+                                                          .doctorTimings
+                                                          .where((element) =>
+                                                      element.day ==
                                                           "thursday")
-                                                      .first
-                                                      .slots
-                                                      .removeAt(index);
-                                                }
-                                                setState(() {});
-                                              },
-                                            )
+                                                          .first
+                                                          .slots
+                                                          .removeAt(index);
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ],
-                                    ));
+                                        ));
                                   },
                                 ),
                               ),
@@ -1476,8 +1476,8 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: time.thusdaydata.length == 0
                                     ? 0
                                     : time.thusdaydata.length <= 3
-                                        ? 50
-                                        : 150,
+                                    ? 50
+                                    : 150,
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: time.thusdaydata == null
@@ -1486,11 +1486,11 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Text("${index + 1}) " +
-                                            time.thusdaydata[index].toString()),
-                                      ],
-                                    ));
+                                          children: [
+                                            Text("${index + 1}) " +
+                                                time.thusdaydata[index].toString()),
+                                          ],
+                                        ));
                                   },
                                 ),
                               ),
@@ -1515,35 +1515,35 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                                 child: Text(
-                              "Friday",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            )),
+                                  "Friday",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 18),
+                                )),
                           ),
                           profile == null
                               ? Text('No Previous Timings')
                               : profile.data.clinicDoctor
-                                      .where((t) =>
-                                          t.id.toString() ==
-                                          widget.clinicDoctorId)
-                                      .first
-                                      .doctorTimings
-                                      .isEmpty
-                                  ? Text("No Previous Timings")
-                                  : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .where((element) =>
-                                                  element.day == "friday")
-                                              .first
-                                              .slots
-                                              .length ==
-                                          0
-                                      ? Text('No Previous Timings')
-                                      : Text('OldTimings'),
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .isEmpty
+                              ? Text("No Previous Timings")
+                              : profile.data.clinicDoctor
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .where((element) =>
+                          element.day == "friday")
+                              .first
+                              .slots
+                              .length ==
+                              0
+                              ? Text('No Previous Timings')
+                              : Text('OldTimings'),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SingleChildScrollView(
@@ -1552,151 +1552,151 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: profile == null
                                     ? 0
                                     : profile.data.clinicDoctor
-                                            .where((t) =>
-                                                t.id.toString() ==
-                                                widget.clinicDoctorId)
-                                            .first
-                                            .doctorTimings
-                                            .isEmpty
-                                        ? 0
-                                        : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .where((element) =>
-                                                        element.day == "friday")
-                                                    .first
-                                                    .slots
-                                                    .length ==
-                                                0
-                                            ? 0
-                                            : profile.data.clinicDoctor
-                                                        .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
-                                                        .first
-                                                        .doctorTimings
-                                                        .where((element) =>
-                                                            element.day ==
-                                                            "friday")
-                                                        .first
-                                                        .slots
-                                                        .length <=
-                                                    3
-                                                ? 70
-                                                : 150,
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day == "friday")
+                                    .first
+                                    .slots
+                                    .length ==
+                                    0
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget
+                                        .clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "friday")
+                                    .first
+                                    .slots
+                                    .length <=
+                                    3
+                                    ? 70
+                                    : 150,
                                 child: ListView.builder(
                                   physics: ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: profile == null
                                       ? 0
                                       : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .isEmpty
-                                          ? 0
-                                          : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "friday")
-                                                      .first
-                                                      .slots ==
-                                                  null
-                                              ? 0
-                                              : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .isEmpty
-                                                  ? 0
-                                                  : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "friday")
-                                                      .first
-                                                      .slots
-                                                      .length,
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "friday")
+                                      .first
+                                      .slots ==
+                                      null
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "friday")
+                                      .first
+                                      .slots
+                                      .length,
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: [
-                                            Text("${index + 1}) " +
-                                                (profile.data.clinicDoctor
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Text("${index + 1}) " +
+                                                    (profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .isEmpty
-                                                    ? 0
-                                                    : profile.data.clinicDoctor
+                                                        ? 0
+                                                        : profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .where((element) =>
-                                                            element.day ==
-                                                            "friday")
+                                                    element.day ==
+                                                        "friday")
                                                         .first
                                                         .slots[index]
                                                         .toString())),
-                                            IconButton(
-                                              icon: Icon(
-                                                  Icons.remove_circle_outline,
-                                                  color: red),
-                                              onPressed: () {
-                                                if (profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
+                                                IconButton(
+                                                  icon: Icon(
+                                                      Icons.remove_circle_outline,
+                                                      color: red),
+                                                  onPressed: () {
+                                                    if (profile.data.clinicDoctor
+                                                        .where((t) =>
+                                                    t.id.toString() ==
                                                         widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isNotEmpty) {
-                                                  profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
+                                                        .first
+                                                        .doctorTimings
+                                                        .isNotEmpty) {
+                                                      profile.data.clinicDoctor
+                                                          .where((t) =>
+                                                      t.id.toString() ==
                                                           widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
+                                                          .first
+                                                          .doctorTimings
+                                                          .where((element) =>
+                                                      element.day ==
                                                           "friday")
-                                                      .first
-                                                      .slots
-                                                      .removeAt(index);
-                                                }
-                                                setState(() {});
-                                              },
-                                            )
+                                                          .first
+                                                          .slots
+                                                          .removeAt(index);
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ],
-                                    ));
+                                        ));
                                   },
                                 ),
                               ),
@@ -1814,8 +1814,8 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: time.fridaydata.length == 0
                                     ? 0
                                     : time.fridaydata.length <= 3
-                                        ? 50
-                                        : 150,
+                                    ? 50
+                                    : 150,
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: time.fridaydata == null
@@ -1824,11 +1824,11 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Text("${index + 1}) " +
-                                            time.fridaydata[index].toString()),
-                                      ],
-                                    ));
+                                          children: [
+                                            Text("${index + 1}) " +
+                                                time.fridaydata[index].toString()),
+                                          ],
+                                        ));
                                   },
                                 ),
                               ),
@@ -1853,35 +1853,35 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                                 child: Text(
-                              "Saturday",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            )),
+                                  "Saturday",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 18),
+                                )),
                           ),
                           profile == null
                               ? Text('No Previous Timings')
                               : profile.data.clinicDoctor
-                                      .where((t) =>
-                                          t.id.toString() ==
-                                          widget.clinicDoctorId)
-                                      .first
-                                      .doctorTimings
-                                      .isEmpty
-                                  ? Text("No Previous Timings")
-                                  : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .where((element) =>
-                                                  element.day == "saturday")
-                                              .first
-                                              .slots
-                                              .length ==
-                                          0
-                                      ? Text('No Previous Timings')
-                                      : Text('OldTimings'),
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .isEmpty
+                              ? Text("No Previous Timings")
+                              : profile.data.clinicDoctor
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .where((element) =>
+                          element.day == "saturday")
+                              .first
+                              .slots
+                              .length ==
+                              0
+                              ? Text('No Previous Timings')
+                              : Text('OldTimings'),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SingleChildScrollView(
@@ -1890,160 +1890,160 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: profile == null
                                     ? 0
                                     : profile.data.clinicDoctor
-                                            .where((t) =>
-                                                t.id.toString() ==
-                                                widget.clinicDoctorId)
-                                            .first
-                                            .doctorTimings
-                                            .isEmpty
-                                        ? 0
-                                        : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .where((element) =>
-                                                        element.day ==
-                                                        "saturday")
-                                                    .first
-                                                    .slots
-                                                    .length ==
-                                                0
-                                            ? 0
-                                            : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isEmpty
-                                                ? 0
-                                                : profile.data.clinicDoctor
-                                                            .where((t) =>
-                                                                t.id.toString() ==
-                                                                widget
-                                                                    .clinicDoctorId)
-                                                            .first
-                                                            .doctorTimings
-                                                            .where((element) =>
-                                                                element.day ==
-                                                                "saturday")
-                                                            .first
-                                                            .slots
-                                                            .length <=
-                                                        3
-                                                    ? 70
-                                                    : 150,
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "saturday")
+                                    .first
+                                    .slots
+                                    .length ==
+                                    0
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget
+                                        .clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "saturday")
+                                    .first
+                                    .slots
+                                    .length <=
+                                    3
+                                    ? 70
+                                    : 150,
                                 child: ListView.builder(
                                   physics: ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: profile == null
                                       ? 0
                                       : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .isEmpty
-                                          ? 0
-                                          : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "saturday")
-                                                      .first
-                                                      .slots ==
-                                                  null
-                                              ? 0
-                                              : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .isEmpty
-                                                  ? 0
-                                                  : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "saturday")
-                                                      .first
-                                                      .slots
-                                                      .length,
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "saturday")
+                                      .first
+                                      .slots ==
+                                      null
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "saturday")
+                                      .first
+                                      .slots
+                                      .length,
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: [
-                                            Text("${index + 1}) " +
-                                                (profile.data.clinicDoctor
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Text("${index + 1}) " +
+                                                    (profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .isEmpty
-                                                    ? 0
-                                                    : profile.data.clinicDoctor
+                                                        ? 0
+                                                        : profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .where((element) =>
-                                                            element.day ==
-                                                            "saturday")
+                                                    element.day ==
+                                                        "saturday")
                                                         .first
                                                         .slots[index]
                                                         .toString())),
-                                            IconButton(
-                                              icon: Icon(
-                                                  Icons.remove_circle_outline,
-                                                  color: red),
-                                              onPressed: () {
-                                                if (profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
+                                                IconButton(
+                                                  icon: Icon(
+                                                      Icons.remove_circle_outline,
+                                                      color: red),
+                                                  onPressed: () {
+                                                    if (profile.data.clinicDoctor
+                                                        .where((t) =>
+                                                    t.id.toString() ==
                                                         widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isNotEmpty) {
-                                                  profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
+                                                        .first
+                                                        .doctorTimings
+                                                        .isNotEmpty) {
+                                                      profile.data.clinicDoctor
+                                                          .where((t) =>
+                                                      t.id.toString() ==
                                                           widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
+                                                          .first
+                                                          .doctorTimings
+                                                          .where((element) =>
+                                                      element.day ==
                                                           "saturday")
-                                                      .first
-                                                      .slots
-                                                      .removeAt(index);
-                                                }
-                                                setState(() {});
-                                              },
-                                            )
+                                                          .first
+                                                          .slots
+                                                          .removeAt(index);
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ],
-                                    ));
+                                        ));
                                   },
                                 ),
                               ),
@@ -2161,8 +2161,8 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: time.saturdaydata.length == 0
                                     ? 0
                                     : time.saturdaydata.length <= 3
-                                        ? 50
-                                        : 150,
+                                    ? 50
+                                    : 150,
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: time.saturdaydata == null
@@ -2171,12 +2171,12 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Text("${index + 1}) " +
-                                            time.saturdaydata[index]
-                                                .toString()),
-                                      ],
-                                    ));
+                                          children: [
+                                            Text("${index + 1}) " +
+                                                time.saturdaydata[index]
+                                                    .toString()),
+                                          ],
+                                        ));
                                   },
                                 ),
                               ),
@@ -2201,35 +2201,35 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                                 child: Text(
-                              "Sunday",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            )),
+                                  "Sunday",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 18),
+                                )),
                           ),
                           profile == null
                               ? Text('No Previous Timings')
                               : profile.data.clinicDoctor
-                                      .where((t) =>
-                                          t.id.toString() ==
-                                          widget.clinicDoctorId)
-                                      .first
-                                      .doctorTimings
-                                      .isEmpty
-                                  ? Text("No Previous Timings")
-                                  : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .where((element) =>
-                                                  element.day == "sunday")
-                                              .first
-                                              .slots
-                                              .length ==
-                                          0
-                                      ? Text('No Previous Timings')
-                                      : Text('OldTimings'),
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .isEmpty
+                              ? Text("No Previous Timings")
+                              : profile.data.clinicDoctor
+                              .where((t) =>
+                          t.id.toString() ==
+                              widget.clinicDoctorId)
+                              .first
+                              .doctorTimings
+                              .where((element) =>
+                          element.day == "sunday")
+                              .first
+                              .slots
+                              .length ==
+                              0
+                              ? Text('No Previous Timings')
+                              : Text('OldTimings'),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SingleChildScrollView(
@@ -2238,160 +2238,160 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: profile == null
                                     ? 0
                                     : profile.data.clinicDoctor
-                                            .where((t) =>
-                                                t.id.toString() ==
-                                                widget.clinicDoctorId)
-                                            .first
-                                            .doctorTimings
-                                            .isEmpty
-                                        ? 0
-                                        : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .where((element) =>
-                                                        element.day == "sunday")
-                                                    .first
-                                                    .slots
-                                                    .length ==
-                                                0
-                                            ? 0
-                                            : profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
-                                                        widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isEmpty
-                                                ? 0
-                                                : profile.data.clinicDoctor
-                                                            .where((t) =>
-                                                                t.id.toString() ==
-                                                                widget
-                                                                    .clinicDoctorId)
-                                                            .first
-                                                            .doctorTimings
-                                                            .where((element) =>
-                                                                element.day ==
-                                                                "sunday")
-                                                            .first
-                                                            .slots
-                                                            .length <=
-                                                        3
-                                                    ?70
-                                                    : 150,
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day == "sunday")
+                                    .first
+                                    .slots
+                                    .length ==
+                                    0
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget.clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .isEmpty
+                                    ? 0
+                                    : profile.data.clinicDoctor
+                                    .where((t) =>
+                                t.id.toString() ==
+                                    widget
+                                        .clinicDoctorId)
+                                    .first
+                                    .doctorTimings
+                                    .where((element) =>
+                                element.day ==
+                                    "sunday")
+                                    .first
+                                    .slots
+                                    .length <=
+                                    3
+                                    ?70
+                                    : 150,
                                 child: ListView.builder(
                                   physics: ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: profile == null
                                       ? 0
                                       : profile.data.clinicDoctor
-                                              .where((t) =>
-                                                  t.id.toString() ==
-                                                  widget.clinicDoctorId)
-                                              .first
-                                              .doctorTimings
-                                              .isEmpty
-                                          ? 0
-                                          : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "sunday")
-                                                      .first
-                                                      .slots ==
-                                                  null
-                                              ? 0
-                                              : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .isEmpty
-                                                  ? 0
-                                                  : profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
-                                                          widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
-                                                          "sunday")
-                                                      .first
-                                                      .slots
-                                                      .length,
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "sunday")
+                                      .first
+                                      .slots ==
+                                      null
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .isEmpty
+                                      ? 0
+                                      : profile.data.clinicDoctor
+                                      .where((t) =>
+                                  t.id.toString() ==
+                                      widget.clinicDoctorId)
+                                      .first
+                                      .doctorTimings
+                                      .where((element) =>
+                                  element.day ==
+                                      "sunday")
+                                      .first
+                                      .slots
+                                      .length,
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: [
-                                            Text("${index + 1}) " +
-                                                (profile.data.clinicDoctor
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Text("${index + 1}) " +
+                                                    (profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .isEmpty
-                                                    ? 0
-                                                    : profile.data.clinicDoctor
+                                                        ? 0
+                                                        : profile.data.clinicDoctor
                                                         .where((t) =>
-                                                            t.id.toString() ==
-                                                            widget
-                                                                .clinicDoctorId)
+                                                    t.id.toString() ==
+                                                        widget
+                                                            .clinicDoctorId)
                                                         .first
                                                         .doctorTimings
                                                         .where((element) =>
-                                                            element.day ==
-                                                            "sunday")
+                                                    element.day ==
+                                                        "sunday")
                                                         .first
                                                         .slots[index]
                                                         .toString())),
-                                            IconButton(
-                                              icon: Icon(
-                                                  Icons.remove_circle_outline,
-                                                  color: red),
-                                              onPressed: () {
-                                                if (profile.data.clinicDoctor
-                                                    .where((t) =>
-                                                        t.id.toString() ==
+                                                IconButton(
+                                                  icon: Icon(
+                                                      Icons.remove_circle_outline,
+                                                      color: red),
+                                                  onPressed: () {
+                                                    if (profile.data.clinicDoctor
+                                                        .where((t) =>
+                                                    t.id.toString() ==
                                                         widget.clinicDoctorId)
-                                                    .first
-                                                    .doctorTimings
-                                                    .isNotEmpty) {
-                                                  profile.data.clinicDoctor
-                                                      .where((t) =>
-                                                          t.id.toString() ==
+                                                        .first
+                                                        .doctorTimings
+                                                        .isNotEmpty) {
+                                                      profile.data.clinicDoctor
+                                                          .where((t) =>
+                                                      t.id.toString() ==
                                                           widget.clinicDoctorId)
-                                                      .first
-                                                      .doctorTimings
-                                                      .where((element) =>
-                                                          element.day ==
+                                                          .first
+                                                          .doctorTimings
+                                                          .where((element) =>
+                                                      element.day ==
                                                           "sunday")
-                                                      .first
-                                                      .slots
-                                                      .removeAt(index);
-                                                }
+                                                          .first
+                                                          .slots
+                                                          .removeAt(index);
+                                                    }
 
-                                                setState(() {});
-                                              },
-                                            )
+                                                    setState(() {});
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ],
-                                    ));
+                                        ));
                                   },
                                 ),
                               ),
@@ -2509,8 +2509,8 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                 height: time.sundaydata.length == 0
                                     ? 0
                                     : time.sundaydata.length <= 3
-                                        ? 50
-                                        : 150,
+                                    ? 50
+                                    : 150,
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: time.sundaydata == null
@@ -2519,11 +2519,11 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                   itemBuilder: (context, index) {
                                     return Center(
                                         child: Column(
-                                      children: [
-                                        Text("${index + 1}) " +
-                                            time.sundaydata[index].toString()),
-                                      ],
-                                    ));
+                                          children: [
+                                            Text("${index + 1}) " +
+                                                time.sundaydata[index].toString()),
+                                          ],
+                                        ));
                                   },
                                 ),
                               ),
@@ -2540,6 +2540,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                       setState(() {
                         _isInAsyncCall = true;
                       });
+                      print(widget.clinicDoctorId);
                       SendTime st = SendTime(doctorTimings: []);
                       for (int i = 0; i < 7; i++) {
                         TimingGenerationValue tm = TimingGenerationValue(
@@ -2550,7 +2551,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             if (time.mondaydata.isEmpty) {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = [];
@@ -2560,12 +2561,12 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-
+                                print(tm.slots);
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = time.mondaydata;
@@ -2576,9 +2577,9 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.mondaydata);
-
+                                print(tm.slots);
                               }
-                              
+
                             }
 
                             break;
@@ -2586,7 +2587,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             if (time.tuesdaydata.isEmpty) {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = [];
@@ -2597,12 +2598,12 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-
+                                print(tm.slots);
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = time.tuesdaydata;
@@ -2614,9 +2615,9 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.tuesdaydata);
-
+                                print(tm.slots);
                               }
-                              
+
                             }
 
                             break;
@@ -2624,7 +2625,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             if (time.wednesdaydata.isEmpty) {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = [];
@@ -2635,12 +2636,12 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-
+                                print(tm.slots);
                               }
                             } else {
-                               ClinicDoctor x = profile.data.clinicDoctor
+                              ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = time.wednesdaydata;
@@ -2652,9 +2653,9 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.wednesdaydata);
-
+                                print(tm.slots);
                               }
-                              
+
                             }
 
                             break;
@@ -2662,7 +2663,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             if (time.thusdaydata.isEmpty) {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = [];
@@ -2673,11 +2674,12 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
+                                print(mod);
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = time.thusdaydata;
@@ -2689,9 +2691,9 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.thusdaydata);
-
+                                print(tm.slots);
                               }
-                              
+
                             }
 
                             break;
@@ -2699,7 +2701,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             if (time.fridaydata.isEmpty) {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = [];
@@ -2709,12 +2711,12 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-
+                                print(mod);
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = time.fridaydata;
@@ -2725,9 +2727,9 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.fridaydata);
-
+                                print(tm.slots);
                               }
-                              
+
                             }
 
                             break;
@@ -2735,7 +2737,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             if (time.saturdaydata.isEmpty) {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = [];
@@ -2746,12 +2748,12 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
-
+                                print(mod);
                               }
                             } else {
-                               ClinicDoctor x = profile.data.clinicDoctor
+                              ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = time.saturdaydata;
@@ -2763,9 +2765,9 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.saturdaydata);
-
+                                print(tm.slots);
                               }
-                              
+
                             }
 
                             break;
@@ -2773,7 +2775,7 @@ class _TimingGenerationState extends State<TimingGeneration> {
                             if (time.sundaydata.isEmpty) {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = [];
@@ -2783,11 +2785,12 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .first
                                     .slots;
                                 tm.slots = mod;
+                                print(mod);
                               }
                             } else {
                               ClinicDoctor x = profile.data.clinicDoctor
                                   .where((t) =>
-                                      t.id.toString() == widget.clinicDoctorId)
+                              t.id.toString() == widget.clinicDoctorId)
                                   .first;
                               if (x.doctorTimings.isEmpty) {
                                 tm.slots = time.sundaydata;
@@ -2798,23 +2801,26 @@ class _TimingGenerationState extends State<TimingGeneration> {
                                     .slots;
                                 tm.slots = mod;
                                 tm.slots.addAll(time.sundaydata);
-
+                                print(tm.slots);
                               }
-                              
+
                             }
 
                             break;
                         }
                         st.doctorTimings.add(tm);
                       }
+                      print(st.doctorTimings);
                       for (var i in st.doctorTimings) {
+                        print(i.day);
+                        print(i.slots.toString());
                       }
-                      
+
                       bool check =
-                          await doctorTimings(st, widget.clinicDoctorId);
+                      await doctorTimings(st, widget.clinicDoctorId);
                       if (check) {
                         SharedPreferences pref =
-                            await SharedPreferences.getInstance();
+                        await SharedPreferences.getInstance();
                         pref.reload();
                         setState(() {
                           _isInAsyncCall = false;
@@ -2822,13 +2828,13 @@ class _TimingGenerationState extends State<TimingGeneration> {
 
                         widget.getdoctors();
                         Fluttertoast.showToast(
-                                msg: "Timings updated",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: green,
-                                textColor: black,
-                                fontSize: 16.0)
+                            msg: "Timings updated",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: green,
+                            textColor: black,
+                            fontSize: 16.0)
                             .then((value) => allSet(database, patientDatabase));
                         setState(() {});
                       } else {
@@ -2872,7 +2878,7 @@ class Addingtime with ChangeNotifier {
   List<Slots> sundaydata = [];
   void dowork(String day, String startTime, String endTime, int patients) {
     Slots ds =
-        Slots(startTime: startTime, endTime: endTime, noOfPatients: patients);
+    Slots(startTime: startTime, endTime: endTime, noOfPatients: patients);
     switch (day) {
       case "mon":
         mondaydata.add(ds);
@@ -2907,7 +2913,7 @@ class TimingsUpdateForResponseModel {
 
   TimingsUpdateForResponseModel.fromJson(Map<String, dynamic> json) {
     data =
-        json['data'] != null ? new ClinicDoctor.fromJson(json['data']) : null;
+    json['data'] != null ? new ClinicDoctor.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {

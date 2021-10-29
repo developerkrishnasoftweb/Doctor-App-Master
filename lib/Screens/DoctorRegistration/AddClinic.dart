@@ -29,11 +29,16 @@ class _AddClinicState extends State<AddClinic> {
             title: new Text(suggestion.title),
           ),
           padding: EdgeInsets.all(8.0)),
-      itemSorter: (a, b) => a.id == b.id ? 0 : a.id > b.id ? -1 : 1,
+      itemSorter: (a, b) => a.id == b.id
+          ? 0
+          : a.id > b.id
+              ? -1
+              : 1,
       itemFilter: (suggestion, input) =>
           suggestion.title.toLowerCase().startsWith(input.toLowerCase()),
     );
   }
+
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   String startTime;
   String endTime;
@@ -53,6 +58,7 @@ class _AddClinicState extends State<AddClinic> {
   TextEditingController _speciality = TextEditingController();
   TextEditingController _address = TextEditingController();
   TextEditingController _timings = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -257,6 +263,7 @@ class _AddClinicState extends State<AddClinic> {
                             onPressed: () {
                               speclist.add(_speciality.text);
                               _speciality.clear();
+                              print(speclist);
                             }),
                       )
                     ],
@@ -308,6 +315,7 @@ class _AddClinicState extends State<AddClinic> {
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
+                        print('hello');
                         if (await addClinic(
                             _name.text,
                             _type.text,
@@ -321,11 +329,10 @@ class _AddClinicState extends State<AddClinic> {
                             _address.text,
                             _timings.text,
                             _phno.text)) {
-                              bttncont.success();
-                            }else{
-                              bttncont.reset();
-                            }
-                        
+                          bttncont.success();
+                        } else {
+                          bttncont.reset();
+                        }
                       } else {
                         bttncont.stop();
                       }
@@ -423,11 +430,13 @@ class _AddClinicState extends State<AddClinic> {
 class CitySearch {
   int id;
   String name;
+
   CitySearch(this.id, this.name);
 }
 
 class LocalitySearch {
   int id;
   String name;
+
   LocalitySearch(this.id, this.name);
 }

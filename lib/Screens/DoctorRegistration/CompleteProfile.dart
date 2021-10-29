@@ -33,6 +33,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
   final picker = ImagePicker();
   Dio dio = new Dio();
   SendImageDataModel sendThis = SendImageDataModel(identityVerificationUrl: []);
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +41,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
   }
 
   List<StateData> suggestions = [];
+
   getSuggestions() async {
     List<StateData> suggestion = await getStateinfo();
     List<SpecialityData> ss = await getSpeciality();
@@ -58,6 +60,8 @@ class _CompleteProfileState extends State<CompleteProfile> {
     setState(() {
       _image = File(image.path);
     });
+
+    print(_image);
   }
 
   startupload(File imageFile) async {
@@ -75,16 +79,20 @@ class _CompleteProfileState extends State<CompleteProfile> {
             "Authorization": token,
           }));
 
-
+      print(response.statusCode);
       var data = jsonDecode(response.toString());
       ImageDataModel imageUrl = ImageDataModel.fromJson(data);
-      IdentityVerificationUrl addThis = IdentityVerificationUrl(type: "id_verification",url: imageUrl.data);
-      if(sendThis.identityVerificationUrl.isEmpty){
+      IdentityVerificationUrl addThis =
+          IdentityVerificationUrl(type: "id_verification", url: imageUrl.data);
+      if (sendThis.identityVerificationUrl.isEmpty) {
         sendThis.identityVerificationUrl.add(addThis);
-      }else{
-        sendThis.identityVerificationUrl[0]=addThis;
+      } else {
+        sendThis.identityVerificationUrl[0] = addThis;
       }
+
+      print(data);
     } catch (e) {
+      print(e);
     }
   }
 
@@ -103,20 +111,22 @@ class _CompleteProfileState extends State<CompleteProfile> {
             "Authorization": token,
           }));
 
-
+      print(response.statusCode);
       var data = jsonDecode(response.toString());
       ImageDataModel imageUrl = ImageDataModel.fromJson(data);
-      IdentityVerificationUrl addThis = IdentityVerificationUrl(type: "clinic_ownership",url: imageUrl.data);
-      if(sendThis.identityVerificationUrl.length==1){
+      IdentityVerificationUrl addThis =
+          IdentityVerificationUrl(type: "clinic_ownership", url: imageUrl.data);
+      if (sendThis.identityVerificationUrl.length == 1) {
         sendThis.identityVerificationUrl.add(addThis);
-      }else{
-        sendThis.identityVerificationUrl[1]=addThis;
+      } else {
+        sendThis.identityVerificationUrl[1] = addThis;
       }
+
+      print(data);
     } catch (e) {
+      print(e);
     }
   }
-
-  
 
   int currentStep = 0;
 
@@ -343,7 +353,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
             }
           });
         },
-        onStepContinue: () async{
+        onStepContinue: () async {
           switch (currentStep) {
             case 0:
               changeScreen(
@@ -365,25 +375,25 @@ class _CompleteProfileState extends State<CompleteProfile> {
               // print(sendThis.toJson());
               // print(json.encode(sendThis.toJson()['identity_verification_url']));
               bool result = await sendImagesUrl(sendThis);
-              if(result==true){
+              if (result == true) {
                 Fluttertoast.showToast(
-                                      msg: "Profile Created\nPlease Login ",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: green,
-                                      textColor: black,
-                                      fontSize: 16.0);
-                                      changeScreenRepacement(context, LoginPage());
-              }else{
+                    msg: "Profile Created\nPlease Login ",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: green,
+                    textColor: black,
+                    fontSize: 16.0);
+                changeScreenRepacement(context, LoginPage());
+              } else {
                 Fluttertoast.showToast(
-                                  msg: "Some error Occured",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: red,
-                                  textColor: black,
-                                  fontSize: 16.0);
+                    msg: "Some error Occured",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: red,
+                    textColor: black,
+                    fontSize: 16.0);
               }
               // AlertDialog();
               // setState(() {
@@ -410,102 +420,99 @@ class _CompleteProfileState extends State<CompleteProfile> {
   }
 }
 
-
-
-
-  // List<Step> mySteps = [
-  //   Step(
-  //     title: Text('YOUR PROFILE'),
-  //     content: Text(''),
-  //     isActive: true,
-  //   ),
-  //   Step(title: Text('CLINIC'), content: Text(''), isActive: true),
-  //   Step(
-  //       title: Text('UPLOAD DOCUMENTS'),
-  //       content: Container(
-  //         child: Column(
-  //           children: <Widget>[
-  //             RichText(
-  //                 text: TextSpan(
-  //                     text: 'Submit a photo ID for Verification\n',
-  //                     style: TextStyle(
-  //                         color: black,
-  //                         fontSize: 20,
-  //                         fontWeight: FontWeight.bold),
-  //                     children: <TextSpan>[
-  //                   TextSpan(
-  //                     text:
-  //                         'This is to verify that you are who you say you are.Example: Passport, AadharUID, Pan Card, Election Commision Card, DL, Ration Card with photo\n',
-  //                     style: TextStyle(
-  //                         color: black,
-  //                         fontSize: 15,
-  //                         fontWeight: FontWeight.w300),
-  //                   ),
-  //                 ])),
-  //             Align(
-  //               alignment: Alignment.bottomLeft,
-  //               child: Row(
-  //                 children: [
-  //                   FlatButton(
-  //                     child: Text(
-  //                       'Select',
-  //                       style: TextStyle(
-  //                         color: orangep,
-  //                         fontSize: 20,
-  //                         fontWeight: FontWeight.bold,
-  //                       ),
-  //                     ),
-  //                     onPressed: (){}
-  //                   ),
-  //                   Padding(padding: EdgeInsets.only(left: 15)),
-  //                   FlatButton(
-  //                     //onPressed: startupload,
-  //                     child: Text('Upload',
-  //                         style: TextStyle(
-  //                           color: orangef,
-  //                           fontSize: 20,
-  //                           fontWeight: FontWeight.bold,
-  //                         )),
-  //                         onPressed: (){},
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //             Divider(),
-  //             RichText(
-  //                 text: TextSpan(
-  //                     text: 'Submit Clinic ownership document\n',
-  //                     style: TextStyle(
-  //                         color: black,
-  //                         fontSize: 20,
-  //                         fontWeight: FontWeight.bold),
-  //                     children: <TextSpan>[
-  //                   TextSpan(
-  //                     text:
-  //                         'This is to verify that you are are registered healthcare professional.Example: Clinic letter head/prescription pad stating you are the clinic owner with your signature, Clinic Registration Proof, Document for waste disposal, Sales tax receipt for clinic\n',
-  //                     style: TextStyle(
-  //                         color: black,
-  //                         fontSize: 15,
-  //                         fontWeight: FontWeight.w300),
-  //                   ),
-  //                 ])),
-  //             Align(
-  //               alignment: Alignment.bottomLeft,
-  //               child: FlatButton(
-  //                 onPressed: () {
-  //                   //getImage();
-  //                 },
-  //                 child: Text('Upload',
-  //                     style: TextStyle(
-  //                       color: orangef,
-  //                       fontSize: 20,
-  //                       fontWeight: FontWeight.bold,
-  //                     )),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //       state: StepState.editing,
-  //       isActive: true),
-  // ];
+// List<Step> mySteps = [
+//   Step(
+//     title: Text('YOUR PROFILE'),
+//     content: Text(''),
+//     isActive: true,
+//   ),
+//   Step(title: Text('CLINIC'), content: Text(''), isActive: true),
+//   Step(
+//       title: Text('UPLOAD DOCUMENTS'),
+//       content: Container(
+//         child: Column(
+//           children: <Widget>[
+//             RichText(
+//                 text: TextSpan(
+//                     text: 'Submit a photo ID for Verification\n',
+//                     style: TextStyle(
+//                         color: black,
+//                         fontSize: 20,
+//                         fontWeight: FontWeight.bold),
+//                     children: <TextSpan>[
+//                   TextSpan(
+//                     text:
+//                         'This is to verify that you are who you say you are.Example: Passport, AadharUID, Pan Card, Election Commision Card, DL, Ration Card with photo\n',
+//                     style: TextStyle(
+//                         color: black,
+//                         fontSize: 15,
+//                         fontWeight: FontWeight.w300),
+//                   ),
+//                 ])),
+//             Align(
+//               alignment: Alignment.bottomLeft,
+//               child: Row(
+//                 children: [
+//                   FlatButton(
+//                     child: Text(
+//                       'Select',
+//                       style: TextStyle(
+//                         color: orangep,
+//                         fontSize: 20,
+//                         fontWeight: FontWeight.bold,
+//                       ),
+//                     ),
+//                     onPressed: (){}
+//                   ),
+//                   Padding(padding: EdgeInsets.only(left: 15)),
+//                   FlatButton(
+//                     //onPressed: startupload,
+//                     child: Text('Upload',
+//                         style: TextStyle(
+//                           color: orangef,
+//                           fontSize: 20,
+//                           fontWeight: FontWeight.bold,
+//                         )),
+//                         onPressed: (){},
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             Divider(),
+//             RichText(
+//                 text: TextSpan(
+//                     text: 'Submit Clinic ownership document\n',
+//                     style: TextStyle(
+//                         color: black,
+//                         fontSize: 20,
+//                         fontWeight: FontWeight.bold),
+//                     children: <TextSpan>[
+//                   TextSpan(
+//                     text:
+//                         'This is to verify that you are are registered healthcare professional.Example: Clinic letter head/prescription pad stating you are the clinic owner with your signature, Clinic Registration Proof, Document for waste disposal, Sales tax receipt for clinic\n',
+//                     style: TextStyle(
+//                         color: black,
+//                         fontSize: 15,
+//                         fontWeight: FontWeight.w300),
+//                   ),
+//                 ])),
+//             Align(
+//               alignment: Alignment.bottomLeft,
+//               child: FlatButton(
+//                 onPressed: () {
+//                   //getImage();
+//                 },
+//                 child: Text('Upload',
+//                     style: TextStyle(
+//                       color: orangef,
+//                       fontSize: 20,
+//                       fontWeight: FontWeight.bold,
+//                     )),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//       state: StepState.editing,
+//       isActive: true),
+// ];

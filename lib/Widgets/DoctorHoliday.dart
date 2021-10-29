@@ -39,6 +39,7 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
             DateFormat("yyyy-MM-dd").format(selectedDate).toString();
       });
     String date = selectedDate.toString();
+    //print("date= " + date);
   }
 
   // ClinicDoctor dropdownvalue;
@@ -58,6 +59,7 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
+    // print(h);
     return Consumer<Holiday>(
       builder: (context, hol, child) {
         return Scaffold(
@@ -150,6 +152,8 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                                     .toString());
                                 controller.clear();
                               }
+
+                              print(hol.holi);
                             }),
                       ],
                     ),
@@ -167,10 +171,10 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                         itemBuilder: (context, index) {
                           return Center(
                               child: Column(
-                            children: [
-                              Text("${index + 1}) " + hol.holi[index]),
-                            ],
-                          ));
+                                children: [
+                                  Text("${index + 1}) " + hol.holi[index]),
+                                ],
+                              ));
                         },
                       ),
                     ),
@@ -244,10 +248,10 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                                     height: 50,
                                     child: Center(
                                         child: Text(
-                                      "No Holidays",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    )),
+                                          "No Holidays",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )),
                                   );
                                 } else {
                                   return ListView.builder(
@@ -256,13 +260,14 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                                           ? 0
                                           : snapshot.data.holidays.length,
                                       itemBuilder: (context, index) {
+                                        print(snapshot.data.holidays);
                                         snapshot.data.holidays.sort();
                                         final item =
-                                            snapshot.data.holidays[index];
+                                        snapshot.data.holidays[index];
                                         return ListTile(
                                             title: Text("Date"),
                                             subtitle: Text(DateFormat(
-                                                    'dd-MM-yyyy')
+                                                'dd-MM-yyyy')
                                                 .format((DateTime.parse(item)))
                                                 .toString()),
                                             trailing: IconButton(
@@ -274,25 +279,27 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                                                   setState(() {
                                                     _isInAsyncCall = true;
                                                   });
+                                                  print(snapshot.data.holidays);
                                                   setState(() {
                                                     snapshot.data.holidays
                                                         .removeAt(index);
                                                   });
+                                                  print(snapshot.data.holidays);
                                                   DocHoli ans = DocHoli(
                                                       holidays: snapshot
                                                           .data.holidays);
                                                   bool check =
-                                                      await sendHolidays(
-                                                          ans, widget.docId);
+                                                  await sendHolidays(
+                                                      ans, widget.docId);
                                                   if (check) {
                                                     SharedPreferences pref =
-                                                        await SharedPreferences
-                                                            .getInstance();
+                                                    await SharedPreferences
+                                                        .getInstance();
                                                     SenHolidayUpdateModel
-                                                        docData =
-                                                        SenHolidayUpdateModel(
-                                                            data:
-                                                                snapshot.data);
+                                                    docData =
+                                                    SenHolidayUpdateModel(
+                                                        data:
+                                                        snapshot.data);
                                                     pref.setString(
                                                         'docDataResponse',
                                                         json.encode(
@@ -304,9 +311,9 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                                                     Fluttertoast.showToast(
                                                         msg: "Holidays updated",
                                                         toastLength:
-                                                            Toast.LENGTH_SHORT,
+                                                        Toast.LENGTH_SHORT,
                                                         gravity:
-                                                            ToastGravity.CENTER,
+                                                        ToastGravity.CENTER,
                                                         timeInSecForIosWeb: 1,
                                                         backgroundColor: green,
                                                         textColor: black,
@@ -317,11 +324,11 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                                                     });
                                                     Fluttertoast.showToast(
                                                         msg:
-                                                            "Some error Occured",
+                                                        "Some error Occured",
                                                         toastLength:
-                                                            Toast.LENGTH_SHORT,
+                                                        Toast.LENGTH_SHORT,
                                                         gravity:
-                                                            ToastGravity.CENTER,
+                                                        ToastGravity.CENTER,
                                                         timeInSecForIosWeb: 1,
                                                         backgroundColor: red,
                                                         textColor: black,
@@ -334,9 +341,9 @@ class _DoctorHolidaysState extends State<DoctorHolidays> {
                               default:
                                 return Center(
                                     child: Text(
-                                  "Something went Wrong",
-                                  style: TextStyle(color: red),
-                                ));
+                                      "Something went Wrong",
+                                      style: TextStyle(color: red),
+                                    ));
                             }
                           },
                         ),

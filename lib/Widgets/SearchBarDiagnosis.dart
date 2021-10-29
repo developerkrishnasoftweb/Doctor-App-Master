@@ -12,9 +12,7 @@ class SearchBarDiagnosis extends StatefulWidget {
   final String pId;
   final int docId;
   final int clinicDocId;
-
-  SearchBarDiagnosis({Key key, this.pId, this.docId, this.clinicDocId})
-      : super(key: key);
+  SearchBarDiagnosis({Key key, this.pId, this.docId,this.clinicDocId }) : super(key: key);
 
   @override
   _SearchBarDiagnosisState createState() => _SearchBarDiagnosisState();
@@ -147,6 +145,7 @@ StreamBuilder<List<Symptom>> _buildTaskList(
   return StreamBuilder(
     stream: database.watchAllTasks(query),
     builder: (context, AsyncSnapshot<List<Symptom>> snapshot) {
+      //print(query);
       final tasks = snapshot.data ?? List();
       return Container(
         alignment: Alignment.topLeft,
@@ -178,7 +177,6 @@ StreamBuilder<List<Symptom>> _buildTaskList(
                   context: context,
                   builder: (BuildContext context) {
                     return GetTimings(
-                        id: itemTask.id,
                         briefTitle: itemTask.title,
                         pId: pId,
                         pv: pv,
@@ -211,13 +209,7 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid4(BuildContext context,
           break;
         default:
           return Container(
-            height: (snapshot.data.last.diagnosis == null)
-                ? 0
-                : (snapshot.data.last.diagnosis.data.length == 0)
-                    ? 0
-                    : (snapshot.data.last.diagnosis.data.length <= 3)
-                        ? 50
-                        : 120,
+            height: (snapshot.data.last.diagnosis == null)?0:(snapshot.data.last.diagnosis.data.length==0)?0:(snapshot.data.last.diagnosis.data.length<=3)?50:120,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               child: Wrap(
@@ -226,55 +218,55 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid4(BuildContext context,
                     snapshot.data.last.diagnosis == null
                         ? 0
                         : snapshot.data.last.diagnosis.data.length,
-                    (index) => GestureDetector(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text(
-                                      "Are you sure you want to remove it?"),
-                                  actions: [
-                                    FlatButton(
-                                      child: Text("Yes"),
-                                      color: red,
-                                      onPressed: () {
-                                        //  pv.deleteBrief(
-                                        //      snapshot.data.last,
-                                        //      snapshot.data.last.briefHistory
-                                        //          .data[index].title);
-                                        pv.deleteDiagnosis(
-                                            snapshot.data.last,
-                                            snapshot.data.last.diagnosis
-                                                .data[index].title);
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    FlatButton(
-                                      child: Text("No"),
-                                      color: green,
-                                      onPressed: () => Navigator.pop(context),
-                                    ),
-                                  ],
-                                );
-                              },
+                        (index) => GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title:
+                              Text("Are you sure you want to remove it?"),
+                              actions: [
+                                FlatButton(
+                                  child: Text("Yes"),
+                                  color: red,
+                                  onPressed: () {
+                                    //  pv.deleteBrief(
+                                    //      snapshot.data.last,
+                                    //      snapshot.data.last.briefHistory
+                                    //          .data[index].title);
+                                    pv.deleteDiagnosis(
+                                        snapshot.data.last,
+                                        snapshot.data.last.diagnosis
+                                            .data[index].title);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                FlatButton(
+                                  child: Text("No"),
+                                  color: green,
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
                             );
                           },
-                          child: Container(
-                            child: Chip(
-                              elevation: 4,
-                              shadowColor: Colors.grey[50],
-                              padding: EdgeInsets.all(4),
-                              // clipBehavior: Clip.antiAlias,
-                              backgroundColor: orangef,
-                              label: FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Container(
-                                    //  width: 60.0,
-                                    //  height: 20,
-                                    child: Row(
+                        );
+                      },
+                      child: Container(
+                        child: Chip(
+                          elevation: 4,
+                          shadowColor: Colors.grey[50],
+                          padding: EdgeInsets.all(4),
+                          // clipBehavior: Clip.antiAlias,
+                          backgroundColor: orangef,
+                          label: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Container(
+                              //  width: 60.0,
+                              //  height: 20,
+                                child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     RichText(
                                       textAlign: TextAlign.center,
@@ -287,9 +279,7 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid4(BuildContext context,
                                         ),
                                       ),
                                     ),
-                                    Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 5)),
+                                    Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                                     RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
@@ -301,10 +291,10 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid4(BuildContext context,
                                         )),
                                   ],
                                 )),
-                              ),
-                            ),
                           ),
-                        )),
+                        ),
+                      ),
+                    )),
               ),
             ),
           );
@@ -317,8 +307,7 @@ StreamBuilder<List<PatientsVisitData>> _buildTaskListGrid4(BuildContext context,
 class AddSymptoms extends StatefulWidget {
   final int docId;
   final int clinicDocId;
-
-  AddSymptoms({Key key, this.docId, this.clinicDocId}) : super(key: key);
+  AddSymptoms({Key key, this.docId,this.clinicDocId }) : super(key: key);
 
   @override
   _AddSymptomsState createState() => _AddSymptomsState();
@@ -395,7 +384,7 @@ class _AddSymptomsState extends State<AddSymptoms> {
                   height: 40,
                   width: MediaQuery.of(context).size.width * .75,
                   decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Enter Disease Name',
@@ -502,8 +491,7 @@ class _AddSymptomsState extends State<AddSymptoms> {
                       period = VisibilityPeriod.Always;
                     }
                   });
-                  database.addBrief(
-                      diseaseName, period, widget.docId, widget.clinicDocId);
+                  database.addBrief(diseaseName, period, widget.docId,widget.clinicDocId );
                   Navigator.pop(context);
                 }),
           ),

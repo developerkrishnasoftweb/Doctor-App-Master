@@ -7,13 +7,14 @@ class AddAllergyLifestyle extends StatefulWidget {
   final int docId;
 
   const AddAllergyLifestyle({Key key, this.docId}) : super(key: key);
+
   @override
   _AddAllergyLifestyleState createState() => _AddAllergyLifestyleState();
 }
 
 class _AddAllergyLifestyleState extends State<AddAllergyLifestyle> {
-
   String query = '';
+
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<HabitDB>(context);
@@ -50,10 +51,9 @@ class _AddAllergyLifestyleState extends State<AddAllergyLifestyle> {
                             query = val;
                           });
                         },
-                        
                       ),
                     ),
-                    _buildTaskList(context, query, database,widget.docId),
+                    _buildTaskList(context, query, database, widget.docId),
                   ],
                 ),
               ),
@@ -88,11 +88,12 @@ class _AddAllergyLifestyleState extends State<AddAllergyLifestyle> {
   }
 }
 
-StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
-    HabitDB database, int docId) {
+StreamBuilder<List<Habit>> _buildTaskList(
+    BuildContext context, String query, HabitDB database, int docId) {
   return StreamBuilder(
     stream: database.watchAllTask(query),
     builder: (context, AsyncSnapshot<List<Habit>> snapshot) {
+      print(query);
       final tasks = snapshot.data ?? List();
       return Container(
         height: MediaQuery.of(context).size.height * 0.6,
@@ -121,6 +122,7 @@ StreamBuilder<List<Habit>> _buildTaskList(BuildContext context, String query,
 class AddAllergies extends StatefulWidget {
   final int docId;
   final HabitDB database;
+
   AddAllergies({Key key, this.docId, this.database}) : super(key: key);
 
   @override

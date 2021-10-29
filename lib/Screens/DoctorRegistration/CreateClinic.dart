@@ -12,6 +12,7 @@ class CreateClinic extends StatefulWidget {
   final List<StateData> suggestionsstate;
 
   const CreateClinic({Key key, this.suggestionsstate}) : super(key: key);
+
   @override
   _CreateClinicState createState() => _CreateClinicState(suggestionsstate);
 }
@@ -20,6 +21,7 @@ class _CreateClinicState extends State<CreateClinic> {
   List<StateData> suggestionstate = [];
 
   RoundedLoadingButtonController _bttnCont = RoundedLoadingButtonController();
+
   _CreateClinicState(this.suggestionstate) {
     cityTextField = new AutoCompleteTextField<StateData>(
       decoration: new InputDecoration(
@@ -34,7 +36,11 @@ class _CreateClinicState extends State<CreateClinic> {
             title: new Text(suggestion.title),
           ),
           padding: EdgeInsets.all(8.0)),
-      itemSorter: (a, b) => a.id == b.id ? 0 : a.id > b.id ? -1 : 1,
+      itemSorter: (a, b) => a.id == b.id
+          ? 0
+          : a.id > b.id
+              ? -1
+              : 1,
       itemFilter: (suggestion, input) =>
           suggestion.title.toLowerCase().startsWith(input.toLowerCase()),
     );
@@ -56,10 +62,12 @@ class _CreateClinicState extends State<CreateClinic> {
   String address;
   String phoneNo;
   StateData selected;
+
   //LocationSearch selected;
 
   bool _autoValidate = false;
   bool isSelected = false;
+
   //List<dynamic> timings=timereturn();
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
@@ -133,8 +141,10 @@ class _CreateClinicState extends State<CreateClinic> {
   List<ClinicsByStateData> clinics = [];
   StateData state;
   ClinicsByStateData _selectedClinic;
+
   @override
   Widget build(BuildContext context) {
+    print("Clinic timings");
     return new Scaffold(
         appBar: new AppBar(
           backgroundColor: orangef,
@@ -411,11 +421,13 @@ class _CreateClinicState extends State<CreateClinic> {
 class DegreeSearch {
   int id;
   String name;
+
   DegreeSearch(this.id, this.name);
 }
 
 class LocationSearch {
   int id;
   String name;
+
   LocationSearch(this.id, this.name);
 }

@@ -16,7 +16,7 @@ class LabTest extends StatefulWidget {
 
 class _LabTestState extends State<LabTest> with SingleTickerProviderStateMixin {
   final RoundedLoadingButtonController _btnController =
-      new RoundedLoadingButtonController();
+  new RoundedLoadingButtonController();
 
   TabController controller;
   @override
@@ -138,6 +138,7 @@ class _LabTestState extends State<LabTest> with SingleTickerProviderStateMixin {
                       ),
                       color: blue,
                       onPressed: () {
+                        print(test.parametersList.length);
                         ex.insertTask(Examination(
                             clinicDoctorId: 1,
                             doctorId: widget.docId,
@@ -145,7 +146,7 @@ class _LabTestState extends State<LabTest> with SingleTickerProviderStateMixin {
                             price: 200,
                             title: _title.text,
                             parameters:
-                                Parameters2(data: test.parametersList)));
+                            Parameters2(data: test.parametersList)));
                         test.parametersList = [];
                         _title.clear();
                         _btnController.reset();
@@ -216,7 +217,7 @@ class _NumericParameterState extends State<NumericParameter> {
   Widget build(BuildContext context) {
     return Consumer<ExaminationProvider>(builder: (context, test, child) {
       return SingleChildScrollView(
-              child: Form(
+        child: Form(
             key: _formKey,
             child: Container(
                 padding: EdgeInsets.all(10.0),
@@ -290,30 +291,30 @@ class _NumericParameterState extends State<NumericParameter> {
                     ),
                     widget.paraName == 'numeric'
                         ? Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Container(
-                              height: 45.0,
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Please enter some text';
-                                  }
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                decoration: new InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: blue),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: blue),
-                                  ),
-                                  hintText: widget.val1,
-                                ),
-                                controller: _lbr,
-                              ),
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                        height: 45.0,
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          decoration: new InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: blue),
                             ),
-                          )
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: blue),
+                            ),
+                            hintText: widget.val1,
+                          ),
+                          controller: _lbr,
+                        ),
+                      ),
+                    )
                         : Container(),
 
                     Padding(
@@ -322,13 +323,36 @@ class _NumericParameterState extends State<NumericParameter> {
                         height: 45.0,
                         child: widget.paraName == "numeric"
                             ? TextFormField(
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Please enter some text';
-                                  }
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          decoration: new InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: blue),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: blue),
+                            ),
+                            hintText: widget.val2,
+                          ),
+                          controller: _hbr,
+                        )
+                            : Row(
+                          children: [
+                            Container(
+                              width:
+                              MediaQuery.of(context).size.width * 0.5,
+                              child: TextFormField(
+                                // validator: (value) {
+                                //   if (value.isEmpty) {
+                                //     return 'Please enter some text';
+                                //   }
+                                //   return null;
+                                // },
                                 decoration: new InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: blue),
@@ -336,43 +360,20 @@ class _NumericParameterState extends State<NumericParameter> {
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: blue),
                                   ),
-                                  hintText: widget.val2,
+                                  hintText: "Enter Result Type",
                                 ),
                                 controller: _hbr,
-                              )
-                            : Row(
-                                children: [
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    child: TextFormField(
-                                      // validator: (value) {
-                                      //   if (value.isEmpty) {
-                                      //     return 'Please enter some text';
-                                      //   }
-                                      //   return null;
-                                      // },
-                                      decoration: new InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: blue),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: blue),
-                                        ),
-                                        hintText: "Enter Result Type",
-                                      ),
-                                      controller: _hbr,
-                                    ),
-                                  ),
-                                  IconButton(
-                                      icon: Icon(Icons.add_circle),
-                                      onPressed: () {
-                                        test.addReference(_hbr.text);
-                                        setState(() {});
-                                        _hbr.clear();
-                                      })
-                                ],
                               ),
+                            ),
+                            IconButton(
+                                icon: Icon(Icons.add_circle),
+                                onPressed: () {
+                                  test.addReference(_hbr.text);
+                                  setState(() {});
+                                  _hbr.clear();
+                                })
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -384,51 +385,51 @@ class _NumericParameterState extends State<NumericParameter> {
                         height: 45.0,
                         child: widget.paraName == 'numeric'
                             ? TextFormField(
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Please enter some text';
-                                  }
-                                  return null;
-                                },
-                                decoration: new InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: blue),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: blue),
-                                  ),
-                                  hintText: widget.val3,
-                                  // labelText: widget.val3,
-                                ),
-                                controller: _unit,
-                              )
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          decoration: new InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: blue),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: blue),
+                            ),
+                            hintText: widget.val3,
+                            // labelText: widget.val3,
+                          ),
+                          controller: _unit,
+                        )
                             : DropdownButton(
-                                value: _selectedbio,
-                                isExpanded: true,
-                                hint: Text('Select Bio References'),
-                                elevation: 16,
-                                style: TextStyle(color: black),
-                                isDense: true,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _selectedbio = newValue;
-                                    test.bioReferences.contains(newValue)
-                                        ? test.bioReferences.remove(newValue)
-                                        : test.addBioReference(newValue);
-                                  });
-                                },
-                                items: test.references.map((String val) {
-                                  return DropdownMenuItem(
-                                    child: ListTile(
-                                      leading: test.bioReferences.contains(val)
-                                          ? Icon(Icons.radio_button_checked)
-                                          : Icon(Icons.radio_button_unchecked),
-                                      title: Text(val),
-                                    ),
-                                    value: val,
-                                  );
-                                }).toList(),
+                          value: _selectedbio,
+                          isExpanded: true,
+                          hint: Text('Select Bio References'),
+                          elevation: 16,
+                          style: TextStyle(color: black),
+                          isDense: true,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _selectedbio = newValue;
+                              test.bioReferences.contains(newValue)
+                                  ? test.bioReferences.remove(newValue)
+                                  : test.addBioReference(newValue);
+                            });
+                          },
+                          items: test.references.map((String val) {
+                            return DropdownMenuItem(
+                              child: ListTile(
+                                leading: test.bioReferences.contains(val)
+                                    ? Icon(Icons.radio_button_checked)
+                                    : Icon(Icons.radio_button_unchecked),
+                                title: Text(val),
                               ),
+                              value: val,
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
 
@@ -444,21 +445,21 @@ class _NumericParameterState extends State<NumericParameter> {
                           if (_formKey.currentState.validate()) {
                             widget.paraName == 'numeric'
                                 ? test.addParameter(new ParameterData(
-                                    title: _pname.text,
-                                    sample: _sample.text,
-                                    method: _method.text,
-                                    references: [_lbr.text, _hbr.text],
-                                    bioReference: [],
-                                    unit: _unit.text,
-                                    type: widget.paraName))
+                                title: _pname.text,
+                                sample: _sample.text,
+                                method: _method.text,
+                                references: [_lbr.text, _hbr.text],
+                                bioReference: [],
+                                unit: _unit.text,
+                                type: widget.paraName))
                                 : test.addParameter(new ParameterData(
-                                    title: _pname.text,
-                                    sample: _sample.text,
-                                    method: _method.text,
-                                    references: test.references,
-                                    unit: _unit.text,
-                                    bioReference: test.bioReferences,
-                                    type: widget.paraName));
+                                title: _pname.text,
+                                sample: _sample.text,
+                                method: _method.text,
+                                references: test.references,
+                                unit: _unit.text,
+                                bioReference: test.bioReferences,
+                                type: widget.paraName));
                             test.bioReferences = [];
                             test.references = [];
                             _lbr.clear();

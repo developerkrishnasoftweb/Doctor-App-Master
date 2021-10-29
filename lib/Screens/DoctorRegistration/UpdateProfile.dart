@@ -188,6 +188,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     });
     ClinicDoctor cli = doctor.clinicDoctor
         .firstWhere((element) => element.id == _selectedClinic.id);
+    print(_selectedClinic.emergencyFee);
     setState(() {
       opdFeesctrl.text = cli.consultationFee.toString();
       emergFeesctrl.text = cli.emergencyFee.toString();
@@ -217,6 +218,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
+    print(w);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -652,6 +654,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 onChanged: (ClinicDoctor newValue) {
                                   setState(() {
                                     _selectedClinic = newValue;
+                                    print(_selectedClinic.id);
                                     opdFeesctrl.text = _selectedClinic
                                         .consultationFee
                                         .toString();
@@ -866,6 +869,7 @@ class ProfileHeader extends StatelessWidget {
               ),
               Text(
                 title,
+                style: TextStyle(fontSize: 16),
               ),
               if (subtitle != null) ...[
                 const SizedBox(height: 5.0),

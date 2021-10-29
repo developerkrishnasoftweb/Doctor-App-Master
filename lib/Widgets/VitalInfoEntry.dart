@@ -13,13 +13,13 @@ class VitalEntry extends StatefulWidget {
   final VoidCallback fun;
   VitalEntry(
       {Key key,
-      this.token,
-      this.patientVisit,
-      this.temp,
-      this.bp,
-      this.pulse,
-      this.weight,
-      this.fun})
+        this.token,
+        this.patientVisit,
+        this.temp,
+        this.bp,
+        this.pulse,
+        this.weight,
+        this.fun})
       : super(key: key);
 
   @override
@@ -46,11 +46,11 @@ class _VitalEntryState extends State<VitalEntry> {
     var pv = await widget.patientVisit.checkPatient(widget.token.guid);
     widget.patientVisit.updateBP(
         pv.last,
-         lbpController.text + "/" +bpController.text,
+        lbpController.text + "/" +bpController.text,
         pulseController.text,
         tempController.text,
         weightController.text);
-        widget.fun();
+    widget.fun();
   }
 
   @override
@@ -198,7 +198,7 @@ class _VitalEntryState extends State<VitalEntry> {
               updateInfo();
 
               Navigator.pop(context);
-              
+
             },
             child: Text("Save"),
             textColor: white,

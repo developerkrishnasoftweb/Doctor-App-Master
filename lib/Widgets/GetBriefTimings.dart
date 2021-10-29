@@ -15,18 +15,15 @@ class GetTimings extends StatefulWidget {
   final String type;
   final int docId;
   final String allergyOrLifeType;
-  final int id;
-
   const GetTimings(
       {Key key,
-      this.briefTitle,
-      this.visibleTill,
-      this.pv,
-      this.pId,
-      this.type,
-      this.docId,
-      this.allergyOrLifeType,
-      this.id})
+        this.briefTitle,
+        this.visibleTill,
+        this.pv,
+        this.pId,
+        this.type,
+        this.docId,
+        this.allergyOrLifeType})
       : super(key: key);
 
   @override
@@ -64,7 +61,6 @@ class _GetTimingsState extends State<GetTimings> {
       case 'brief':
         List<BriefHistoryData> bhd = [
           BriefHistoryData(
-            id: widget.id,
             date: setDate,
             title: widget.briefTitle,
             visibleTill: widget.visibleTill,
@@ -77,25 +73,22 @@ class _GetTimingsState extends State<GetTimings> {
         var p = await widget.pv.checkPatient(widget.pId);
         widget.pv.updateBriefHistory(p.last, bh);
 
-        /// Uncomment these line
-        /// if diagnosis should be added while adding brief history
-        ///
-        // List<DignosisData> bhdd = [
-        //   DignosisData(
-        //     date: setDate,
-        //     title: widget.briefTitle,
-        //     visibleTill: widget.visibleTill,
-        //     isCured: _radioValue == "Since" ? false : true,
-        //   )
-        // ];
-        // Dignosisgenerated bht = Dignosisgenerated(data: bhdd);
-        // var pp = await widget.pv.checkPatient(widget.pId);
-        // widget.pv.updateDiagnosis(pp.last, bht, recom, med);
+        List<DignosisData> bhdd = [
+          DignosisData(
+            date: setDate,
+            title: widget.briefTitle,
+            visibleTill: widget.visibleTill,
+            isCured: _radioValue == "Since" ? false : true,
+          )
+        ];
+        Dignosisgenerated bht = Dignosisgenerated(data: bhdd);
+        var pp = await widget.pv.checkPatient(widget.pId);
+
+        widget.pv.updateDiagnosis(pp.last, bht, recom, med);
         break;
       case 'todayVisit':
         List<VisitReasonData> vhd = [
           VisitReasonData(
-            id: widget.id,
             date: setDate,
             title: widget.briefTitle,
             visibleTill: widget.visibleTill,
@@ -149,6 +142,7 @@ class _GetTimingsState extends State<GetTimings> {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.height);
     final recom = Provider.of<RecommendationDB>(context);
     final med = Provider.of<MedicinesDB>(context);
     return SingleChildScrollView(
@@ -216,10 +210,10 @@ class _GetTimingsState extends State<GetTimings> {
                                   width: MediaQuery.of(context).size.width,
                                   child: GridView.builder(
                                     gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 10,
-                                            mainAxisSpacing: 5.0,
-                                            crossAxisSpacing: 5.0),
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 10,
+                                        mainAxisSpacing: 5.0,
+                                        crossAxisSpacing: 5.0),
                                     itemCount: 32,
                                     itemBuilder: (context, index) {
                                       return GestureDetector(
@@ -227,6 +221,7 @@ class _GetTimingsState extends State<GetTimings> {
                                           setState(() {
                                             days = index;
                                           });
+                                          print(days);
                                         },
                                         child: Container(
                                           alignment: Alignment.center,
@@ -239,7 +234,7 @@ class _GetTimingsState extends State<GetTimings> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(30)),
                                               border:
-                                                  Border.all(color: orange)),
+                                              Border.all(color: orange)),
                                           child: Text(index.toString()),
                                         ),
                                       );
@@ -262,10 +257,10 @@ class _GetTimingsState extends State<GetTimings> {
                                   width: MediaQuery.of(context).size.width,
                                   child: GridView.builder(
                                     gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 10,
-                                            mainAxisSpacing: 5.0,
-                                            crossAxisSpacing: 5.0),
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 10,
+                                        mainAxisSpacing: 5.0,
+                                        crossAxisSpacing: 5.0),
                                     itemCount: 12,
                                     itemBuilder: (context, index) {
                                       return GestureDetector(
@@ -273,6 +268,8 @@ class _GetTimingsState extends State<GetTimings> {
                                           setState(() {
                                             months = index;
                                           });
+                                          print(months);
+
                                         },
                                         child: Container(
                                           alignment: Alignment.center,
@@ -285,7 +282,7 @@ class _GetTimingsState extends State<GetTimings> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(30)),
                                               border:
-                                                  Border.all(color: orange)),
+                                              Border.all(color: orange)),
                                           child: Text(index.toString()),
                                         ),
                                       );
@@ -308,10 +305,10 @@ class _GetTimingsState extends State<GetTimings> {
                                   width: MediaQuery.of(context).size.width,
                                   child: GridView.builder(
                                     gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 10,
-                                            mainAxisSpacing: 5.0,
-                                            crossAxisSpacing: 5.0),
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 10,
+                                        mainAxisSpacing: 5.0,
+                                        crossAxisSpacing: 5.0),
                                     itemCount: 22,
                                     itemBuilder: (context, index) {
                                       return GestureDetector(
@@ -319,6 +316,7 @@ class _GetTimingsState extends State<GetTimings> {
                                           setState(() {
                                             years = index;
                                           });
+                                          print(years.toString());
                                         },
                                         child: Container(
                                           alignment: Alignment.center,
@@ -331,7 +329,7 @@ class _GetTimingsState extends State<GetTimings> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(30)),
                                               border:
-                                                  Border.all(color: orange)),
+                                              Border.all(color: orange)),
                                           child: Text(index.toString()),
                                         ),
                                       );
@@ -350,7 +348,7 @@ class _GetTimingsState extends State<GetTimings> {
                           Fluttertoast.showToast(
                               msg: "${widget.briefTitle} added to list",
                               toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
+                              gravity: ToastGravity.CENTER ,
                               timeInSecForIosWeb: 1,
                               backgroundColor: green,
                               textColor: white,

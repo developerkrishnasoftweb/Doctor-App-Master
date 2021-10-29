@@ -37,18 +37,18 @@ class _MedicineSearchState extends State<MedicineSearch>
     SharedPreferences pref = await SharedPreferences.getInstance();
     String doctors = pref.getString('parameters');
     ParametersUpdate parametersUpdate =
-        ParametersUpdate.fromJson(json.decode(doctors));
+    ParametersUpdate.fromJson(json.decode(doctors));
     setState(() {
       category = parametersUpdate.data.category.map((e) => e.title).toList();
     });
-    
+
   }
 //dose,fre , dura
   addNewCategory(String category) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String doctors = pref.getString('parameters');
     ParametersUpdate parametersUpdate =
-        ParametersUpdate.fromJson(json.decode(doctors));
+    ParametersUpdate.fromJson(json.decode(doctors));
     parametersUpdate.data.category.add(ParameterData(isOnline: false,title: category,value: 0,type: "category"));
     pref.remove('parameters');
     pref.setString('parameters', json.encode(parametersUpdate));
@@ -86,26 +86,26 @@ class _MedicineSearchState extends State<MedicineSearch>
         titlePadding: EdgeInsets.zero,
         scrollable: true,
         title: Container(
-            alignment: Alignment.center,
-            color: orangep,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Search Medicine',
-                    style: TextStyle(color: white),
-                  ),
-                  IconButton(
-                      icon: Icon(Icons.cancel),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      })
-                ],
-              ),
+          alignment: Alignment.center,
+          color: orangep,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  'Search Medicine',
+                  style: TextStyle(color: white),
+                ),
+                IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+              ],
             ),
           ),
+        ),
         actions: <Widget>[
           Stack(
             // fit: StackFit.expand,
@@ -156,81 +156,82 @@ class _MedicineSearchState extends State<MedicineSearch>
                         child: Flexible(
                           fit: FlexFit.loose,
                           child:
-                              TabBarView(controller: tabController, children: [
+                          TabBarView(controller: tabController, children: [
                             _buildTaskList(
                                 context, query, med, patientsVisit, widget.pId),
                             con
                                 ? CMedicine(
-                                    cat: cate,
-                                    db: med,
-                                    pv: patientsVisit,
-                                    pId: widget.pId)
+                                cat: cate,
+                                db: med,
+                                pv: patientsVisit,
+                                pId: widget.pId)
                                 : Container(
-                                    child: ListView.builder(
-                                      itemCount: category.length + 1,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        if (index == category.length) {
-                                          return Container(
-                                            padding: EdgeInsets.only(bottom: 50),
-                                            child: ListTile(
-                                              
-                                              title: newcat
-                                                  ? TextFormField(
-                                                      controller: _category,
-                                                      decoration: InputDecoration(
-                                                          labelText:
-                                                              'New Category',
-                                                          border:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(5),
-                                                          )),
-                                                    )
-                                                  : Text(
-                                                      " Category not in list?",
-                                                      style:
-                                                          TextStyle(color: blue),
-                                                    ),
-                                              trailing: FlatButton(
-                                                  onPressed: () { 
-                                                    if (newcat &&
-                                                        _category
-                                                            .text.isNotEmpty) {
-                                                      category
-                                                          .add(_category.text);
-                                                      addNewCategory(
-                                                          _category.text);
-                                                      _category.clear();
-                                                    }
-                                                    setState(() {
-                                                      newcat = !newcat;
-                                                    });
-                                                  },
-                                                  color: blue,
-                                                  textColor: white,
-                                                  child: newcat
-                                                      ? Text('Save')
-                                                      : Text('Add New')),
-                                            ),
-                                          );
-                                        } else {
-                                          return ListTile(
-                                            title: Text(category[index]),
-                                            trailing:
-                                                Icon(Icons.arrow_forward_ios),
-                                            onTap: () {
+                              child: ListView.builder(
+                                itemCount: category.length + 1,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  if (index == category.length) {
+                                    return Container(
+                                      padding: EdgeInsets.only(bottom: 50),
+                                      child: ListTile(
+
+                                        title: newcat
+                                            ? TextFormField(
+                                          controller: _category,
+                                          decoration: InputDecoration(
+                                              labelText:
+                                              'New Category',
+                                              border:
+                                              OutlineInputBorder(
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(5),
+                                              )),
+                                        )
+                                            : Text(
+                                          " Category not in list?",
+                                          style:
+                                          TextStyle(color: blue),
+                                        ),
+                                        trailing: FlatButton(
+                                            onPressed: () {
+                                              if (newcat &&
+                                                  _category
+                                                      .text.isNotEmpty) {
+                                                print(_category.text);
+                                                category
+                                                    .add(_category.text);
+                                                addNewCategory(
+                                                    _category.text);
+                                                _category.clear();
+                                              }
                                               setState(() {
-                                                con = true;
-                                                cate = category[index];
+                                                newcat = !newcat;
                                               });
                                             },
-                                          );
-                                        }
+                                            color: blue,
+                                            textColor: white,
+                                            child: newcat
+                                                ? Text('Save')
+                                                : Text('Add New')),
+                                      ),
+                                    );
+                                  } else {
+                                    return ListTile(
+                                      title: Text(category[index]),
+                                      trailing:
+                                      Icon(Icons.arrow_forward_ios),
+                                      onTap: () {
+                                        setState(() {
+                                          con = true;
+                                          cate = category[index];
+                                        });
                                       },
-                                    ),
-                                  )
+                                    );
+                                  }
+                                },
+                              ),
+                            )
                           ]),
                         )),
                   ],
@@ -272,6 +273,7 @@ class _MedicineSearchState extends State<MedicineSearch>
     return StreamBuilder(
       stream: database.watchAllTask(query),
       builder: (context, AsyncSnapshot<List<Medicine>> snapshot) {
+        print(query+snapshot.data.toString());
         final tasks = snapshot.data ?? List();
         return Container(
           height: MediaQuery.of(context).size.height * 0.6,
@@ -318,7 +320,7 @@ class _MedicineSearchState extends State<MedicineSearch>
                 child: ListTile(
                   // contentPadding: EdgeInsets.zero,
                   dense: true,
-                  
+
                   title:Text(itemTask.title),
                   subtitle: Text(itemTask.salt  ),
                   // subtitle: Text(itemTask.interactionDrugs +
@@ -363,19 +365,19 @@ class CMedicine extends StatelessWidget {
               final itemTask = tasks[index];
               return GestureDetector(
                 // onTap: () async {
-                  // showDialog(
-                  //   context: context,
-                  //   builder: (BuildContext context) {
-                  //     return SelectMedicine(
-                  //       medicine: itemTask,
-                  //       docId: widget.docId,
-                  //       pv: pv,
-                  //       disease: widget.disease,
-                  //       fun: widget.fun,
-                  //       pId: widget.pId,
-                  //     );
-                  //   },
-                  // );
+                // showDialog(
+                //   context: context,
+                //   builder: (BuildContext context) {
+                //     return SelectMedicine(
+                //       medicine: itemTask,
+                //       docId: widget.docId,
+                //       pv: pv,
+                //       disease: widget.disease,
+                //       fun: widget.fun,
+                //       pId: widget.pId,
+                //     );
+                //   },
+                // );
 
                 //   // PrescribedMedicines pm = PrescribedMedicines(
                 //   //     title: itemTask.title,
@@ -393,11 +395,11 @@ class CMedicine extends StatelessWidget {
                 // },
                 child: ListTile(
                   // contentPadding: EdgeInsets.zero,
-                   dense: true,
-                  
+                  dense: true,
+
                   title:Text(itemTask.title),
                   subtitle: Text(itemTask.defaultUnit + " "+itemTask.defaultFrequency + " "+itemTask.defaultDose + " "+itemTask.defaultDuration + " "+itemTask.defaultDirection + " "+itemTask.defaultRoute ),
-                 // subtitle: Text(itemTask.interactionDrugs +
+                  // subtitle: Text(itemTask.interactionDrugs +
                   //     " " +
                   //     itemTask.defaultFrequency),
                 ),

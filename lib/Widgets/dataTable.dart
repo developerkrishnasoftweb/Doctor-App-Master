@@ -36,6 +36,11 @@ class _TokenTableState extends State<TokenTable> {
         stream: database.watchAllTasks(widget.query, widget.date),
         builder: (context, AsyncSnapshot<List<Token>> list) {
           li = list.data;
+
+          // li.forEach((element) {
+          //   print('Data Table gender : ${element.name} ${element.gender}');
+          // });
+
           onSort(int columnIndex, bool ascending, List<Token> token) {
             if (columnIndex == 1) {
               if (ascending) {
@@ -47,6 +52,7 @@ class _TokenTableState extends State<TokenTable> {
           }
 
           if (list.data != null) {
+
             return Container(
               height: 300,
               child: SingleChildScrollView(
@@ -78,153 +84,150 @@ class _TokenTableState extends State<TokenTable> {
                     ],
                     rows: li
                         .map((p) => DataRow(cells: [
-                              DataCell(Text(p.tokenno.toString()),
-                                  onTap: () {}),
-                              DataCell(
-                                  Text(p.name,
-                                      style: TextStyle(
-                                          color: (p.isOnline)
-                                              ? (green)
-                                              : (p.cancelled == (true)
-                                                  ? (grey)
-                                                  : (p.appointmenttype ==
-                                                          ('emergency')
-                                                      ? (red)
-                                                      : (p.bookedtype ==
-                                                              ('on call')
-                                                          ? orangef
-                                                          : blueGrey))))),
-                                  onTap: () => p.cancelled == false
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              UpdateBooking(
-                                                id: p.id,
-                                                time: p.tokentime,
-                                                token: p,
-                                                tokenno: p.tokenno,
-                                                initialName: p.name,
-                                                initialAge: p.age.toString(),
-                                                initialAddress: p.address,
-                                                initialMob:
-                                                    p.mobileno.toString(),
-                                                initialAppointmentType:
-                                                    p.appointmenttype,
-                                                initialBookigType: p.bookedtype,
-                                                visitType: p.visittype,
-                                                gender: p.gender,
-                                                counter: widget.count,
-                                                docId: p.doctorid,
-                                              ))
-                                      : {}),
-                              DataCell(
-                                  GetBiggerData(
-                                      p.address,
-                                      (p.isOnline)
-                                          ? (green)
-                                          : (p.cancelled == (true)
-                                              ? (grey)
-                                              : (p.appointmenttype ==
-                                                      ('emergency')
-                                                  ? (red)
-                                                  : (p.bookedtype == ('on call')
-                                                      ? orangef
-                                                      : blueGrey)))),
-                                  onTap: () {}),
-                              DataCell(Text(
-                                (p.visittype == "new visit"
-                                        ? "   N "
-                                        : "   F ") +
-                                    (p.isPresent == true ? "   P " : "   A "),
-                                style: TextStyle(
-                                    color: (p.isOnline)
-                                        ? (green)
-                                        : (p.cancelled == (true)
-                                            ? (grey)
-                                            : (p.appointmenttype ==
-                                                    ('emergency')
-                                                ? (red)
-                                                : (p.bookedtype == ('on call')
-                                                    ? orangef
-                                                    : blueGrey)))),
-                              )),
-                              DataCell(Text(
-                                p.guid.toString(),
-                                style: TextStyle(
-                                    color: (p.isOnline)
-                                        ? (green)
-                                        : (p.cancelled == (true)
-                                            ? (grey)
-                                            : (p.appointmenttype ==
-                                                    ('emergency')
-                                                ? (red)
-                                                : (p.bookedtype == ('on call')
-                                                    ? orangef
-                                                    : blueGrey)))),
-                              )),
-                              // DataCell(
-                              //     Text(
-                              //       DateFormat("dd-MM-yyyy")
-                              //           .format(p.tokentime)
-                              //           .toString(),
-                              //       style: TextStyle(
-                              //           color: (p.isOnline)
-                              //               ? (green)
-                              //               : (p.cancelled == (true)
-                              //                   ? (grey)
-                              //                   : (p.appointmenttype ==
-                              //                           ('emergency')
-                              //                       ? (red)
-                              //                       : (p.bookedtype ==
-                              //                               ('on call')
-                              //                           ? orangef
-                              //                           : blueGrey)))),
-                              //     ),
-                              //     onTap: () {}),
-                              // DataCell(
-                              //     Text(
-                              //       DateFormat.jm()
-                              //           .format(p.tokentime)
-                              //           .toString(),
-                              //       style: TextStyle(
-                              //           color: (p.isOnline)
-                              //               ? (green)
-                              //               : (p.cancelled == (true)
-                              //                   ? (grey)
-                              //                   : (p.appointmenttype ==
-                              //                           ('emergency')
-                              //                       ? (red)
-                              //                       : (p.bookedtype ==
-                              //                               ('on call')
-                              //                           ? orangef
-                              //                           : blueGrey)))),
-                              //     ),
-                              //     onTap: () {}),
-                              // DataCell(Text(
-                              //   p.visittype,
-                              //   style: TextStyle(
-                              //       color: (p.cancelled == (true)
-                              //           ? (grey)
-                              //           : (p.appointmenttype == ('emergency')
-                              //               ? (red)
-                              //               : (p.bookedtype == ('on call')
-                              //                   ? orangef
-                              //                   : blueGrey)))),
-                              // )),
-                              // DataCell(
-                              //   Text(
-                              //     p.cancelled.toString(),
-                              //     style: TextStyle(
-                              //         color: (p.cancelled == (true)
-                              //             ? (grey)
-                              //             : (p.appointmenttype == ('emergency')
-                              //                 ? (red)
-                              //                 : (p.bookedtype == ('on call')
-                              //                     ? orangef
-                              //                     : blueGrey)))),
-                              //   ),
-                              // ),
-                            ]))
+                      DataCell(Text(p.tokenno.toString()),
+                          onTap: () {}),
+                      DataCell(
+                          Text(p.name,
+                              style: TextStyle(
+                                  color: (p.isOnline)
+                                      ? (green)
+                                      : (p.cancelled == (true)
+                                      ? (grey)
+                                      : (p.appointmenttype ==
+                                      ('emergency')
+                                      ? (red)
+                                      : (p.bookedtype ==
+                                      ('on call')
+                                      ? orangef
+                                      : blueGrey))))),
+                          onTap: () => p.cancelled == false ?
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => UpdateBooking(
+                                id: p.id,
+                                time: p.tokentime,
+                                token: p,
+                                tokenno: p.tokenno,
+                                initialName: p.name,
+                                initialAge: p.age.toString(),
+                                initialAddress: p.address,
+                                initialMob: p.mobileno.toString(),
+                                initialAppointmentType: p.appointmenttype,
+                                initialBookigType: p.bookedtype,
+                                visitType: p.visittype,
+                                gender: p.gender,
+                                counter: widget.count,
+                                docId: p.doctorid,
+                              ))
+                              : { print('false')}),
+                      DataCell(
+                          GetBiggerData(
+                              p.address,
+                              (p.isOnline)
+                                  ? (green)
+                                  : (p.cancelled == (true)
+                                  ? (grey)
+                                  : (p.appointmenttype ==
+                                  ('emergency')
+                                  ? (red)
+                                  : (p.bookedtype == ('on call')
+                                  ? orangef
+                                  : blueGrey)))),
+                          onTap: () {}),
+                      DataCell(Text(
+                        (p.visittype == "new visit"
+                            ? "   N "
+                            : "   F ") +
+                            (p.isPresent == true ? "   P " : "   A "),
+                        style: TextStyle(
+                            color: (p.isOnline)
+                                ? (green)
+                                : (p.cancelled == (true)
+                                ? (grey)
+                                : (p.appointmenttype ==
+                                ('emergency')
+                                ? (red)
+                                : (p.bookedtype == ('on call')
+                                ? orangef
+                                : blueGrey)))),
+                      )),
+                      DataCell(Text(
+                        p.guid.toString(),
+                        style: TextStyle(
+                            color: (p.isOnline)
+                                ? (green)
+                                : (p.cancelled == (true)
+                                ? (grey)
+                                : (p.appointmenttype ==
+                                ('emergency')
+                                ? (red)
+                                : (p.bookedtype == ('on call')
+                                ? orangef
+                                : blueGrey)))),
+                      )),
+                      // DataCell(
+                      //     Text(
+                      //       DateFormat("dd-MM-yyyy")
+                      //           .format(p.tokentime)
+                      //           .toString(),
+                      //       style: TextStyle(
+                      //           color: (p.isOnline)
+                      //               ? (green)
+                      //               : (p.cancelled == (true)
+                      //                   ? (grey)
+                      //                   : (p.appointmenttype ==
+                      //                           ('emergency')
+                      //                       ? (red)
+                      //                       : (p.bookedtype ==
+                      //                               ('on call')
+                      //                           ? orangef
+                      //                           : blueGrey)))),
+                      //     ),
+                      //     onTap: () {}),
+                      // DataCell(
+                      //     Text(
+                      //       DateFormat.jm()
+                      //           .format(p.tokentime)
+                      //           .toString(),
+                      //       style: TextStyle(
+                      //           color: (p.isOnline)
+                      //               ? (green)
+                      //               : (p.cancelled == (true)
+                      //                   ? (grey)
+                      //                   : (p.appointmenttype ==
+                      //                           ('emergency')
+                      //                       ? (red)
+                      //                       : (p.bookedtype ==
+                      //                               ('on call')
+                      //                           ? orangef
+                      //                           : blueGrey)))),
+                      //     ),
+                      //     onTap: () {}),
+                      // DataCell(Text(
+                      //   p.visittype,
+                      //   style: TextStyle(
+                      //       color: (p.cancelled == (true)
+                      //           ? (grey)
+                      //           : (p.appointmenttype == ('emergency')
+                      //               ? (red)
+                      //               : (p.bookedtype == ('on call')
+                      //                   ? orangef
+                      //                   : blueGrey)))),
+                      // )),
+                      // DataCell(
+                      //   Text(
+                      //     p.cancelled.toString(),
+                      //     style: TextStyle(
+                      //         color: (p.cancelled == (true)
+                      //             ? (grey)
+                      //             : (p.appointmenttype == ('emergency')
+                      //                 ? (red)
+                      //                 : (p.bookedtype == ('on call')
+                      //                     ? orangef
+                      //                     : blueGrey)))),
+                      //   ),
+                      // ),
+                    ]))
                         .toList()),
               ),
             );
@@ -385,6 +388,7 @@ class _AppointmentHistoryTableState extends State<AppointmentHistoryTable> {
       builder: (BuildContext context,
           AsyncSnapshot<DoctorAppointmentHistoryModel> snapshot) {
         if (snapshot.data == null) {
+          print("No data");
           return CircularProgressIndicator();
         } else {
           return Container(
@@ -410,19 +414,19 @@ class _AppointmentHistoryTableState extends State<AppointmentHistoryTable> {
                           snapshot.data.data[i].patientId,
                           style: TextStyle(
                               color: (snapshot.data.data[i].bookingType ==
-                                      "cancelled")
+                                  "cancelled")
                                   ? (grey)
                                   : (snapshot.data.data[i].appointmentType ==
-                                          ('emergency')
-                                      ? (red)
-                                      : (snapshot.data.data[i].bookingType ==
-                                              ('on call')
-                                          ? orangef
-                                          : blueGrey))),
+                                  ('emergency')
+                                  ? (red)
+                                  : (snapshot.data.data[i].bookingType ==
+                                  ('on call')
+                                  ? orangef
+                                  : blueGrey))),
                         ), onTap: () {
                       showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AppointmentHistoryDetails(historyData:snapshot.data.data[i] ,)
+                          context: context,
+                          builder: (BuildContext context) => AppointmentHistoryDetails(historyData:snapshot.data.data[i] ,)
                       );
                     }),
                     // DataCell(
@@ -447,53 +451,53 @@ class _AppointmentHistoryTableState extends State<AppointmentHistoryTable> {
                         snapshot.data.data[i].patientName,
                         style: TextStyle(
                             color: (snapshot.data.data[i].bookingType ==
-                                    "cancelled")
+                                "cancelled")
                                 ? (grey)
                                 : (snapshot.data.data[i].appointmentType ==
-                                        ('emergency')
-                                    ? (red)
-                                    : (snapshot.data.data[i].bookingType ==
-                                            ('on call')
-                                        ? orangef
-                                        : blueGrey))),
+                                ('emergency')
+                                ? (red)
+                                : (snapshot.data.data[i].bookingType ==
+                                ('on call')
+                                ? orangef
+                                : blueGrey))),
                       ),
                     ),
                     DataCell(
                       Center(
                           child: Text(
                             snapshot.data.data[i].patient.address,
-                        style: TextStyle(
-                            color: (snapshot.data.data[i].bookingType ==
+                            style: TextStyle(
+                                color: (snapshot.data.data[i].bookingType ==
                                     "cancelled")
-                                ? (grey)
-                                : (snapshot.data.data[i].appointmentType ==
-                                        ('emergency')
+                                    ? (grey)
+                                    : (snapshot.data.data[i].appointmentType ==
+                                    ('emergency')
                                     ? (red)
                                     : (snapshot.data.data[i].bookingType ==
-                                            ('on call')
-                                        ? orangef
-                                        : blueGrey))),
-                      )),
+                                    ('on call')
+                                    ? orangef
+                                    : blueGrey))),
+                          )),
                     ),
                     DataCell(
                       Center(
                           child: Text(
-                        DateFormat('dd-MM-yyyy')
-                            .format((DateTime.parse(
+                            DateFormat('dd-MM-yyyy')
+                                .format((DateTime.parse(
                                 snapshot.data.data[i].appointmentTime)))
-                            .toString(),
-                        style: TextStyle(
-                            color: (snapshot.data.data[i].bookingType ==
+                                .toString(),
+                            style: TextStyle(
+                                color: (snapshot.data.data[i].bookingType ==
                                     "cancelled")
-                                ? (grey)
-                                : (snapshot.data.data[i].appointmentType ==
-                                        ('emergency')
+                                    ? (grey)
+                                    : (snapshot.data.data[i].appointmentType ==
+                                    ('emergency')
                                     ? (red)
                                     : (snapshot.data.data[i].bookingType ==
-                                            ('on call')
-                                        ? orangef
-                                        : blueGrey))),
-                      )),
+                                    ('on call')
+                                    ? orangef
+                                    : blueGrey))),
+                          )),
                     ),
                     // DataCell(
                     //   Center(

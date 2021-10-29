@@ -5,7 +5,9 @@ class IconBuilder extends StatelessWidget {
   final IconData icon;
   final int units;
   final String title;
+
   IconBuilder(this.icon, this.units, this.title);
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(

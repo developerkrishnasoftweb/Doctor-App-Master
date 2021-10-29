@@ -16,7 +16,7 @@ class AppointmentHistoryDetails extends StatefulWidget {
 
 class _AppointmentHistoryDetailsState extends State<AppointmentHistoryDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController patientNameCtrl; 
+  TextEditingController patientNameCtrl;
   TextEditingController ageCtrl;
   TextEditingController addressCtrl;
   TextEditingController mobileCtrl;
@@ -44,48 +44,48 @@ class _AppointmentHistoryDetailsState extends State<AppointmentHistoryDetails> {
     presentTimeCtrl = TextEditingController();
 
     setState(() {
-      patientNameCtrl.text=widget.historyData.patient.name;
-      ageCtrl.text=widget.historyData.patient.age.toString();
+      patientNameCtrl.text = widget.historyData.patient.name;
+      ageCtrl.text = widget.historyData.patient.age.toString();
       addressCtrl.text = widget.historyData.patient.address;
-      mobileCtrl.text=widget.historyData.patient.mobileNo;
-      appTypeCtrl.text=widget.historyData.appointmentType;
-      appIDCtrl.text=widget.historyData.appointmentId;
-      visitTypeCtrl.text=widget.historyData.visitType;
-      bookedTypeCtrl.text=widget.historyData.bookingType;
-      appTimeCtrl.text=widget.historyData.appointmentTime == null
-                              ? ''
-                              : DateFormat('dd-MM-yyyy')
-                                  .format((DateTime.parse(
-                                      widget.historyData.appointmentTime)))
-                                  .toString() + " " +DateFormat.Hms()
-                                  .format((DateTime.parse(
-                                      widget.historyData.appointmentTime)))
-                                  .toString();
-      bookTimeCtrl.text=widget.historyData.bookedAt == null
-                              ? ''
-                              : DateFormat('dd-MM-yyyy')
-                                  .format((DateTime.parse(
-                                      widget.historyData.bookedAt)))
-                                  .toString() + " " +DateFormat.Hms()
-                                  .format((DateTime.parse(
-                                      widget.historyData.bookedAt)))
-                                  .toString();
-      presentTimeCtrl.text=widget.historyData.presentTime == null
-                              ? ''
-                              : DateFormat('dd-MM-yyyy')
-                                  .format((DateTime.parse(
-                                      widget.historyData.presentTime)))
-                                  .toString() + " " +DateFormat.Hms()
-                                  .format((DateTime.parse(
-                                      widget.historyData.presentTime)))
-                                  .toString();
+      mobileCtrl.text = widget.historyData.patient.mobileNo;
+      appTypeCtrl.text = widget.historyData.appointmentType;
+      appIDCtrl.text = widget.historyData.appointmentId;
+      visitTypeCtrl.text = widget.historyData.visitType;
+      bookedTypeCtrl.text = widget.historyData.bookingType;
+      appTimeCtrl.text = widget.historyData.appointmentTime == null
+          ? ''
+          : DateFormat('dd-MM-yyyy')
+                  .format((DateTime.parse(widget.historyData.appointmentTime)))
+                  .toString() +
+              " " +
+              DateFormat.Hms()
+                  .format((DateTime.parse(widget.historyData.appointmentTime)))
+                  .toString();
+      bookTimeCtrl.text = widget.historyData.bookedAt == null
+          ? ''
+          : DateFormat('dd-MM-yyyy')
+                  .format((DateTime.parse(widget.historyData.bookedAt)))
+                  .toString() +
+              " " +
+              DateFormat.Hms()
+                  .format((DateTime.parse(widget.historyData.bookedAt)))
+                  .toString();
+      presentTimeCtrl.text = widget.historyData.presentTime == null
+          ? ''
+          : DateFormat('dd-MM-yyyy')
+                  .format((DateTime.parse(widget.historyData.presentTime)))
+                  .toString() +
+              " " +
+              DateFormat.Hms()
+                  .format((DateTime.parse(widget.historyData.presentTime)))
+                  .toString();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-
+    //print(w);
     return SingleChildScrollView(
         child: AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -124,7 +124,8 @@ class _AppointmentHistoryDetailsState extends State<AppointmentHistoryDetails> {
                 child: SingleChildScrollView(
                   physics: ClampingScrollPhysics(),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5.0, vertical: 10.0),
                     child: Column(
                       children: <Widget>[
                         Padding(
@@ -183,7 +184,6 @@ class _AppointmentHistoryDetailsState extends State<AppointmentHistoryDetails> {
                             ),
                           ),
                         ),
-                        
                         Padding(
                           padding: const EdgeInsets.fromLTRB(8.0, 2, 8, 2),
                           child: TextFormField(

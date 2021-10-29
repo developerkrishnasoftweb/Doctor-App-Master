@@ -50,11 +50,11 @@ class _DiseaseAnalysisWidgetState extends State<DiseaseAnalysisWidget> {
                     );
                     selected != null
                         ? setState(() {
-                            st = selected;
-                          })
+                      st = selected;
+                    })
                         : setState(() {
-                            st = st;
-                          });
+                      st = st;
+                    });
                   },
                   child: Text(
                     "${DateFormat('dd-MM-yyyy').format(st).toString()} ",
@@ -78,11 +78,11 @@ class _DiseaseAnalysisWidgetState extends State<DiseaseAnalysisWidget> {
                     );
                     selected != null
                         ? setState(() {
-                            et = selected;
-                          })
+                      et = selected;
+                    })
                         : setState(() {
-                            et = et;
-                          });
+                      et = et;
+                    });
                   },
                   child: Text(
                     DateFormat('dd-MM-yyyy').format(et).toString(),
@@ -107,7 +107,7 @@ class _DiseaseAnalysisWidgetState extends State<DiseaseAnalysisWidget> {
                   return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
-                        // sortColumnIndex: 1,
+                      // sortColumnIndex: 1,
                         columnSpacing: 8,
                         horizontalMargin: 5,
                         columns: <DataColumn>[
@@ -124,86 +124,86 @@ class _DiseaseAnalysisWidgetState extends State<DiseaseAnalysisWidget> {
                         ],
                         rows: snapshot.data.data
                             .map<DataRow>((p) => DataRow(cells: [
-                                  DataCell(
-                                      Text(
-                                        p.name,
-                                        style: TextStyle(color: blue),
-                                      ),
-                                      onTap: () => showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return SimpleDialog(
-                                                title: Text(
-                                                    "Prescribed  Medicines for ${p.name}"),
-                                                children: [
-                                                  DataTable(
-                                                      // columnSpacing: 8,
-                                                      // horizontalMargin: 5,
+                          DataCell(
+                              Text(
+                                p.name,
+                                style: TextStyle(color: blue),
+                              ),
+                              onTap: () => showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SimpleDialog(
+                                    title: Text(
+                                        "Prescribed  Medicines for ${p.name}"),
+                                    children: [
+                                      DataTable(
+                                        // columnSpacing: 8,
+                                        // horizontalMargin: 5,
 
-                                                      columns: <DataColumn>[
-                                                        // DataColumn(
-                                                        //     label: Text(
-                                                        //         'Rank')),
-                                                        DataColumn(
-                                                            label: Text(
-                                                          'Medicine Name',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )),
-                                                        DataColumn(
-                                                            label: Text(
-                                                          'Times',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )),
-                                                      ],
-                                                      rows: p.medicines
-                                                          .map<DataRow>((li) =>
-                                                              DataRow(cells: [
-                                                                // DataCell(
-                                                                //   Text(
-                                                                //     i=,
-                                                                //   ),
-                                                                // ),
-                                                                DataCell(
-                                                                  Text(
-                                                                    li.title,
-                                                                  ),
-                                                                ),
-                                                                DataCell(
-                                                                  Text(li.count
-                                                                      .toString()),
-                                                                )
-                                                              ]))
-                                                          .toList())
-                                                ],
-                                              );
-                                            },
-                                          )),
-                                  DataCell(Text(p.total.toString()),
-                                      onTap: () {}),
-                                  DataCell(Text(p.feedback.toString()),
-                                      onTap: () {}),
-                                  DataCell(Text(p.cured.toString()),
-                                      onTap: () {}),
-                                  DataCell(Text(p.partial.toString()),
-                                      onTap: () {}),
-                                  DataCell(Text(p.notCured.toString()),
-                                      onTap: () {}),
-                                  DataCell(Text(p.symptomsIncreased.toString()),
-                                      onTap: () {}),
-                                DataCell(
-                                  p.quality==null? Text("Null") :  LinearProgressIndicator(
-                                      minHeight: 30,
-                                      value: double.parse(
-                                          (p.quality / 100).toString()),
-                                    ),
-                                  )
-                                ]))
+                                          columns: <DataColumn>[
+                                            // DataColumn(
+                                            //     label: Text(
+                                            //         'Rank')),
+                                            DataColumn(
+                                                label: Text(
+                                                  'Medicine Name',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .bold),
+                                                )),
+                                            DataColumn(
+                                                label: Text(
+                                                  'Times',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .bold),
+                                                )),
+                                          ],
+                                          rows: p.medicines
+                                              .map<DataRow>((li) =>
+                                              DataRow(cells: [
+                                                // DataCell(
+                                                //   Text(
+                                                //     i=,
+                                                //   ),
+                                                // ),
+                                                DataCell(
+                                                  Text(
+                                                    li.title,
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Text(li.count
+                                                      .toString()),
+                                                )
+                                              ]))
+                                              .toList())
+                                    ],
+                                  );
+                                },
+                              )),
+                          DataCell(Text(p.total.toString()),
+                              onTap: () {}),
+                          DataCell(Text(p.feedback.toString()),
+                              onTap: () {}),
+                          DataCell(Text(p.cured.toString()),
+                              onTap: () {}),
+                          DataCell(Text(p.partial.toString()),
+                              onTap: () {}),
+                          DataCell(Text(p.notCured.toString()),
+                              onTap: () {}),
+                          DataCell(Text(p.symptomsIncreased.toString()),
+                              onTap: () {}),
+                          DataCell(
+                            p.quality==null? Text("Null") :  LinearProgressIndicator(
+                              minHeight: 30,
+                              value: double.parse(
+                                  (p.quality / 100).toString()),
+                            ),
+                          )
+                        ]))
                             .toList()),
                   );
                   break;

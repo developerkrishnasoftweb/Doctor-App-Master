@@ -80,7 +80,7 @@ class _UpdateExaminationState extends State<UpdateExamination> {
                   itemBuilder: (BuildContext context, int index) {
                     return ExpansionTile(
                       title:
-                          Text(widget.examination.parameters.data[index].title),
+                      Text(widget.examination.parameters.data[index].title),
                       children: [
                         Container(
                             padding: EdgeInsets.all(10.0),
@@ -113,7 +113,7 @@ class _UpdateExaminationState extends State<UpdateExamination> {
                                   padding: const EdgeInsets.all(4.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Container(
                                         width: 100.0,
@@ -122,15 +122,15 @@ class _UpdateExaminationState extends State<UpdateExamination> {
                                           decoration: new InputDecoration(
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide:
-                                                    BorderSide(color: blue),
+                                                BorderSide(color: blue),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide:
-                                                    BorderSide(color: blue),
+                                                BorderSide(color: blue),
                                               ),
                                               hintText: 'Sample',
                                               labelStyle:
-                                                  TextStyle(color: grey)),
+                                              TextStyle(color: grey)),
                                           initialValue: widget.examination
                                               .parameters.data[index].sample,
                                         ),
@@ -142,15 +142,15 @@ class _UpdateExaminationState extends State<UpdateExamination> {
                                           decoration: new InputDecoration(
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide:
-                                                    BorderSide(color: blue),
+                                                BorderSide(color: blue),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide:
-                                                    BorderSide(color: blue),
+                                                BorderSide(color: blue),
                                               ),
                                               hintText: 'Method',
                                               labelStyle:
-                                                  TextStyle(color: grey)),
+                                              TextStyle(color: grey)),
                                           initialValue: widget.examination
                                               .parameters.data[index].method,
                                         ),
@@ -163,42 +163,42 @@ class _UpdateExaminationState extends State<UpdateExamination> {
                                   height: 5.0,
                                 ),
                                 widget.examination.parameters.data[index]
-                                            .type ==
-                                        'numeric'
+                                    .type ==
+                                    'numeric'
                                     ? Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Container(
-                                          height: 45.0,
-                                          child: TextFormField(
-                                              validator: (value) {
-                                                if (value.isEmpty) {
-                                                  return 'Please enter some text';
-                                                }
-                                                return null;
-                                              },
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              decoration: new InputDecoration(
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        BorderSide(color: blue),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        BorderSide(color: blue),
-                                                  ),
-                                                  hintText:
-                                                      "Low Biological Ref Interval"),
-                                              initialValue: widget
-                                                  .examination
-                                                  .parameters
-                                                  .data[index]
-                                                  .references
-                                                  .first),
-                                        ),
-                                      )
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Container(
+                                    height: 45.0,
+                                    child: TextFormField(
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'Please enter some text';
+                                          }
+                                          return null;
+                                        },
+                                        keyboardType:
+                                        TextInputType.number,
+                                        decoration: new InputDecoration(
+                                            enabledBorder:
+                                            OutlineInputBorder(
+                                              borderSide:
+                                              BorderSide(color: blue),
+                                            ),
+                                            focusedBorder:
+                                            OutlineInputBorder(
+                                              borderSide:
+                                              BorderSide(color: blue),
+                                            ),
+                                            hintText:
+                                            "Low Biological Ref Interval"),
+                                        initialValue: widget
+                                            .examination
+                                            .parameters
+                                            .data[index]
+                                            .references
+                                            .first),
+                                  ),
+                                )
                                     : Container(),
 
                                 Padding(
@@ -206,77 +206,77 @@ class _UpdateExaminationState extends State<UpdateExamination> {
                                   child: Container(
                                     height: 45.0,
                                     child: widget.examination.parameters
-                                                .data[index].type ==
-                                            "numeric"
+                                        .data[index].type ==
+                                        "numeric"
                                         ? TextFormField(
-                                            validator: (value) {
-                                              if (value.isEmpty) {
-                                                return 'Please enter some text';
-                                              }
-                                              return null;
-                                            },
-                                            keyboardType: TextInputType.number,
-                                            decoration: new InputDecoration(
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide:
-                                                      BorderSide(color: blue),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide:
-                                                      BorderSide(color: blue),
-                                                ),
-                                                // hintText: widget.val2,
-                                                hintText:
-                                                    "High Biological Ref Interval"),
-                                            initialValue: widget
-                                                .examination
-                                                .parameters
-                                                .data[index]
-                                                .references
-                                                .last)
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'Please enter some text';
+                                          }
+                                          return null;
+                                        },
+                                        keyboardType: TextInputType.number,
+                                        decoration: new InputDecoration(
+                                            enabledBorder:
+                                            OutlineInputBorder(
+                                              borderSide:
+                                              BorderSide(color: blue),
+                                            ),
+                                            focusedBorder:
+                                            OutlineInputBorder(
+                                              borderSide:
+                                              BorderSide(color: blue),
+                                            ),
+                                            // hintText: widget.val2,
+                                            hintText:
+                                            "High Biological Ref Interval"),
+                                        initialValue: widget
+                                            .examination
+                                            .parameters
+                                            .data[index]
+                                            .references
+                                            .last)
                                         : Row(
-                                            children: [
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.5,
-                                                child: TextFormField(
-                                                  // validator: (value) {
-                                                  //   if (value.isEmpty) {
-                                                  //     return 'Please enter some text';
-                                                  //   }
-                                                  //   return null;
-                                                  // },
-                                                  decoration:
-                                                      new InputDecoration(
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: blue),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: blue),
-                                                    ),
-                                                    hintText:
-                                                        "Enter Result Type",
-                                                  ),
-                                                  controller: _hbr,
-                                                ),
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.5,
+                                          child: TextFormField(
+                                            // validator: (value) {
+                                            //   if (value.isEmpty) {
+                                            //     return 'Please enter some text';
+                                            //   }
+                                            //   return null;
+                                            // },
+                                            decoration:
+                                            new InputDecoration(
+                                              enabledBorder:
+                                              OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: blue),
                                               ),
-                                              IconButton(
-                                                  icon: Icon(Icons.add_circle),
-                                                  onPressed: () {
-                                                    // test.addReference(_hbr.text);
-                                                    setState(() {});
-                                                    _hbr.clear();
-                                                  })
-                                            ],
+                                              focusedBorder:
+                                              OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: blue),
+                                              ),
+                                              hintText:
+                                              "Enter Result Type",
+                                            ),
+                                            controller: _hbr,
                                           ),
+                                        ),
+                                        IconButton(
+                                            icon: Icon(Icons.add_circle),
+                                            onPressed: () {
+                                              // test.addReference(_hbr.text);
+                                              setState(() {});
+                                              _hbr.clear();
+                                            })
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -287,84 +287,84 @@ class _UpdateExaminationState extends State<UpdateExamination> {
                                   child: Container(
                                     height: 45.0,
                                     child: widget.examination.parameters
-                                                .data[index].type ==
-                                            'numeric'
+                                        .data[index].type ==
+                                        'numeric'
                                         ? TextFormField(
-                                            validator: (value) {
-                                              if (value.isEmpty) {
-                                                return 'Please enter some text';
-                                              }
-                                              return null;
-                                            },
-                                            decoration: new InputDecoration(
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide:
-                                                      BorderSide(color: blue),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide:
-                                                      BorderSide(color: blue),
-                                                ),
-                                                hintText: "Unit"
-                                                // hintText: widget.val3,
-                                                // labelText: widget.val3,
-                                                ),
-                                            initialValue: widget.examination
-                                                .parameters.data[index].unit,
-                                          )
-                                        : DropdownButton(
-                                            value: _selectedbio,
-                                            isExpanded: true,
-                                            hint: Text('Select Bio References'),
-                                            elevation: 16,
-                                            style: TextStyle(color: black),
-                                            isDense: true,
-                                            onChanged: (newValue) {
-                                              setState(() {
-                                                _selectedbio = newValue;
-                                                widget
-                                                        .examination
-                                                        .parameters
-                                                        .data[index]
-                                                        .bioReference
-                                                        .contains(newValue)
-                                                    ? widget
-                                                        .examination
-                                                        .parameters
-                                                        .data[index]
-                                                        .bioReference
-                                                        .remove(newValue)
-                                                    : widget
-                                                        .examination
-                                                        .parameters
-                                                        .data[index]
-                                                        .bioReference
-                                                        .add(newValue);
-                                              });
-                                            },
-                                            items: widget.examination.parameters
-                                                .data[index].references
-                                                .map((dynamic val) {
-                                              return DropdownMenuItem(
-                                                child: ListTile(
-                                                  leading: widget
-                                                          .examination
-                                                          .parameters
-                                                          .data[index]
-                                                          .bioReference
-                                                          .contains(val)
-                                                      ? Icon(Icons
-                                                          .radio_button_checked)
-                                                      : Icon(Icons
-                                                          .radio_button_unchecked),
-                                                  title: Text(val),
-                                                ),
-                                                value: val,
-                                              );
-                                            }).toList(),
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return 'Please enter some text';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: new InputDecoration(
+                                          enabledBorder:
+                                          OutlineInputBorder(
+                                            borderSide:
+                                            BorderSide(color: blue),
                                           ),
+                                          focusedBorder:
+                                          OutlineInputBorder(
+                                            borderSide:
+                                            BorderSide(color: blue),
+                                          ),
+                                          hintText: "Unit"
+                                        // hintText: widget.val3,
+                                        // labelText: widget.val3,
+                                      ),
+                                      initialValue: widget.examination
+                                          .parameters.data[index].unit,
+                                    )
+                                        : DropdownButton(
+                                      value: _selectedbio,
+                                      isExpanded: true,
+                                      hint: Text('Select Bio References'),
+                                      elevation: 16,
+                                      style: TextStyle(color: black),
+                                      isDense: true,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          _selectedbio = newValue;
+                                          widget
+                                              .examination
+                                              .parameters
+                                              .data[index]
+                                              .bioReference
+                                              .contains(newValue)
+                                              ? widget
+                                              .examination
+                                              .parameters
+                                              .data[index]
+                                              .bioReference
+                                              .remove(newValue)
+                                              : widget
+                                              .examination
+                                              .parameters
+                                              .data[index]
+                                              .bioReference
+                                              .add(newValue);
+                                        });
+                                      },
+                                      items: widget.examination.parameters
+                                          .data[index].references
+                                          .map((dynamic val) {
+                                        return DropdownMenuItem(
+                                          child: ListTile(
+                                            leading: widget
+                                                .examination
+                                                .parameters
+                                                .data[index]
+                                                .bioReference
+                                                .contains(val)
+                                                ? Icon(Icons
+                                                .radio_button_checked)
+                                                : Icon(Icons
+                                                .radio_button_unchecked),
+                                            title: Text(val),
+                                          ),
+                                          value: val,
+                                        );
+                                      }).toList(),
+                                    ),
                                   ),
                                 ),
 

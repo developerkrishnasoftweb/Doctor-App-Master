@@ -18,7 +18,6 @@ class SignUpPageState extends State<SignUpPage> {
   bool _autoValidate = false;
   String mobno = '';
   String password = '';
-  String confirmPassword = '';
   bool isPObsolete = false;
   bool isCpObsolete = false;
   final _formKey = GlobalKey<FormState>();
@@ -27,6 +26,7 @@ class SignUpPageState extends State<SignUpPage> {
   String errorText = "Doctor Already Exists! Please login";
   final RoundedLoadingButtonController _btnController =
       new RoundedLoadingButtonController();
+
   @override
   void initState() {
     errorController = StreamController<ErrorAnimationType>();
@@ -49,25 +49,25 @@ class SignUpPageState extends State<SignUpPage> {
   Future<void> _validateInputs() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-          String otpgenerated = await generateOtp(mobno);
-          if (otpgenerated == null) {
-           errorController.add(ErrorAnimationType.shake);
-            setState(() {
-              hasError = true;
-            });
-            _btnController.reset();
-           } else {
-             _btnController.success();
-            changeScreenRepacement(context,
-                Otp(mobno: mobno, password: password, generated: otpgenerated));
-          }
-        } else {
-          setState(() {
-            _autoValidate = true;
-          });
-          _btnController.reset();
-       }
+      String otpgenerated = await generateOtp(mobno);
+      if (otpgenerated == null) {
+        errorController.add(ErrorAnimationType.shake);
+        setState(() {
+          hasError = true;
+        });
+        _btnController.reset();
+      } else {
+        _btnController.success();
+        changeScreenRepacement(context,
+            Otp(mobno: mobno, password: password, generated: otpgenerated));
+      }
+    } else {
+      setState(() {
+        _autoValidate = true;
+      });
+      _btnController.reset();
     }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -194,6 +194,7 @@ class SignUpPageState extends State<SignUpPage> {
                                       setState(() {
                                         mobno = val;
                                       });
+                                      print(mobno);
                                     },
                                     keyboardType: TextInputType.number,
                                   ),
@@ -213,9 +214,7 @@ class SignUpPageState extends State<SignUpPage> {
                                             ? 'Enter a valid password'
                                             : null,
                                     onChanged: (String val) {
-                                      setState(() {
-                                        password = val;
-                                      });
+                                      password = val;
                                     },
                                     decoration: new InputDecoration(
                                       hintText: 'Enter Password',
@@ -270,11 +269,6 @@ class SignUpPageState extends State<SignUpPage> {
                                         },
                                       ),
                                     ),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        confirmPassword = value;
-                                      });
-                                    },
                                     keyboardType: TextInputType.visiblePassword,
                                     obscureText: !isCpObsolete,
                                     style: TextStyle(color: Colors.black),
@@ -290,7 +284,9 @@ class SignUpPageState extends State<SignUpPage> {
                                 child: Text('Already have an Account? Login'),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width<=360?250:350,
+                                width: MediaQuery.of(context).size.width <= 360
+                                    ? 250
+                                    : 350,
                                 child: RoundedLoadingButton(
                                   controller: _btnController,
                                   child: Text(
