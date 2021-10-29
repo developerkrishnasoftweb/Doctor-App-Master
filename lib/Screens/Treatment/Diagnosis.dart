@@ -75,8 +75,14 @@ class _DiagnosisState extends State<Diagnosis> {
         visitData?.allergies?.data?.map((e) => e.toJson())?.toList();
     final lifestyle =
         visitData?.lifestyle?.data?.map((e) => e.toJson())?.toList();
-    final examination =
-        visitData?.examination?.data?.map((e) => e.toJson())?.toList();
+    final examination = visitData?.examination?.data?.map((e) {
+      e.parameters.forEach((parameter) {
+        if (parameter.result == null) {
+          parameter.result = [];
+        }
+      });
+      return e.toJson();
+    })?.toList();
     var payload = <String, dynamic>{
       "age": widget.token.age,
       "gender": widget.token.gender,
