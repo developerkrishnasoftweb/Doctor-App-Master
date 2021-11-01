@@ -43,7 +43,7 @@ class _PatientReportState extends State<PatientReport> {
   int currentPage = 0, totalPage = 0;
   PdfConfig pdfConfig;
   PdfDocument document = PdfDocument();
-  PdfPageFormat selectedPageFormat = PdfPageFormat.a3;
+  PdfPageFormat selectedPageFormat = PdfPageFormat.a4;
   List<PdfPageFormat> pdfPageFormats = <PdfPageFormat>[
     PdfPageFormat.a3,
     PdfPageFormat.a4,
@@ -343,11 +343,15 @@ class _PatientReportState extends State<PatientReport> {
     //Draw the watermark text to the desired position over the PDF page with red color
     // final rootImage = await rootBundle.load('images/getcure logo.png');
     ByteData byteData = backgroundImage.readAsBytesSync().buffer.asByteData();
-    graphics.drawImage(
-        sync.PdfBitmap(byteData.buffer
-            .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
-        Rect.fromLTWH(
-            0, 0, page.getClientSize().width, page.getClientSize().height));
+    try {
+      graphics.drawImage(
+          sync.PdfBitmap(byteData.buffer
+              .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)),
+          Rect.fromLTWH(
+              0, 0, page.getClientSize().width, page.getClientSize().height));
+    } catch (e) {
+      print(e);
+    }
     //Restore the graphics
     graphics.restore();
     //Save the docuemnt
