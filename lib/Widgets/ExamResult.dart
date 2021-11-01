@@ -73,12 +73,12 @@ class _ExamResultState extends State<ExamResult> {
               ],
               rows: List.generate(
                 widget.exmdata.parameters.length,
-                    (index) {
+                (index) {
                   Parameters parameter = widget.exmdata.parameters[index];
 
                   return DataRow(
                       color: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
+                        (Set<MaterialState> states) {
                           return getColor(parameter);
                         },
                       ),
@@ -87,78 +87,93 @@ class _ExamResultState extends State<ExamResult> {
                         DataCell(
                             parameter.type == 'numeric'
                                 ? TextFormField(
-                              initialValue: parameter.result.length == 0 ? "" : parameter.result.last,
-                              keyboardType: TextInputType.number,
-                              onChanged: (val) async {
-                                String tex = "";
-                                setState(() {
-                                  tex = val;
-                                  //print("tex  : " +parameter.result.toString());
-                                });
+                                    initialValue: parameter.result.length == 0
+                                        ? ""
+                                        : parameter.result.last,
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (val) async {
+                                      String tex = "";
+                                      setState(() {
+                                        tex = val;
+                                        //print("tex  : " +parameter.result.toString());
+                                      });
 
-                                ParameterData pd = ParameterData(
-                                    title: parameter.title,
-                                    type: "numeric",
-                                    unit: parameter.unit,
-                                    bioReference: parameter.bioReference,
-                                    references: parameter.references,
-                                    method: parameter.method,
-                                    sample: parameter.sample);
+                                      ParameterData pd = ParameterData(
+                                          title: parameter.title,
+                                          type: "numeric",
+                                          unit: parameter.unit,
+                                          bioReference: parameter.bioReference,
+                                          references: parameter.references,
+                                          method: parameter.method,
+                                          sample: parameter.sample);
 
-                                var x = await patientsVisit.checkPatient(widget.pid);
+                                      var x = await patientsVisit
+                                          .checkPatient(widget.pid);
 
-                                patientsVisit.updateExaminationParams(x.last, widget.exmdata.examinationId, pd, tex);
+                                      patientsVisit.updateExaminationParams(
+                                          x.last,
+                                          widget.exmdata.examinationId,
+                                          pd,
+                                          tex);
 
-                                setState(() {
-                                  List<String> temp;
-                                  temp.add(tex);
-                                  parameter.result =  temp;
-                                  //print("tex  : " +parameter.result.toString());
-                                  // print("Change  : " +parameter.result[0]);
-                                });
-
-                              },
-                            )
+                                      setState(() {
+                                        List<String> temp;
+                                        temp.add(tex);
+                                        parameter.result = temp;
+                                        //print("tex  : " +parameter.result.toString());
+                                        // print("Change  : " +parameter.result[0]);
+                                      });
+                                    },
+                                  )
                                 : DropdownButton<String>(
-                              items:
-                              parameter.references.map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              hint: Text('result'),
-                              value: parameter.result.length == 0
-                                  ? null
-                                  : parameter.result[0],
-                              elevation: 5,
-                              isExpanded: true,
-                              onChanged: (val) async {
-                                setState(() {
-                                  _category = val;
-                                  if (parameter.result.isNotEmpty) {
-                                    parameter.result[0] = val;
-                                  }
-                                });
-                                ParameterData pd = ParameterData(
-                                    title: parameter.title,
-                                    type: "radio",
-                                    unit: parameter.unit,
-                                    bioReference: parameter.bioReference,
-                                    references: parameter.references,
-                                    method: parameter.method,
-                                    sample: parameter.sample);
+                                    items: parameter.references
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    hint: Text('result'),
+                                    value: parameter.result.length == 0
+                                        ? null
+                                        : parameter.result[0],
+                                    elevation: 5,
+                                    isExpanded: true,
+                                    onChanged: (val) async {
+                                      setState(() {
+                                        _category = val;
+                                        if (parameter.result.isNotEmpty) {
+                                          parameter.result[0] = val;
+                                        }
+                                      });
+                                      ParameterData pd = ParameterData(
+                                          title: parameter.title,
+                                          type: "radio",
+                                          unit: parameter.unit,
+                                          bioReference: parameter.bioReference,
+                                          references: parameter.references,
+                                          method: parameter.method,
+                                          sample: parameter.sample);
 
-                                var x = await patientsVisit.checkPatient(widget.pid);
-                                patientsVisit.updateExaminationParams(x.last, widget.exmdata.examinationId, pd, _category);
-
-                              },
-                            ),
+                                      var x = await patientsVisit
+                                          .checkPatient(widget.pid);
+                                      patientsVisit.updateExaminationParams(
+                                          x.last,
+                                          widget.exmdata.examinationId,
+                                          pd,
+                                          _category);
+                                    },
+                                  ),
                             onTap: () {}),
-                        DataCell(Text(parameter.type == 'numeric' ? '${parameter.references[0]} - ${parameter.references.last}' : parameter.bioReference.length == 0 ? '' : parameter.bioReference.first), onTap: () {}),
+                        DataCell(
+                            Text(parameter.type == 'numeric'
+                                ? '${parameter.references[0]} - ${parameter.references.last}'
+                                : parameter.bioReference.length == 0
+                                    ? ''
+                                    : parameter.bioReference.first),
+                            onTap: () {}),
                         DataCell(Text(parameter.unit), onTap: () {}),
-                      ]
-                  );
+                      ]);
                 },
               ),
             ),
@@ -170,12 +185,17 @@ class _ExamResultState extends State<ExamResult> {
 
   Color getColor(Parameters parameter) {
     if (parameter.result.length != 0) {
-
-      if (parameter.type == 'numeric' && (double.parse(parameter.result[0]) < double.parse(parameter.references[0]) || double.parse(parameter.result[0]) > double.parse(parameter.references.last))) {
+      if (parameter.type == 'numeric' &&
+          (double.parse(parameter.result[0]) <
+                  double.parse(parameter.references[0]) ||
+              double.parse(parameter.result[0]) >
+                  double.parse(parameter.references.last))) {
         // print('result : ${parameter.result.toString()}');
         //print('references : ${parameter.references.toString()}');
         return Colors.red[100];
-      } else if (parameter.bioReference.length != 0 && parameter.type == 'radio' && (parameter.result[0] != parameter.bioReference.first)) {
+      } else if (parameter.bioReference.length != 0 &&
+          parameter.type == 'radio' &&
+          (parameter.result[0] != parameter.bioReference.first)) {
         return Colors.red[100];
       } else {
         return Colors.white;

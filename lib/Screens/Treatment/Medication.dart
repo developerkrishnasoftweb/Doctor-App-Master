@@ -199,7 +199,7 @@ class _MedicationState extends State<Medication> {
           payload.addAll({"diagnosis": diagnosis});
         }
 
-        print(examination);
+        print(jsonEncode(payload));
         final response = await getMedicationsSuggestion(payload);
         final patientsVisitDB =
             Provider.of<PatientsVisitDB>(context, listen: false);

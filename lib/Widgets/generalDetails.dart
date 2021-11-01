@@ -25,7 +25,7 @@ class _GeneralDetailsState extends State<GeneralDetails> {
   getData() async {
     //print("General Details");
     List<PatientsVisitData> pd =
-    await widget.patientVisit.checkPatient(widget.token.guid);
+        await widget.patientVisit.checkPatient(widget.token.guid);
     //print(pd);
     setState(() {
       temp = tempController.text = pd.last.temperature.toString();
@@ -80,7 +80,8 @@ class _GeneralDetailsState extends State<GeneralDetails> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 4),
-                      Text('Temp', style: TextStyle(color: Colors.black, fontSize: 16)),
+                      Text('Temp',
+                          style: TextStyle(color: Colors.black, fontSize: 16)),
                       Container(
                           height: 30,
                           width: 30,
@@ -88,8 +89,13 @@ class _GeneralDetailsState extends State<GeneralDetails> {
                             "images/tempPic.png",
                             fit: BoxFit.cover,
                           )),
-                      Text(double.parse(tempController.text).toString(),
-                          style: TextStyle(color: Colors.black, fontSize: 16,fontWeight: FontWeight.bold)),
+                      Text(
+                          (double.tryParse('${tempController.text}') ?? 0.0)
+                              .toString(),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -117,9 +123,9 @@ class _GeneralDetailsState extends State<GeneralDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
                       SizedBox(height: 4),
-                      Text('B.P', style: TextStyle(color: Colors.black, fontSize: 16)),
+                      Text('B.P',
+                          style: TextStyle(color: Colors.black, fontSize: 16)),
                       Container(
                           height: 30,
                           width: 30,
@@ -127,9 +133,11 @@ class _GeneralDetailsState extends State<GeneralDetails> {
                             "images/bp.png",
                             fit: BoxFit.cover,
                           )),
-                      Text( bpController.text,
-                          style: TextStyle(color: Colors.black, fontSize: 16,fontWeight: FontWeight.bold)),
-
+                      Text(bpController.text,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -158,7 +166,8 @@ class _GeneralDetailsState extends State<GeneralDetails> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 4),
-                      Text('Pulse', style: TextStyle(color: Colors.black, fontSize: 16)),
+                      Text('Pulse',
+                          style: TextStyle(color: Colors.black, fontSize: 16)),
                       Container(
                           height: 30,
                           width: 30,
@@ -167,8 +176,10 @@ class _GeneralDetailsState extends State<GeneralDetails> {
                             fit: BoxFit.cover,
                           )),
                       Text(pulseController.text,
-                          style: TextStyle(color: Colors.black, fontSize: 16,fontWeight: FontWeight.bold)),
-
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -196,9 +207,9 @@ class _GeneralDetailsState extends State<GeneralDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
                       SizedBox(height: 4),
-                      Text('Weight', style: TextStyle(color: Colors.black, fontSize: 16)),
+                      Text('Weight',
+                          style: TextStyle(color: Colors.black, fontSize: 16)),
                       Container(
                           height: 30,
                           width: 30,
@@ -206,8 +217,13 @@ class _GeneralDetailsState extends State<GeneralDetails> {
                             "images/weighticon.png",
                             fit: BoxFit.cover,
                           )),
-                      Text(double.parse(weightController.text).toString(),
-                          style: TextStyle(color: Colors.black, fontSize: 16,fontWeight: FontWeight.bold)),
+                      Text(
+                          (double.tryParse('${weightController.text}') ?? 0.0)
+                              .toString(),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),

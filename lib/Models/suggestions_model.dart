@@ -35,6 +35,9 @@ class SuggestionsModel {
     if (json['examination'] != null) {
       examination = <ExaminationData>[];
       json['examination'].forEach((v) {
+        v['examination']['parameters'].forEach((examination) {
+          examination['result'] = [];
+        });
         examination.add(new ExaminationData.fromJson(v['examination']));
       });
     }

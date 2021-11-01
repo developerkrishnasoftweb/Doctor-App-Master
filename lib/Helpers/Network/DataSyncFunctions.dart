@@ -429,6 +429,7 @@ fetchExamination(String docId, ExaminationsDB examinationsDB) async {
     BASEURL + "/examinations",
     headers: {"Authorization": token},
   );
+  print(BASEURL + "/examinations");
   print(token);
   if (response.statusCode == 200) {
     SyncExam symptomSync = SyncExam.fromJson(json.decode(response.body));
