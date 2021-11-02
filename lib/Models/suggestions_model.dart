@@ -42,9 +42,9 @@ class SuggestionsModel {
         examination.add(new ExaminationData.fromJson(v['examination']));
       });
     }
-    if (json['diagonis'] != null) {
+    if (json['diagnosis'] != null) {
       diagnosis = <DignosisData>[];
-      json['diagonis'].forEach((v) {
+      json['diagnosis'].forEach((v) {
         diagnosis.add(new DignosisData(
             date: v['symptom']['date'] ?? '',
             isCured: v['symptom']['is_cured'] ?? false,
