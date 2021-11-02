@@ -319,6 +319,7 @@ class _AppointmentsState extends State<Appointments> {
                     _selecteddoc.id.toString(), fdb, _selecteddoc.doctorId);
                 fetchPatientsVisit(_selecteddoc.id.toString(), pv);
                 fetchPatients(_selecteddoc.id.toString(), p);
+                getAdvices(context);
               }),
           IconButton(
             icon: Icon(

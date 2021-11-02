@@ -54,6 +54,7 @@ class _MedicationState extends State<Medication> {
 
   Future<void> getAdvices() async {
     List<Advice> tempAdvice = await adviceProvider.getAllAdvices();
+
     PatientsVisitData visitData =
         (await patient.getDiagnosis(widget.token.guid)).last;
     advices.clear();
@@ -199,10 +200,9 @@ class _MedicationState extends State<Medication> {
           payload.addAll({"diagnosis": diagnosis});
         }
 
-        print(jsonEncode(payload));
         final response = await getMedicationsSuggestion(payload);
-        final patientsVisitDB =
-            Provider.of<PatientsVisitDB>(context, listen: false);
+        // final patientsVisitDB =
+        //     Provider.of<PatientsVisitDB>(context, listen: false);
         if (response != null) {
           final list = await patient.getDiagnosis(widget.token.guid);
           if (list.last.diagnosis != null) {
@@ -210,32 +210,42 @@ class _MedicationState extends State<Medication> {
           }
           for (var suggestion in response) {
             for (var medicine in suggestion.medications) {
-              await patientsVisitDB.updateMedication(
-                  visitData, _disease, medicine);
+              await patient.updateMedication(visitData, _disease, medicine);
             }
-            for (var advice in suggestion.advices) {
-              if (visitData?.advices?.advices != null &&
-                  !visitData.advices.advices
-                      .map((e) => e.id)
-                      .toList()
-                      .contains(advice.id)) {
-                await patientsVisitDB.insertAdvice([advice], visitData);
-              } else {
-                await patientsVisitDB.insertAdvice([advice], visitData);
-              }
-            }
-            PatientsVisitData vd =
-                (await patient.checkPatient(widget.token.guid)).last;
-            if (vd?.advices?.advices != null) {
-              vd.advices.advices.forEach((advice) {
-                advices.add(AllAdvices(
-                    advice: Advice.fromJson(advice.toJson()),
-                    isSelected: true));
-              });
-              widget.getAdvices(vd.advices.advices);
-            }
+            await patient.insertAdvice(suggestion.advices, visitData);
+            // for (var advice in suggestion.advices) {
+            // if (visitData?.advices?.advices != null) {
+            //   if (!visitData.advices.advices
+            //       .map((e) => e.id)
+            //       .toList()
+            //       .contains(advice.id)) {
+            //     await patient.insertAdvice([advice], visitData);
+            //   }
+            // } else {
+            //   await patient.insertAdvice(suggestion.advices, visitData);
+            // }
+            // if (visitData?.advices?.advices != null &&
+            //     !visitData.advices.advices
+            //         .map((e) => e.id)
+            //         .toList()
+            //         .contains(advice.id)) {
+            //   // await patientsVisitDB.insertAdvice([advice], visitData);
+            // } else {
+            //   // await patientsVisitDB.insertAdvice([advice], visitData);
+            // }
+            // }
           }
-
+          PatientsVisitData vd =
+              (await patient.checkPatient(widget.token.guid)).last;
+          print(vd);
+          if (vd?.advices?.advices != null) {
+            for (var advice in vd.advices.advices) {
+              advices.add(AllAdvices(
+                  advice: Advice.fromJson(advice.toJson()),
+                  isSelected: true));
+            }
+            widget.getAdvices(vd.advices.advices);
+          }
           setState(() {});
         } else {
           print('Suggestions not found!!!');
@@ -823,7 +833,8 @@ class _MedicationState extends State<Medication> {
                                                           (_, stateSetter) =>
                                                               AlertDialog(
                                                         title: Text(
-                                                            "Select Advice"),
+                                                          "Select Advice",
+                                                        ),
                                                         content:
                                                             SingleChildScrollView(
                                                           physics:

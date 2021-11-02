@@ -150,19 +150,31 @@ class PatientsVisitDB extends _$PatientsVisitDB {
   Future updateDiagnosis(PatientsVisitData data, Dignosisgenerated bh,
       RecommendationDB rec, MedicinesDB md) async {
     var query = update(patientsVisit)..where((t) => t.id.equals(data.id));
+    // adding all existing diagnosis data in list
     List<DignosisData> list = [];
     // list = data.briefHistory.data;
     if (data.diagnosis != null) {
       list = data.diagnosis.data;
     }
-    var res = list.where((element) => element.title == bh.data[0].title);
-    if (res.length == 0) {
-      list = bh.data;
-      // list.add(bh.data[0]);
-      bh.data = list;
-    } else {
-      bh.data = list;
+
+    if (bh.data != null) {
+      for (var diagnosis in bh.data) {
+        if (!list.map((e) => e.title).contains(diagnosis.title)) {
+          list.add(diagnosis);
+        }
+      }
     }
+
+    bh.data = list;
+
+    // var res = list.where((element) => element.title == bh.data[0].title);
+    // if (res.length == 0) {
+    //   list = bh.data;
+    //   // list.add(bh.data[0]);
+    //   bh.data = list;
+    // } else {
+    //   bh.data = list;
+    // }
     for (var j in bh.data) {
       List<RecommendationData> listRecom = await rec.recommend(j.title);
 
