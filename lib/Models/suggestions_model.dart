@@ -38,6 +38,7 @@ class SuggestionsModel {
         v['examination']['parameters'].forEach((examination) {
           examination['result'] = [];
         });
+        v['examination']['examination_id'] = v['examination_id'];
         examination.add(new ExaminationData.fromJson(v['examination']));
       });
     }

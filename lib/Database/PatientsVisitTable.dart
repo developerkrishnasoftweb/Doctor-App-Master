@@ -157,7 +157,8 @@ class PatientsVisitDB extends _$PatientsVisitDB {
     }
     var res = list.where((element) => element.title == bh.data[0].title);
     if (res.length == 0) {
-      list.add(bh.data[0]);
+      list = bh.data;
+      // list.add(bh.data[0]);
       bh.data = list;
     } else {
       bh.data = list;
