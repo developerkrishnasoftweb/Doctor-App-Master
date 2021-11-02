@@ -212,6 +212,7 @@ class _MedicationState extends State<Medication> {
             for (var medicine in suggestion.medications) {
               await patient.updateMedication(visitData, _disease, medicine);
             }
+
             await patient.insertAdvice(suggestion.advices, visitData);
             // for (var advice in suggestion.advices) {
             // if (visitData?.advices?.advices != null) {
