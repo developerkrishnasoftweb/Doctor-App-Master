@@ -48,7 +48,7 @@ class _SlotBookingState extends State<SlotBooking> {
   String _mobileno;
 
   bool result = false;
-  String patientId = '';
+  // String patientId = '';
   String response = 'NIL';
 
   Patient patient;
@@ -252,11 +252,11 @@ class _SlotBookingState extends State<SlotBooking> {
                       border: OutlineInputBorder(),
                       suffixIcon: Icon(Icons.search)),
                   onChanged: (val) async {
-                    setState(() {
-                      patientId = val;
-                    });
+                    // setState(() {
+                    //   patientId = val;
+                    // });
                     List<Patient> doc =
-                    await widget.patientDatabase.checkPatient(patientId);
+                    await widget.patientDatabase.checkPatient(val);
                     // print(doc.toString());
                     if (doc.isEmpty) {
                       ctrl1.clear();
