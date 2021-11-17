@@ -82,6 +82,7 @@ class _AppointmentsState extends State<Appointments> {
 
   GenerateTokens token = GenerateTokens();
 
+  // method to generate token
   generate(TokenDB database) {
     print(_selecteddoc.id.toString() + "******************************");
     BuildContext context;

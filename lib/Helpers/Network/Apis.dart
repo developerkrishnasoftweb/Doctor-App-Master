@@ -21,13 +21,14 @@ const UPDATEDOCTOR = BASEURL + "/my-doctor-profile";
 //   								   experience?: string;  qualification?: string;  consultation_fee?: number;
 //   								   emergency_fee?: number;  speciality?: string;
 //   									address?: string;  information?: string; })
-const DELETEDOCTOR =
-    BASEURL + "/my-doctor-profile"; // (delete request to soft delete me)
-const UPDATECLINIC = BASEURL +
-    "/my-clinic-timing/+clinicId"; // (put request to add/update my clinic timings) (body: {doctor_timings: Timing[];
+// const DELETEDOCTOR =
+//     BASEURL + "/my-doctor-profile"; // (delete request to soft delete me)
+
+// const UPDATECLINIC = BASEURL +
+//     "/my-clinic-timing/+clinicId"; // (put request to add/update my clinic timings) (body: {doctor_timings: Timing[];
 //patients_per_hour: number;}) here Timing represents array of object=> {day: DaysEnum; start_time: string;  end_time: string;  break_start?: string;  break_end?: string;}
 
-const MYCLINICS = BASEURL + "/my-clinics";
+// const MYCLINICS = BASEURL + "/my-clinics";
 
 // III) CLINIC=>
 const ADDCLINIC = BASEURL +
