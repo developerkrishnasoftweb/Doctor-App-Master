@@ -544,8 +544,7 @@ Future<bool> fetchCancelledTokens(
         db.updateData(
             token.copyWith(
               booked: false,
-            ),
-            i.patientName);
+            ));
 
         db.insertTask(Token(
             clinicid: clinicid,

@@ -14,6 +14,7 @@ class GeneratedTokens {
   final int nfp;
   final List<Slots> slots;
   final int fees;
+
   GeneratedTokens(
       {this.fees,
       this.doctorid,
@@ -45,7 +46,6 @@ class GenerateTokens {
 
     DateTime st;
     DateTime et;
-    int tno = 1;
     for (var i in tokens.slots) {
       st = DateTime.parse(
           DateFormat('yyyy-MM-dd').format(tokens.date).toString() +
@@ -61,7 +61,7 @@ class GenerateTokens {
         final token = Token(
             fees: tokens.fees,
             clinicid: tokens.clinicId,
-            tokenno: tno,
+            tokenno: j + 1,
             bookedAt: DateTime.now(),
             doctorid: tokens.doctorid,
             tokentime: j == 0
@@ -71,7 +71,6 @@ class GenerateTokens {
                   ));
         st = j == 0 ? st : st.add(Duration(seconds: int.parse(interval[0])));
         database.insertTask(token);
-        tno++;
       }
     }
     // for (int i = 1; i <= tokens.nfp * hours; i++) {

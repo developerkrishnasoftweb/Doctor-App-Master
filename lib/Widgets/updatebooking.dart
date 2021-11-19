@@ -479,8 +479,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                           database.updateData(
                               widget.token.copyWith(
                                 booked: false,
-                              ),
-                              _name);
+                              ));
                           database.insertTask(Token(
                             gender: widget.token.gender,
                             clinicid: widget.token.clinicid,
@@ -533,8 +532,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                                     gender: _radiovalue4,
                                     booked: true,
                                     isOnline: result,
-                                    updatedAt: DateTime.now()),
-                                _name);
+                                    updatedAt: DateTime.now()));
                             _btnController.success();
                             Timer(Duration(seconds: 1),
                                     () => Navigator.of(context).pop());
@@ -575,8 +573,7 @@ class _UpdateBookingState extends State<UpdateBooking> {
                                     isPresent: true,
                                     presentTime: DateTime.now(),
                                     isOnline: result,
-                                    updatedAt: DateTime.now()),
-                                _name);
+                                    updatedAt: DateTime.now()));
                             _btnController.success();
                             Timer(Duration(seconds: 1),
                                     () => Navigator.of(context).pop());

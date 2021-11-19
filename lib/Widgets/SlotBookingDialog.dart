@@ -605,8 +605,7 @@ class _SlotBookingState extends State<SlotBooking> {
                                       bookedAt: DateTime.now(),
                                       gender: _radiovalue4,
                                       isOnline: false,
-                                      guid: responsePatient),
-                                  response.toString());
+                                      guid: responsePatient));
                               insertPatients(responsePatient);
                               setState(() {
                                 widget.count(widget.database);
@@ -677,8 +676,7 @@ class _SlotBookingState extends State<SlotBooking> {
                                       bookedAt: DateTime.now(),
                                       gender: _radiovalue4,
                                       presentTime: DateTime.now(),
-                                      guid: responsePatient),
-                                  response.toString());
+                                      guid: responsePatient));
                               insertPatients(responsePatient);
                               setState(() {
                                 widget.count(widget.database);

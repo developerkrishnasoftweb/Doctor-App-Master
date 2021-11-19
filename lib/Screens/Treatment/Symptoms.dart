@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getcure_doctor/Database/PatientsVisitTable.dart';
 import 'package:getcure_doctor/Database/TokenTable.dart';
 import 'package:getcure_doctor/Widgets/FeedBackScreen.dart';
@@ -12,20 +9,19 @@ import 'package:getcure_doctor/Widgets/SearchAllergy.dart';
 import 'package:getcure_doctor/Widgets/SearchBar.dart';
 import 'package:getcure_doctor/Widgets/SearchLifeStyle.dart';
 import 'package:getcure_doctor/Widgets/searchBarVisit.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:getcure_doctor/Helpers/AppConfig/colors.dart';
+
 // import 'package:provider/provider.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 import 'package:provider/provider.dart';
 
 class Symtoms extends StatefulWidget {
   final Token token;
   final int clinicDocId;
   final List<PatientsVisitData> pd;
-  
-  Symtoms({Key key, this.token, this.clinicDocId, this.pd }) : super(key: key);
+
+  Symtoms({Key key, this.token, this.clinicDocId, this.pd}) : super(key: key);
 
   @override
   _SymtomsState createState() => _SymtomsState();
@@ -36,40 +32,8 @@ class _SymtomsState extends State<Symtoms> {
   bool isloading = false;
   bool showResponse = false;
   String error = '';
-  final picker = ImagePicker();
 
   String query = '';
-  Future uploadImage() async {
-    const url = "";
-    var image = await picker.getImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      setState(() {
-        isloading = true;
-      });
-    }
-
-    if (image != null) {
-      FormData formData = new FormData.fromMap({
-        "file": await MultipartFile.fromFile(
-          image.path,
-          contentType: new MediaType("image", "jpg"),
-        ),
-        // "upload_preset": "project78",
-        // "cloud_name": "dcsqiv7je",
-      });
-      try {
-        Response response = await Dio().post(url, data: formData);
-        var data = jsonDecode(response.toString());
-
-        setState(() {
-          isloading = false;
-          imageUrl = data['secure_url'];
-        });
-      } catch (e) {
-      }
-    }
-  }
 
   // Future<SymptomsModel> fetchBriefHistoryList() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -111,12 +75,13 @@ class _SymtomsState extends State<Symtoms> {
                     IconButton(
                         icon: Icon(FontAwesome.clock_o),
                         onPressed: () {
-                          
                           showDialog(
                               context: context,
                               builder: (_) {
                                 return PatientVisitDialog(
-                                    token: widget.token, pat: patient,pd: widget.pd);
+                                    token: widget.token,
+                                    pat: patient,
+                                    pd: widget.pd);
                               });
                         }),
                     Text(
@@ -134,7 +99,6 @@ class _SymtomsState extends State<Symtoms> {
                             context: context,
                             builder: (BuildContext context) {
                               return SearchBar(
-
                                   pId: widget.token.guid,
                                   clinicDocID: widget.clinicDocId,
                                   docId: widget.token.doctorid);

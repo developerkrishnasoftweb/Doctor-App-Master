@@ -208,7 +208,7 @@ class TokenDB extends _$TokenDB {
 
   Future insertTask(Token token) => into(tokens).insert(token);
   Future updateTask(Token token) => update(tokens).replace(token);
-  Future updateData(Token token, String name) {
+  Future updateData(Token token) {
     var query = update(tokens)..where((t) => t.id.equals(token.id));
     return query.write(TokensCompanion(
         guid: Value(token.guid),

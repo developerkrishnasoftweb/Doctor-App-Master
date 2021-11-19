@@ -278,7 +278,7 @@ class _MedicationState extends State<Medication> {
                 list.data.last.diagnosis.data.length > 1) {
               list.data.last.diagnosis.data.forEach((element) {
                 final index = list.data.last.diagnosis.data.indexOf(element);
-                final meds = list.data.last.medication.data.where((element) =>
+                final meds = list.data.last.medication?.data?.where((element) =>
                     element.disease ==
                     list.data.last.diagnosis.data[index].title);
                 if (meds != null && meds.isNotEmpty) {

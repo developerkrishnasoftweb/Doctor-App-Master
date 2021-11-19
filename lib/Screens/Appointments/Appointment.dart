@@ -80,12 +80,11 @@ class _AppointmentsState extends State<Appointments> {
     getdoctors();
   }
 
-  GenerateTokens token = GenerateTokens();
-
   // method to generate token
   generate(TokenDB database) {
     print(_selecteddoc.id.toString() + "******************************");
     BuildContext context;
+    GenerateTokens token = GenerateTokens();
     token.tokens = GeneratedTokens(
         fees: _selecteddoc.consultationFee,
         doctorid: _selecteddoc.id,
