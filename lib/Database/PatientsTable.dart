@@ -95,9 +95,6 @@ class PatientsDB extends _$PatientsDB {
   }
 
   Future createPatient2(Patient patient) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String token = pref.getString('dresponse');
-    DoctorLogin doctorLogin = DoctorLogin.fromJson(json.decode(token));
     String uniqueId = "A" + patient.mobileNo.toString();
 
     Patient pat;
@@ -121,7 +118,6 @@ class PatientsDB extends _$PatientsDB {
       into(patients).insert(pat);
     }
 
-    List<Patient> part = await checkPatient(pat.patientId);
     //  if (pat.patientId.toString() != part.patientId) {
     // }
     return uniqueId;
